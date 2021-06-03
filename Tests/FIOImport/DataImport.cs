@@ -47,10 +47,18 @@ namespace Tests.FIOImport
             _testOutputHelper.WriteLine(json);
         }
 
-        [Fact]
-        public void LoadFromCache()
+        [Fact(Skip = "You really don't want to import planets by accident...")]
+        public void ImportAll()
         {
-            FioImporter.LoadAllFromCache();
+            var result = FioImporter.ImportAll();
+            Debugger.Break();
+        }
+        
+        [Fact]
+        public void RawData()
+        {
+            var result = FioImporter.LoadAllFromCache();
+            Debugger.Break();
         }
 
         [Fact]

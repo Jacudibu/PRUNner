@@ -24,14 +24,14 @@ namespace FIOImport
         {
             Directory.CreateDirectory(CacheFolder);
             Directory.CreateDirectory(PlanetFolder);
-            return new RawData(ImportBuildings(), ImportMaterials(), ImportPlanetIdentifiers(), new Planet[0]);
+            return new RawData(ImportBuildings(), ImportMaterials(), ImportAllPlanetData());
         }
         
         public static RawData LoadAllFromCache()
         {
             if (Directory.Exists(CacheFolder))
             {
-                return new RawData(LoadBuildings(), LoadMaterials(), LoadPlanetIdentifiers(), LoadAllPlanetData());
+                return new RawData(LoadBuildings(), LoadMaterials(), LoadAllPlanetData());
             }
 
             Console.WriteLine("Unable to find cached data, downloading...");
@@ -111,14 +111,20 @@ namespace FIOImport
 
             return result;
         }
-        
-        public static Planet ImportPlanetData(PlanetIdentifier planetIdentifier)
-        {
-            return ImportPlanetData(planetIdentifier.PlanetNaturalId);
-        }
 
+        public static Planet[] ImportAllPlanetData()
+        {
+            var identifiers = ImportPlanetIdentifiers();
+            return identifiers.Select(x => ImportPlanetData(x.PlanetNaturalId)).ToArray();
+        }
+        
         public static Planet ImportPlanetData(string planetId)
         {
+            if (File.Exists($"{PlanetFolder}{planetId}.json"))
+            {
+                return null!;
+            }
+            
             var json = Client.GetStringAsync("https://rest.fnar.net/planet/" + planetId).GetAwaiter().GetResult();
             var result = JsonConvert.DeserializeObject<Planet>(json);
 

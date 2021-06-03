@@ -8,15 +8,13 @@ namespace FIOImport
     {
         public readonly Building[] AllBuildings;
         public readonly Material[] AllMaterials;
-        public readonly PlanetIdentifier[] AllPlanets;
-        public readonly Planet[] AllPlanetsDetailed;
+        public readonly Planet[] AllPlanets;
         
-        internal RawData(Building[] allBuildings, Material[] allMaterials, PlanetIdentifier[] allPlanets, Planet[] allPlanetsDetailed)
+        internal RawData(Building[] allBuildings, Material[] allMaterials, Planet[] allPlanets)
         {
             AllBuildings = allBuildings;
             AllMaterials = allMaterials;
             AllPlanets = allPlanets;
-            AllPlanetsDetailed = allPlanetsDetailed;
         }
     }
 }

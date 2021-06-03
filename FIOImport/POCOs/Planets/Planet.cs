@@ -16,7 +16,7 @@ namespace FIOImport.POCOs.Planets
         public string PlanetNaturalId { get; set; }
         public string PlanetName { get; set; }
         public object Namer { get; set; }
-        public int NamingDataEpochMs { get; set; }
+        public long NamingDataEpochMs { get; set; }
         public bool Nameable { get; set; }
         public string SystemId { get; set; }
         public double Gravity { get; set; }

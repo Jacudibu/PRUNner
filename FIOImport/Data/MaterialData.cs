@@ -1,46 +1,10 @@
 using System;
 using System.Collections.Generic;
+using FIOImport.Data.Enums;
 using FIOImport.POCOs;
 
 namespace FIOImport.Data
 {
-    public enum MaterialCategory
-    {
-        AgriculturalProducts,
-        Alloys,
-        Chemicals,
-        ConstructionMaterials,
-        ConstructionParts,
-        ConstructionPrefabs,
-        ConsumablesBasic,
-        ConsumablesLuxury,
-        Drones,
-        ElectronicDevices,
-        ElectronicParts,
-        ElectronicPieces,
-        ElectronicSystems,
-        Elements,
-        EnergySystems,
-        Fuels,
-        Gases,
-        Liquids,
-        MedicalEquipment,
-        Metals,
-        Minerals,
-        Ores,
-        Plastics,
-        ShipEngines,
-        ShipKits,
-        ShipParts,
-        ShipShields,
-        SoftwareComponents,
-        SoftwareSystems,
-        SoftwareTools,
-        Textiles,
-        UnitPrefabs,
-        Utility
-    }
-    
     public static class MaterialCategoryStrings
     {
         public const string AgriculturalProducts = "agricultural products";
@@ -80,8 +44,10 @@ namespace FIOImport.Data
     
     public class MaterialData
     {
-        public static Dictionary<string, MaterialData> AllMaterials = new Dictionary<string, MaterialData>();
-        
+        public static readonly Dictionary<string, MaterialData> AllMaterials = new Dictionary<string, MaterialData>();
+        private static readonly Dictionary<string, MaterialData> MaterialsById = new Dictionary<string, MaterialData>();
+
+        private readonly string _id;
         public readonly MaterialCategory Category;
         public readonly string Name;
         public readonly string Ticker;
@@ -91,17 +57,23 @@ namespace FIOImport.Data
         private MaterialData(Material material)
         {
             Category = Enum.Parse<MaterialCategory>(SanitizeCategoryString(material.CategoryName), true);
+            _id = material.MatId;
             Name = material.Name;
             Ticker = material.Ticker;
             Weight = material.Weight;
             Volume = material.Volume;
         }
 
-        internal static MaterialData CreateFrom(Material material)
+        internal static void CreateFrom(Material material)
         {
             var result = new MaterialData(material);
+            MaterialsById[result._id] = result;
             AllMaterials[result.Ticker] = result;
-            return result;
+        }
+
+        internal static MaterialData GetById(string id)
+        {
+            return MaterialsById[id];
         }
 
         private static string SanitizeCategoryString(string category)

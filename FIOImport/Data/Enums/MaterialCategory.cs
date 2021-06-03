@@ -1,0 +1,39 @@
+namespace FIOImport.Data.Enums
+{
+    public enum MaterialCategory
+    {
+        AgriculturalProducts,
+        Alloys,
+        Chemicals,
+        ConstructionMaterials,
+        ConstructionParts,
+        ConstructionPrefabs,
+        ConsumablesBasic,
+        ConsumablesLuxury,
+        Drones,
+        ElectronicDevices,
+        ElectronicParts,
+        ElectronicPieces,
+        ElectronicSystems,
+        Elements,
+        EnergySystems,
+        Fuels,
+        Gases,
+        Liquids,
+        MedicalEquipment,
+        Metals,
+        Minerals,
+        Ores,
+        Plastics,
+        ShipEngines,
+        ShipKits,
+        ShipParts,
+        ShipShields,
+        SoftwareComponents,
+        SoftwareSystems,
+        SoftwareTools,
+        Textiles,
+        UnitPrefabs,
+        Utility
+    }
+}

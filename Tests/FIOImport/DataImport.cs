@@ -1,4 +1,3 @@
-using System;
 using FIOImport;
 using Newtonsoft.Json;
 using Xunit;
@@ -45,6 +44,12 @@ namespace Tests.FIOImport
             var result = FioImporter.ImportPlanetData("Montem");
             var json = JsonConvert.SerializeObject(result);
             _testOutputHelper.WriteLine(json);
+        }
+
+        [Fact]
+        public void LoadFromCache()
+        {
+            FioImporter.LoadAllFromCache();
         }
     }
 }

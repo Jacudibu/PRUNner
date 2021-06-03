@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using FIOImport;
 using Newtonsoft.Json;
 using Xunit;
@@ -21,7 +22,7 @@ namespace Tests.FIOImport
             var json = JsonConvert.SerializeObject(result);
             _testOutputHelper.WriteLine(json);
         }
-        
+
         [Fact]
         public void ImportMaterials()
         {
@@ -29,7 +30,7 @@ namespace Tests.FIOImport
             var json = JsonConvert.SerializeObject(result);
             _testOutputHelper.WriteLine(json);
         }
-        
+
         [Fact]
         public void ImportPlanetIdentifiers()
         {
@@ -50,6 +51,13 @@ namespace Tests.FIOImport
         public void LoadFromCache()
         {
             FioImporter.LoadAllFromCache();
+        }
+
+        [Fact]
+        public void ParsedData()
+        {
+            var result = FioImporter.LoadAndParseFromCache();
+            Debugger.Break();
         }
     }
 }

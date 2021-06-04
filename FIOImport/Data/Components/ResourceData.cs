@@ -2,7 +2,7 @@ using System;
 using FIOImport.Data.Enums;
 using FIOImport.POCOs.Planets;
 
-namespace FIOImport.Data
+namespace FIOImport.Data.Components
 {
     public class ResourceData
     {
@@ -10,11 +10,11 @@ namespace FIOImport.Data
         public readonly ResourceType ResourceType;
         public readonly double Factor;
 
-        internal ResourceData(Resource resource)
+        internal ResourceData(FioResource poco)
         {
-            Material = MaterialData.GetById(resource.MaterialId);
-            Factor = resource.Factor;
-            ResourceType = Enum.Parse<ResourceType>(resource.ResourceType, true);
+            Material = MaterialData.AllItemsByPocoId[poco.MaterialId];
+            Factor = poco.Factor;
+            ResourceType = Enum.Parse<ResourceType>(poco.ResourceType, true);
         }
     }
 }

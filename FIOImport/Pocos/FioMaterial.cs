@@ -3,7 +3,7 @@ using System;
 
 namespace FIOImport.POCOs
 {
-    public class Material
+    public class FioMaterial
     {
         public string CategoryName { get; set; }
         public string CategoryId { get; set; }

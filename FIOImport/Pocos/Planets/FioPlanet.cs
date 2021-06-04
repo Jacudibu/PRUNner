@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace FIOImport.POCOs.Planets
 {
-    public class Planet
+    public class FioPlanet
     {
-        public List<Resource> Resources { get; set; }
-        public List<BuildRequirement> BuildRequirements { get; set; }
-        public List<ProductionFee> ProductionFees { get; set; }
+        public List<FioResource> Resources { get; set; }
+        public List<FioBuildRequirement> BuildRequirements { get; set; }
+        public List<FioProductionFee> ProductionFees { get; set; }
         public List<object> COGCPrograms { get; set; }
         public List<object> COGCVotes { get; set; }
         public List<object> COGCUpkeep { get; set; }

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace FIOImport.POCOs.Buildings
 {
-    public class Building
+    public class FioBuilding
     {
-        public List<BuildingCost> BuildingCosts { get; set; }
-        public List<Recipe> Recipes { get; set; }
+        public List<FioBuildingCost> BuildingCosts { get; set; }
+        public List<FioRecipe> Recipes { get; set; }
         public string Name { get; set; }
         public string Ticker { get; set; }
         public string Expertise { get; set; }

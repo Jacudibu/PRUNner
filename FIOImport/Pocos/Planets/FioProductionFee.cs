@@ -1,7 +1,7 @@
 // ReSharper disable All
 namespace FIOImport.POCOs.Planets
 {
-    public class ProductionFee
+    public class FioProductionFee
     {
         public string Category { get; set; }
         public double FeeAmount { get; set; }

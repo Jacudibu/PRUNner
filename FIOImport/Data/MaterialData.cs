@@ -1,79 +1,29 @@
 using System;
 using System.Collections.Generic;
+using FIOImport.Data.BaseClasses;
 using FIOImport.Data.Enums;
 using FIOImport.POCOs;
 
 namespace FIOImport.Data
 {
-    public static class MaterialCategoryStrings
+    public class MaterialData : GameData<MaterialData, FioMaterial>
     {
-        public const string AgriculturalProducts = "agricultural products";
-        public const string Alloys = "alloys";
-        public const string Chemicals = "chemicals";
-        public const string ConstructionMaterials = "construction materials";
-        public const string ConstructionParts = "construction parts";
-        public const string ConstructionPrefabs = "construction prefabs";
-        public const string ConsumablesBasic = "consumables (basic)";
-        public const string ConsumablesLuxury = "consumables (luxury)";
-        public const string Drones = "drones";
-        public const string ElectronicDevices = "electronic devices";
-        public const string ElectronicParts = "electronic parts";
-        public const string ElectronicPieces = "electronic pieces";
-        public const string ElectronicSystems = "electronic systems";
-        public const string Elements = "elements";
-        public const string EnergySystems = "energy systems";
-        public const string Fuels = "fuels";
-        public const string Gases = "gases";
-        public const string Liquids = "liquids";
-        public const string MedicalEquipment = "medical equipment";
-        public const string Metals = "metals";
-        public const string Minerals = "minerals";
-        public const string Ores = "ores";
-        public const string Plastics = "plastics";
-        public const string ShipEngines = "ship engines";
-        public const string ShipKits = "ship kits";
-        public const string ShipParts = "ship parts";
-        public const string ShipShields = "ship shields";
-        public const string SoftwareComponents = "software components";
-        public const string SoftwareSystems = "software systems";
-        public const string SoftwareTools = "software tools";
-        public const string Textiles = "textiles";
-        public const string UnitPrefabs = "unit prefabs";
-        public const string Utility = "utility";
-    }
-    
-    public class MaterialData
-    {
-        public static readonly Dictionary<string, MaterialData> AllMaterials = new Dictionary<string, MaterialData>();
-        private static readonly Dictionary<string, MaterialData> MaterialsById = new Dictionary<string, MaterialData>();
+        public MaterialCategory Category { get; private set; }
+        public string Ticker { get; private set; }
+        public string Name { get; private set; }
+        public double Weight { get; private set; }
+        public double Volume { get; private set; }
 
-        private readonly string _id;
-        public readonly MaterialCategory Category;
-        public readonly string Name;
-        public readonly string Ticker;
-        public readonly double Weight;
-        public readonly double Volume;
+        internal override string GetIdFromPoco(FioMaterial poco) => poco.Ticker;
+        internal override string GetFioIdFromPoco(FioMaterial poco) => poco.MatId;
 
-        private MaterialData(Material material)
+        internal override void PostProcessData(FioMaterial poco)
         {
-            Category = Enum.Parse<MaterialCategory>(SanitizeCategoryString(material.CategoryName), true);
-            _id = material.MatId;
-            Name = material.Name;
-            Ticker = material.Ticker;
-            Weight = material.Weight;
-            Volume = material.Volume;
-        }
-
-        internal static void CreateFrom(Material material)
-        {
-            var result = new MaterialData(material);
-            MaterialsById[result._id] = result;
-            AllMaterials[result.Ticker] = result;
-        }
-
-        internal static MaterialData GetById(string id)
-        {
-            return MaterialsById[id];
+            Category = Enum.Parse<MaterialCategory>(SanitizeCategoryString(poco.CategoryName), true);
+            Name = poco.Name;
+            Ticker = poco.Ticker;
+            Weight = poco.Weight;
+            Volume = poco.Volume;
         }
 
         private static string SanitizeCategoryString(string category)

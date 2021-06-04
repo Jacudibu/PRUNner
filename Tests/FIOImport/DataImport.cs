@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using FIOImport;
 using Newtonsoft.Json;
 using Xunit;
@@ -47,7 +48,7 @@ namespace Tests.FIOImport
             _testOutputHelper.WriteLine(json);
         }
 
-        [Fact(Skip = "You really don't want to import planets by accident...")]
+        [Fact]
         public void ImportAll()
         {
             var result = FioImporter.ImportAll();

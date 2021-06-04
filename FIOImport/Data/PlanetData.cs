@@ -1,50 +1,34 @@
-using System.Collections.Generic;
 using System.Linq;
+using FIOImport.Data.BaseClasses;
+using FIOImport.Data.Components;
 using FIOImport.POCOs.Planets;
 
 namespace FIOImport.Data
 {
-    public class PlanetData
+    public class PlanetData : GameData<PlanetData, FioPlanet>
     {
-        public static readonly Dictionary<string, PlanetData> AllPlanets = new Dictionary<string, PlanetData>();
-        private static readonly Dictionary<string, PlanetData> AllPlanetsById = new Dictionary<string, PlanetData>();
-        
-        public readonly ResourceData[] Resources;
-        public readonly BuildRequirementData[] ColonizationMaterials; 
+        public ResourceData[] Resources { get; private set; }
+        public BuildRequirementData[] ColonizationMaterials { get; private set; } 
+        public string Name { get; private set; }
+        public double Fertility { get; private set; }
+        public double Gravity { get; private set; }
+        public double Pressure { get; private set; }
+        public double Radiation { get; private set; }
 
-        private readonly string _id;
-        public readonly string NaturalId;
-        public readonly string Name;
-        
-        public readonly double Fertility;
-        public readonly double Gravity;
-        public readonly double Pressure;
-        public readonly double Radiation;
-        
-        private PlanetData(Planet planet)
+        internal override string GetIdFromPoco(FioPlanet poco) => poco.PlanetId;
+        internal override string GetFioIdFromPoco(FioPlanet poco) => poco.PlanetNaturalId;
+
+        internal override void PostProcessData(FioPlanet poco)
         {
-            _id = planet.PlanetId;
-            NaturalId = planet.PlanetNaturalId;
-            Name = planet.PlanetName;
+            Name = poco.PlanetName;
             
-            Fertility = planet.Fertility;
-            Gravity = planet.Gravity;
-            Pressure = planet.Pressure;
-            Radiation = planet.Radiation;
+            Fertility = poco.Fertility;
+            Gravity = poco.Gravity;
+            Pressure = poco.Pressure;
+            Radiation = poco.Radiation;
 
-            Resources = planet.Resources.Select(x => new ResourceData(x)).ToArray();
-            ColonizationMaterials = planet.BuildRequirements.Select(x => new BuildRequirementData(x)).ToArray();
-        }
-
-        public static void CreateFrom(Planet planet)
-        {
-            var result = new PlanetData(planet);
-            AllPlanets[result.NaturalId] = result;
-        }
-
-        internal static PlanetData GetById(string id)
-        {
-            return AllPlanetsById[id];
+            Resources = poco.Resources.Select(x => new ResourceData(x)).ToArray();
+            ColonizationMaterials = poco.BuildRequirements.Select(x => new BuildRequirementData(x)).ToArray();
         }
     }
 }

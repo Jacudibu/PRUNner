@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace FIOImport.POCOs.Buildings
 {
-    public class Recipe
+    public class FioRecipe
     {
-        public List<Input> Inputs { get; set; }
-        public List<Output> Outputs { get; set; }
+        public List<FioInput> Inputs { get; set; }
+        public List<FioOutput> Outputs { get; set; }
         public int DurationMs { get; set; }
         public string RecipeName { get; set; }
     }

@@ -1,7 +1,7 @@
 // ReSharper disable All
 namespace FIOImport.POCOs.Planets
 {
-    public class Resource
+    public class FioResource
     {
         public string MaterialId { get; set; }
         public string ResourceType { get; set; }

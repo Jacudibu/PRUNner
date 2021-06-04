@@ -1,7 +1,7 @@
 // ReSharper disable All
 namespace FIOImport.POCOs.Buildings
 {
-    public class BuildingCost
+    public class FioInput
     {
         public string CommodityName { get; set; }
         public string CommodityTicker { get; set; }

@@ -52,7 +52,7 @@ namespace FIOImport
             var json = File.ReadAllText(AllBuildingsPath);
             var result = JsonConvert.DeserializeObject<FioBuilding[]>(json);
 
-            return result;
+            return result!;
         }
         
         public static FioBuilding[] ImportBuildings()
@@ -62,7 +62,7 @@ namespace FIOImport
             
             File.WriteAllText(AllBuildingsPath, json);
 
-            return result;
+            return result!;
         }        
         
         public static FioMaterial[] LoadMaterials()
@@ -70,7 +70,7 @@ namespace FIOImport
             var json = File.ReadAllText(AllMaterialsPath);
             var result = JsonConvert.DeserializeObject<FioMaterial[]>(json);
 
-            return result;
+            return result!;
         }
 
         public static FioMaterial[] ImportMaterials()
@@ -80,7 +80,7 @@ namespace FIOImport
             
             File.WriteAllText(AllMaterialsPath, json);
 
-            return result;
+            return result!;
         }
         
         public static FioPlanetIdentifier[] LoadPlanetIdentifiers()
@@ -88,7 +88,7 @@ namespace FIOImport
             var json = File.ReadAllText(AllPlanetIdentifiersPath);
             var result = JsonConvert.DeserializeObject<FioPlanetIdentifier[]>(json);
 
-            return result;
+            return result!;
         }
         
         public static FioPlanetIdentifier[] ImportPlanetIdentifiers()
@@ -98,7 +98,7 @@ namespace FIOImport
 
             File.WriteAllText(AllPlanetIdentifiersPath, json);
             
-            return result;
+            return result!;
         }
 
         public static FioPlanet[] LoadAllPlanetData()
@@ -112,7 +112,7 @@ namespace FIOImport
             var json = File.ReadAllText(fileName);
             var result = JsonConvert.DeserializeObject<FioPlanet>(json);
 
-            return result;
+            return result!;
         }
 
         public static FioPlanet[] ImportAllPlanetData()
@@ -133,7 +133,7 @@ namespace FIOImport
 
             File.WriteAllText($"{PlanetFolder}{planetId}.json", json);
 
-            return result;
+            return result!;
         }
         
         public static FioSystem[] LoadSystems()
@@ -141,7 +141,7 @@ namespace FIOImport
             var json = File.ReadAllText(AllSystemsPath);
             var result = JsonConvert.DeserializeObject<FioSystem[]>(json);
 
-            return result;
+            return result!;
         }
 
         public static FioSystem[] ImportSystems()
@@ -151,7 +151,7 @@ namespace FIOImport
             
             File.WriteAllText(AllSystemsPath, json);
 
-            return result;
+            return result!;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace FIOImport.Data
         public string Name { get; private set; }
         public StarType StarType { get; private set; }
         public List<SystemData> Connections { get; private set; } = new List<SystemData>();
+        public List<PlanetData> Planets { get; private set; } = new List<PlanetData>();
         public double PositionX { get; private set; }
         public double PositionY { get; private set; }
         public double PositionZ { get; private set; }
@@ -44,6 +45,11 @@ namespace FIOImport.Data
             PositionZ = poco.PositionZ;
             SectorId = poco.SectorId;
             SubSectorId = poco.SubSectorId;
+        }
+
+        internal void AddPlanet(PlanetData planet)
+        {
+            Planets.Add(planet);
         }
     }
 }

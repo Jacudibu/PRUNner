@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\FIOImport\FIOImport.csproj" />
+      <ProjectReference Include="..\PRUNner\PRUNner.csproj" />
     </ItemGroup>
 
 </Project>

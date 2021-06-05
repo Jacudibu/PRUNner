@@ -4,7 +4,6 @@ using System.Linq;
 using FIOImport.Data.BaseClasses;
 using FIOImport.Data.Enums;
 using FIOImport.Pocos;
-using FIOImport.POCOs;
 
 namespace FIOImport.Data
 {
@@ -32,7 +31,8 @@ namespace FIOImport.Data
                 {
                     continue;
                 }
-                var connectedSystem = AllItemsByPocoId[FioId];
+                
+                var connectedSystem = AllItemsByPocoId[connection.Connection];
                 connectedSystem.Connections.Add(this);
                 Connections.Add(connectedSystem);
             }

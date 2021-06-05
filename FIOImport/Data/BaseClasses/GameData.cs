@@ -32,5 +32,10 @@ namespace FIOImport.Data.BaseClasses
             AllItems[result.Id] = result;
             AllItemsByPocoId[result.FioId] = result;
         }
+
+        public override string ToString()
+        {
+            return Id;
+        }
     }
 }

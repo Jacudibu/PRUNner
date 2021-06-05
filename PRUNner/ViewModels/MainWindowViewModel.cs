@@ -1,11 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Windows.Input;
+using ReactiveUI;
 
 namespace PRUNner.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public string Greeting => "Hello World!";
+        private ViewModelBase _activeView;
+        public ViewModelBase ActiveView
+        {
+            get => _activeView;
+            set => this.RaiseAndSetIfChanged(ref _activeView, value);
+        }
+
+        private PlanetFinderViewModel PlanetFinderViewModel;
+
+        public MainWindowViewModel()
+        {
+            PlanetFinderViewModel = new PlanetFinderViewModel();
+        }
+        
+        public ICommand ViewPlanetFinder => ReactiveCommand.Create(() => ActiveView = PlanetFinderViewModel);
     }
 }

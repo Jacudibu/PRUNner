@@ -1,6 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:PRUNner.ViewModels;assembly=PRUNner"
+        xmlns:viewModels="clr-namespace:PRUNner.ViewModels;assembly=PRUNner"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -9,9 +9,16 @@
         Title="PRUNner">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <viewModels:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <DockPanel>
+        <Panel DockPanel.Dock="Top" Height="30">
+            <Button Content="Planet Finder" Command="{Binding ViewPlanetFinder}" HorizontalAlignment="Center"/>
+        </Panel>
+        
+        <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}"/>
+        
+    </DockPanel>
 
 </Window>

@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PRUNner.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PRUNner.Views.PlanetFinderView">
+    
+    <Design.DataContext>
+        <viewModels:PlanetFinderViewModel/>
+    </Design.DataContext>
+    
+<StackPanel>
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Resource Filters"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding Item1}"/>
+                <TextBox Text="{Binding Item2}" Margin="5,0,0,0"/>
+                <TextBox Text="{Binding Item3}" Margin="5,0,0,0"/>
+                <TextBox Text="{Binding Item4}" Margin="5,0,0,0"/>
+            </StackPanel>
+            
+            <Button Content="Search!" Margin="10" HorizontalAlignment="Center"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+            <TextBlock Text="Filter Criteria"/>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical">
+                    <CheckBox IsChecked="{Binding DisplayFertile}">Fertile</CheckBox>
+                    <CheckBox IsChecked="{Binding DisplayRocky}">Rocky (MCG)</CheckBox>
+                    <CheckBox IsChecked="{Binding DisplayGaseous}">Gaseous (AEF)</CheckBox>
+                </StackPanel>
+                
+                <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                    <CheckBox IsChecked="{Binding DisplayLowGravity}">Low Gravity (MGC)</CheckBox>
+                    <CheckBox IsChecked="{Binding DisplayLowPressure}">Low Pressure (SEA)</CheckBox>
+                    <CheckBox IsChecked="{Binding DisplayLowTemperature}">Low Temperature (INS)</CheckBox>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                    <CheckBox IsChecked="{Binding DisplayHighGravity}">High Gravity (BL)</CheckBox>
+                    <CheckBox IsChecked="{Binding DisplayHighPressure}">High Pressure (HSE)</CheckBox>
+                    <CheckBox IsChecked="{Binding DisplayHighTemperature}">High Temperature (TSH)</CheckBox>
+                </StackPanel>
+                
+            </StackPanel>
+
+
+            
+        </StackPanel>
+    </StackPanel>
+</StackPanel>
+    
+</UserControl>

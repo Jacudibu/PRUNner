@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PRUNner.ViewModels"
-             xmlns:data="clr-namespace:PRUNner.Backend.Data;assembly=PRUNner.Backend"
              xmlns:planetFinder="clr-namespace:PRUNner.Backend.PlanetFinder;assembly=PRUNner.Backend"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PRUNner.Views.PlanetFinderView">
@@ -71,17 +70,18 @@
     <ItemsControl.ItemTemplate>
     <DataTemplate DataType="planetFinder:PlanetFinderSearchResult">
         <StackPanel Orientation="Horizontal">
-            <TextBlock Width="100" TextAlignment="Center" Text="{Binding Planet.Name}"/>
-            <TextBlock Width="160" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.BuildingMaterialString}"/>
-            <TextBlock Width="50" TextAlignment="Center" IsVisible="{Binding DisplayResource1}" Text="{Binding Resource1}"/>
-            <TextBlock Width="50" TextAlignment="Center" IsVisible="{Binding DisplayResource2}" Text="{Binding Resource2}"/>
-            <TextBlock Width="50" TextAlignment="Center" IsVisible="{Binding DisplayResource3}" Text="{Binding Resource3}"/>
-            <TextBlock Width="50" TextAlignment="Center" IsVisible="{Binding DisplayResource4}" Text="{Binding Resource4}"/>
-            <TextBlock Width="50" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToMoria}"/>
-            <TextBlock Width="50" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToBenten}"/>
-            <TextBlock Width="50" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToHortus}"/>
-            <TextBlock Width="50" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToAntares}"/>
-            <TextBlock Width="50" TextAlignment="Center" Text="{Binding DistancePyrgos}"/>
+            <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.Name}"/>
+            <TextBlock Width="160" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.BuildingMaterialString}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" IsVisible="{Binding DisplayResource1}" Text="{Binding Resource1}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" IsVisible="{Binding DisplayResource2}" Text="{Binding Resource2}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" IsVisible="{Binding DisplayResource3}" Text="{Binding Resource3}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" IsVisible="{Binding DisplayResource4}" Text="{Binding Resource4}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToMoria}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToBenten}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToHortus}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToAntares}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding DistancePyrgos}"/>
+            <Button Content="Plan a new Base" Command="{Binding OpenBasePlanner}"/>
         </StackPanel>
     </DataTemplate>
     </ItemsControl.ItemTemplate>

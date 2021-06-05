@@ -39,5 +39,10 @@ namespace PRUNner.Backend.PlanetFinder
                 ? Planet.GetResource(resources[resourceId - 1])!.CalculateDailyProduction(1).ToString("F2") 
                 : "";
         }
+
+        public void OpenBasePlanner()
+        {
+            // TODO: later on we can invoke an event here that the editor can subscribe to.
+        }
     }
 }

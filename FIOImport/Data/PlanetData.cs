@@ -60,6 +60,11 @@ namespace FIOImport.Data
             return Resources.SingleOrDefault(x => x.Material.Equals(material));
         }
 
+        public bool IsFertile()
+        {
+            return Fertility > -1;
+        }
+
         public bool IsLowGravity()
         {
             return Gravity < 0.25;

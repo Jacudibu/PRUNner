@@ -9,13 +9,14 @@ namespace Tests.FIOImport
     public class DataImport
     {
         private readonly ITestOutputHelper _testOutputHelper;
-
+        private const string? Skip = "No Blaming FIO today"; // Set this to null if you wanna run the tests here.
+        
         public DataImport(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
         }
 
-        [Fact]
+        [Fact(Skip = Skip)]
         public void ImportBuildings()
         {
             var result = FioImporter.ImportBuildings();
@@ -23,7 +24,7 @@ namespace Tests.FIOImport
             _testOutputHelper.WriteLine(json);
         }
 
-        [Fact]
+        [Fact(Skip = Skip)]
         public void ImportMaterials()
         {
             var result = FioImporter.ImportMaterials();
@@ -31,7 +32,7 @@ namespace Tests.FIOImport
             _testOutputHelper.WriteLine(json);
         }
 
-        [Fact]
+        [Fact(Skip = Skip)]
         public void ImportPlanetIdentifiers()
         {
             var result = FioImporter.ImportPlanetIdentifiers();
@@ -39,7 +40,7 @@ namespace Tests.FIOImport
             _testOutputHelper.WriteLine(json);
         }
 
-        [Fact]
+        [Fact(Skip = Skip)]
         public void ImportSpecificPlanet()
         {
             var result = FioImporter.ImportPlanetData("Montem");
@@ -47,21 +48,21 @@ namespace Tests.FIOImport
             _testOutputHelper.WriteLine(json);
         }
 
-        [Fact]
+        [Fact(Skip = Skip)]
         public void ImportAll()
         {
             var result = FioImporter.ImportAll();
             Debugger.Break();
         }
         
-        [Fact]
+        [Fact(Skip = Skip)]
         public void RawData()
         {
             var result = FioImporter.LoadAllFromCache();
             Debugger.Break();
         }
 
-        [Fact]
+        [Fact(Skip = Skip)]
         public void ParsedData()
         {
             var result = FioImporter.LoadAndParseFromCache();

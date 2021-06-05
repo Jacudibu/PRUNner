@@ -25,14 +25,8 @@ namespace Tests
         [Fact]
         public void FindingPlanet()
         {
-            var materialFilter = new List<MaterialData>()
-            {
-                MaterialData.AllItems["FEO"]
-            };
-
-            var result = PlanetFinder.Find(materialFilter, false, false, false,
-                    true, true, true, true, true, true)
-                .OrderByDescending(x => x.Resources.Single(res => res.Material.Ticker.Equals("FEO")).Factor);
+            var result = PlanetFinder.Find(FilterCriteria.T1Criteria, MaterialData.AllItems["FEO"])
+                .OrderByDescending(x => x.GetResource("FEO")!.Factor);
             
             _testOutputHelper.WriteLine("Displaying all T1 planets with FEO, sorted by concentration:");
             foreach (var planetData in result)
@@ -56,13 +50,7 @@ namespace Tests
         [Fact]
         public void FindingPlanetFilteredByDistance()
         {
-            var materialFilter = new List<MaterialData>()
-            {
-                MaterialData.AllItems["LST"]
-            };
-
-            var result = PlanetFinder.Find(materialFilter, false, false, false,
-                    true, true, true, true, true, true)
+            var result = PlanetFinder.Find(FilterCriteria.T1Criteria, "LST")
                 .Select(x => new DistanceSearchResult(x, "CH-771"))                
                 .OrderBy(x => x.Path.Count);
             

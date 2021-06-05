@@ -3,21 +3,25 @@ using FIOImport.POCOs.Planets;
 using PRUNner.Backend.Data.BaseClasses;
 using PRUNner.Backend.Data.Components;
 using PRUNner.Backend.Data.Enums;
+using PRUNner.Backend.PlanetFinder;
 
 namespace PRUNner.Backend.Data
 {
     public class PlanetData : GameData<PlanetData, FioPlanet>
-    {
-        public ResourceData[] Resources { get; private set; }
-        public BuildRequirementData[] ColonizationMaterials { get; private set; } 
-        public string Name { get; private set; }
+    { 
+        public ResourceData[] Resources { get; private set; } = null!;
+        public BuildRequirementData[] ColonizationMaterials { get; private set; } = null!;
+        public string Name { get; private set; } = null!;
         public double Fertility { get; private set; }
         public double Gravity { get; private set; }
         public double Pressure { get; private set; }
         public double Temperature { get; private set; }
         public double Radiation { get; private set; }
         public PlanetType Type { get; private set; }
-        public SystemData System { get; private set; }
+        public SystemData System { get; private set; } = null!;
+
+        private PlanetFinderCache? _planetFinderCache;
+        public PlanetFinderCache PlanetFinderCache => _planetFinderCache ??= new PlanetFinderCache(this);
 
         internal override string GetIdFromPoco(FioPlanet poco) => poco.PlanetNaturalId;
         internal override string GetFioIdFromPoco(FioPlanet poco) => poco.PlanetId;
@@ -94,5 +98,36 @@ namespace PRUNner.Backend.Data
         {
             return Temperature > 75;
         }
+    }
+    
+    public class PlanetFinderCache
+    {
+        public string BuildingMaterialString { get; }
+        public int DistanceToMoria { get; }
+        public int DistanceToBenten { get; }
+        public int DistanceToHortus { get; }
+        public int DistanceToAntares { get; }
+        
+        public PlanetFinderCache(PlanetData planet)
+        {
+            BuildingMaterialString = CreateBuildingMaterialString(planet);
+            DistanceToMoria = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["OT-580"]).Count;
+            DistanceToBenten = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["UV-351"]).Count;
+            DistanceToHortus = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["VH-331"]).Count;
+            DistanceToAntares = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["ZV-307"]).Count;
+        }
+        
+        private static string CreateBuildingMaterialString(PlanetData planet)
+        {
+            var result = planet.Type == PlanetType.Rocky ? "MCG" : "AEF";
+            if (planet.IsLowGravity()) result += "|MGC";
+            if (planet.IsHighGravity()) result += "|BL";
+            if (planet.IsLowPressure()) result += "|SEA";
+            if (planet.IsHighPressure()) result += "|HSE";
+            if (planet.IsLowTemperature()) result += "|INS";
+            if (planet.IsHighTemperature()) result += "|TSH";
+            return result;
+        }
+
     }
 }

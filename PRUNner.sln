@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIOImport", "FIOImport\FIOI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{73508C2A-7157-4B7C-9381-2E3899513214}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRUNner.Backend", "PRUNner.Backend\PRUNner.Backend.csproj", "{C830E084-C4D1-4991-AE13-AE7C02B2AB28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{73508C2A-7157-4B7C-9381-2E3899513214}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73508C2A-7157-4B7C-9381-2E3899513214}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73508C2A-7157-4B7C-9381-2E3899513214}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C830E084-C4D1-4991-AE13-AE7C02B2AB28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C830E084-C4D1-4991-AE13-AE7C02B2AB28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C830E084-C4D1-4991-AE13-AE7C02B2AB28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C830E084-C4D1-4991-AE13-AE7C02B2AB28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

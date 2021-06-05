@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FIOImport.Data.BaseClasses
+namespace PRUNner.Backend.Data.BaseClasses
 {
     public abstract class GameData<TData, TPoco> where TData : GameData<TData, TPoco>, new()
     {

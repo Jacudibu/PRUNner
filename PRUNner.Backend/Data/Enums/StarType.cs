@@ -1,4 +1,4 @@
-namespace FIOImport.Data.Enums
+namespace PRUNner.Backend.Data.Enums
 {
     public enum StarType
     {

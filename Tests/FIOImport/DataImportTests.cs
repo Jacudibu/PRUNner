@@ -65,7 +65,7 @@ namespace Tests.FIOImport
         [Fact(Skip = Skip)]
         public void ParsedData()
         {
-            var result = FioImporter.LoadAndParseFromCache();
+            var result = PRUNner.Backend.ParsedData.LoadAndParseFromCache();
             Debugger.Break();
         }
     }

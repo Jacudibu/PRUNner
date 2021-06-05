@@ -1,4 +1,4 @@
-namespace FIOImport.Data.UnusedStuff
+namespace PRUNner.Backend.Data.UnusedStuff
 {
     public static class MaterialCategoryStrings
     {

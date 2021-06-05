@@ -1,8 +1,8 @@
 using System;
-using FIOImport.Data.Enums;
 using FIOImport.POCOs.Planets;
+using PRUNner.Backend.Data.Enums;
 
-namespace FIOImport.Data.Components
+namespace PRUNner.Backend.Data.Components
 {
     public class ResourceData
     {

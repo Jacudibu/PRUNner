@@ -17,6 +17,8 @@ namespace PRUNner.ViewModels
         public MainWindowViewModel()
         {
             PlanetFinderViewModel = new PlanetFinderViewModel();
+
+            ActiveView = PlanetFinderViewModel;
         }
         
         public ICommand ViewPlanetFinder => ReactiveCommand.Create(() => ActiveView = PlanetFinderViewModel);

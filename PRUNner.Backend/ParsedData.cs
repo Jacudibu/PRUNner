@@ -1,7 +1,8 @@
 using System.Collections.Generic;
-using FIOImport.Data;
+using FIOImport;
+using PRUNner.Backend.Data;
 
-namespace FIOImport
+namespace PRUNner.Backend
 {
     public class ParsedData
     {
@@ -29,6 +30,12 @@ namespace FIOImport
             MaterialData.PostProcessData(rawData.AllMaterials);
             PlanetData.PostProcessData(rawData.AllPlanets);
             SystemData.PostProcessData(rawData.AllSystems);
+        }
+        
+        public static ParsedData LoadAndParseFromCache()
+        {
+            var rawData = FioImporter.LoadAllFromCache();
+            return new ParsedData(rawData);
         }
     }
 }

@@ -1,6 +1,6 @@
 using FIOImport.POCOs.Planets;
 
-namespace FIOImport.Data.Components
+namespace PRUNner.Backend.Data.Components
 {
     public class BuildRequirementData
     {

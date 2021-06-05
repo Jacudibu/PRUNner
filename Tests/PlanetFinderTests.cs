@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FIOImport;
-using FIOImport.Data;
 using PRUNner.Backend;
+using PRUNner.Backend.Data;
+using PRUNner.Backend.PlanetFinder;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -15,7 +15,7 @@ namespace Tests
 
         static PlanetFinderTests()
         {
-            FioImporter.LoadAndParseFromCache();
+            ParsedData.LoadAndParseFromCache();
         }
 
         public PlanetFinderTests(ITestOutputHelper testOutputHelper)

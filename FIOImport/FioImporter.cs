@@ -41,12 +41,6 @@ namespace FIOImport
             return ImportAll();
         }
 
-        public static ParsedData LoadAndParseFromCache()
-        {
-            var rawData = LoadAllFromCache();
-            return new ParsedData(rawData);
-        }
-
         public static FioBuilding[] LoadBuildings()
         {
             var json = File.ReadAllText(AllBuildingsPath);

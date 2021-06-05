@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using FIOImport.Data;
+using PRUNner.Backend.Data;
 
-namespace PRUNner.Backend
+namespace PRUNner.Backend.PlanetFinder
 {
     public static class SystemPathFinder
     {

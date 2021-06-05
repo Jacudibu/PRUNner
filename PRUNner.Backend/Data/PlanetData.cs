@@ -1,10 +1,10 @@
 using System.Linq;
-using FIOImport.Data.BaseClasses;
-using FIOImport.Data.Components;
-using FIOImport.Data.Enums;
 using FIOImport.POCOs.Planets;
+using PRUNner.Backend.Data.BaseClasses;
+using PRUNner.Backend.Data.Components;
+using PRUNner.Backend.Data.Enums;
 
-namespace FIOImport.Data
+namespace PRUNner.Backend.Data
 {
     public class PlanetData : GameData<PlanetData, FioPlanet>
     {

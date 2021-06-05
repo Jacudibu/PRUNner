@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using FIOImport.Data;
-using FIOImport.Data.Enums;
+using PRUNner.Backend.Data;
+using PRUNner.Backend.Data.Enums;
 
-namespace PRUNner.Backend
+namespace PRUNner.Backend.PlanetFinder
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class FilterCriteria

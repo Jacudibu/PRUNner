@@ -14,11 +14,17 @@
             <SubType>Designer</SubType>
         </AvaloniaResource>
         <AvaloniaResource Include="Assets\**" />
+        <Compile Update="App.axaml.cs">
+          <DependentUpon>App.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\MainWindow.axaml.cs">
+          <DependentUpon>MainWindow.axaml</DependentUpon>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.5" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.5" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.5" />
+        <PackageReference Include="Avalonia" Version="0.10.6" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.6" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\FIOImport\FIOImport.csproj" />

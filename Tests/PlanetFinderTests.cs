@@ -40,25 +40,34 @@ namespace Tests
             public readonly PlanetData PlanetData;
             public readonly List<SystemData> Path;
 
+            public readonly List<SystemData> PathToMoria;
+            public readonly List<SystemData> PathToBenten;
+
             public DistanceSearchResult(PlanetData planet, string targetSystem)
             {
                 PlanetData = planet;
                 Path = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems[targetSystem]);
+                PathToMoria = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["OT-580"]);
+                PathToBenten = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["UV-351"]);
             }
         }
         
         [Fact]
         public void FindingPlanetFilteredByDistance()
         {
-            var result = PlanetFinder.Find(FilterCriteria.T1Criteria, "LST")
-                .Select(x => new DistanceSearchResult(x, "CH-771"))                
+            // using this more like a command line tool right now... :D
+            
+            const string origin = "CH-771";
+            const string resource = "H";
+            var result = PlanetFinder.Find(FilterCriteria.None, resource)
+                .Select(x => new DistanceSearchResult(x, origin))                
                 .OrderBy(x => x.Path.Count);
             
-            _testOutputHelper.WriteLine("Displaying all T1 planets with LST, sorted by distance to CH-771:");
-   
+            _testOutputHelper.WriteLine($"Displaying all planets with {resource}, sorted by distance to {origin}:");
+
             foreach (var searchResult in result)
             {
-                _testOutputHelper.WriteLine($"{searchResult.Path.Count} – {searchResult.PlanetData.Id} ({searchResult.PlanetData.Name}) – {searchResult.PlanetData.GetResource("LST")?.Factor}");
+                _testOutputHelper.WriteLine($"{searchResult.Path.Count} – {searchResult.PlanetData.Id} ({searchResult.PlanetData.Name}) – {searchResult.PlanetData.GetResource(resource)?.Factor} – Distance Moria: {searchResult.PathToMoria.Count}, Distance Benten: {searchResult.PathToBenten.Count}" );
             }
         }
     }

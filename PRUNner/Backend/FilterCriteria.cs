@@ -90,5 +90,7 @@ namespace PRUNner.Backend
             ExcludeLowPressure = true, ExcludeHighPressure = true,
             ExcludeLowTemperature = true, ExcludeHighTemperature = true
         };
+
+        public static readonly FilterCriteria None = new();
     }
 }

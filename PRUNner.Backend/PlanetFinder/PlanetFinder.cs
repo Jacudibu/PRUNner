@@ -6,18 +6,20 @@ namespace PRUNner.Backend.PlanetFinder
 {
     public static class PlanetFinder
     {
-        public static IEnumerable<PlanetData> Find(FilterCriteria filterCriteria, params string[] resourceFilter)
+        public static IEnumerable<PlanetFinderSearchResult> Find(FilterCriteria filterCriteria, params string[] resourceFilter)
         {
             return PlanetData.AllItems.Values
                 .Where(filterCriteria.DoesPlanetFitCriteria)
-                .Where(x => DoesPlanetHaveAllResources(x, resourceFilter));            
+                .Where(x => DoesPlanetHaveAllResources(x, resourceFilter))
+                .Select(x => new PlanetFinderSearchResult(x, resourceFilter));            
         }
         
-        public static IEnumerable<PlanetData> Find(FilterCriteria filterCriteria, params MaterialData[] resourceFilter)
+        public static IEnumerable<PlanetFinderSearchResult> Find(FilterCriteria filterCriteria, params MaterialData[] resourceFilter)
         {
             return PlanetData.AllItems.Values
                 .Where(filterCriteria.DoesPlanetFitCriteria)
-                .Where(x => DoesPlanetHaveAllResources(x, resourceFilter));
+                .Where(x => DoesPlanetHaveAllResources(x, resourceFilter))
+                .Select(x => new PlanetFinderSearchResult(x, resourceFilter));
         }
 
         private static bool DoesPlanetHaveAllResources(PlanetData planet, IEnumerable<MaterialData> resources)

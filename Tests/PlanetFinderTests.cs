@@ -27,12 +27,12 @@ namespace Tests
         public void FindingPlanet()
         {
             var result = PlanetFinder.Find(FilterCriteria.T1Criteria, MaterialData.AllItems["FEO"])
-                .OrderByDescending(x => x.GetResource("FEO")!.Factor);
+                .OrderByDescending(x => x.Planet.GetResource("FEO")!.Factor);
             
             _testOutputHelper.WriteLine("Displaying all T1 planets with FEO, sorted by concentration:");
-            foreach (var planetData in result)
+            foreach (var searchResult in result)
             {
-                _testOutputHelper.WriteLine($"{planetData.Id} ({planetData.Name}) – {planetData.GetResource("FEO")?.Factor}");
+                _testOutputHelper.WriteLine($"{searchResult.Planet.Id} ({searchResult.Planet.Name}) – {searchResult.Planet.GetResource("FEO")?.Factor}");
             }
         }
 
@@ -46,10 +46,10 @@ namespace Tests
             public readonly List<SystemData> PathToMoria;
             public readonly List<SystemData> PathToBenten;
 
-            public DistanceSearchResult(PlanetData planet, string targetSystem)
+            public DistanceSearchResult(PlanetFinderSearchResult searchResult, string targetSystem)
             {
-                Planet = planet;
-                From = planet.System;
+                Planet = searchResult.Planet;
+                From = Planet.System;
                 To = SystemData.AllItems[targetSystem];
                 Path = SystemPathFinder.FindShortestPath(From, To);
                 PathToMoria = SystemPathFinder.FindShortestPath(From, SystemData.AllItems["OT-580"]);

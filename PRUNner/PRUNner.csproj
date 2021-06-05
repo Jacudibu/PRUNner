@@ -28,5 +28,6 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\FIOImport\FIOImport.csproj" />
+      <ProjectReference Include="..\PRUNner.Backend\PRUNner.Backend.csproj" />
     </ItemGroup>
 </Project>

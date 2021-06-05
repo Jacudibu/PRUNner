@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Reactive;
+using PRUNner.Backend;
 using ReactiveUI;
 
 namespace PRUNner.ViewModels
@@ -16,11 +18,17 @@ namespace PRUNner.ViewModels
 
         public MainWindowViewModel()
         {
+            RxApp.DefaultExceptionHandler = new AnonymousObserver<Exception>(exception => throw exception);
+            ParsedData.LoadAndParseFromCache();
+            
             PlanetFinderViewModel = new PlanetFinderViewModel();
 
             ActiveView = PlanetFinderViewModel;
         }
         
-        public ICommand ViewPlanetFinder => ReactiveCommand.Create(() => ActiveView = PlanetFinderViewModel);
+        public void ViewPlanetFinder()
+        {
+            ActiveView = PlanetFinderViewModel;
+        }
     }
 }

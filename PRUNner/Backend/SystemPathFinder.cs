@@ -25,7 +25,7 @@ namespace PRUNner.Backend
                 paths.Enqueue(new Path(connection, new List<SystemData>()));
             }
             
-            while (!visited.Contains(to) && paths.Count > 0)
+            while (paths.All(x => x.Position != to) && paths.Count > 0)
             {
                 var path = paths.Dequeue();
                 var unvisitedNeighbors = path.Position.Connections

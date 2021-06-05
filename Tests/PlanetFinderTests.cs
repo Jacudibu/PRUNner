@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using FIOImport;
 using FIOImport.Data;
 using PRUNner.Backend;
@@ -36,8 +37,10 @@ namespace Tests
         }
 
         public class DistanceSearchResult
-        { 
-            public readonly PlanetData PlanetData;
+        {
+            public readonly PlanetData Planet;
+            public readonly SystemData From;
+            public readonly SystemData To;
             public readonly List<SystemData> Path;
 
             public readonly List<SystemData> PathToMoria;
@@ -45,11 +48,34 @@ namespace Tests
 
             public DistanceSearchResult(PlanetData planet, string targetSystem)
             {
-                PlanetData = planet;
-                Path = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems[targetSystem]);
-                PathToMoria = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["OT-580"]);
-                PathToBenten = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["UV-351"]);
+                Planet = planet;
+                From = planet.System;
+                To = SystemData.AllItems[targetSystem];
+                Path = SystemPathFinder.FindShortestPath(From, To);
+                PathToMoria = SystemPathFinder.FindShortestPath(From, SystemData.AllItems["OT-580"]);
+                PathToBenten = SystemPathFinder.FindShortestPath(From, SystemData.AllItems["UV-351"]);
             }
+
+            public override string ToString()
+            {
+                var builder = new StringBuilder();
+
+                builder.Append(Planet.Name);
+                foreach (var system in Path)
+                {
+                    builder.Append(" – ");
+                    builder.Append(system.Name);
+                }
+
+                return builder.ToString();
+            }
+        }
+
+        [Fact]
+        public void PathingSingleJump()
+        {
+            var result = SystemPathFinder.FindShortestPath(SystemData.AllItems["SO-953"], SystemData.AllItems["CH-771"]);
+            Assert.Single(result);
         }
         
         [Fact]
@@ -58,7 +84,7 @@ namespace Tests
             // using this more like a command line tool right now... :D
             
             const string origin = "CH-771";
-            const string resource = "H";
+            const string resource = "N";
             var result = PlanetFinder.Find(FilterCriteria.None, resource)
                 .Select(x => new DistanceSearchResult(x, origin))                
                 .OrderBy(x => x.Path.Count);
@@ -67,7 +93,7 @@ namespace Tests
 
             foreach (var searchResult in result)
             {
-                _testOutputHelper.WriteLine($"{searchResult.Path.Count} – {searchResult.PlanetData.Id} ({searchResult.PlanetData.Name}) – {searchResult.PlanetData.GetResource(resource)?.Factor} – Distance Moria: {searchResult.PathToMoria.Count}, Distance Benten: {searchResult.PathToBenten.Count}" );
+                _testOutputHelper.WriteLine($"{searchResult.Path.Count} – {searchResult.Planet.Id} ({searchResult.Planet.Name}) – {searchResult.Planet.GetResource(resource)?.Factor} – Distance Moria: {searchResult.PathToMoria.Count}, Distance Benten: {searchResult.PathToBenten.Count}\n  | Path: {searchResult}" );
             }
         }
     }

@@ -17,7 +17,7 @@ namespace PRUNner.Models.BasePlanner
 
         public PlanetWorkforce WorkforceRequired { get; } = new();
         public PlanetWorkforce WorkforceCapacity { get; } = new();
-        public PlanetWorkforce WorkforceCurrent { get; } = new();
+        public PlanetWorkforce WorkforceRemaining { get; } = new();
         
         public int AreaTotal { get; } = Constants.BaseArea;
         [Reactive] public int AreaDeveloped { get; private set; } = 0;
@@ -67,7 +67,7 @@ namespace PRUNner.Models.BasePlanner
                 WorkforceCapacity.Add(building.Building.AdditionalWorkforceSpace, building.Amount);
             }
 
-            WorkforceCurrent.SetRemainingWorkforce(WorkforceRequired, WorkforceCapacity);
+            WorkforceRemaining.SetRemainingWorkforce(WorkforceRequired, WorkforceCapacity);
         }
 
         private void RecalculateSpace()

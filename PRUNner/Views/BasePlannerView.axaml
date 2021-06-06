@@ -31,8 +31,7 @@
         
         <StackPanel Margin="10,0,0,0">
             <TextBlock Text="Workforce" HorizontalAlignment="Center"/>
-            <Grid ColumnDefinitions="75,75,75, 75" RowDefinitions="*,*,*,*,*,*" Width="300
-            ">
+            <Grid ColumnDefinitions="80,75,75,75" RowDefinitions="*,*,*,*,*,*" Width="305">
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text=""/>
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Required"/>
                 <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Text="Current"/>

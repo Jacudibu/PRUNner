@@ -4,22 +4,20 @@ using System.Linq;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.Enums;
 using PRUNner.Backend.PlanetFinder;
+using PRUNner.Models;
 using ReactiveUI;
 
 namespace PRUNner.ViewModels
 {
     public class PlanetFinderViewModel : ViewModelBase
     {
-        public string Item1 { get; set; } = "";
-        public string Item2 { get; set; } = "";
-        public string Item3 { get; set; } = "";
-        public string Item4 { get; set; } = "";
+        public MaterialTextBox Item1 { get; } = new();
+        public MaterialTextBox Item2 { get; } = new();
+        public MaterialTextBox Item3 { get; } = new();
+        public MaterialTextBox Item4 { get; } = new();
 
-        public bool DisplayItem1 => !string.IsNullOrWhiteSpace(Item1);
-        public bool DisplayItem2 => !string.IsNullOrWhiteSpace(Item2);
-        public bool DisplayItem3 => !string.IsNullOrWhiteSpace(Item3);
-        public bool DisplayItem4 => !string.IsNullOrWhiteSpace(Item4);
-        
+        public LastPlanetFinderSearch LastSearch { get; } = new();
+
         public bool DisplayFertile { get; set; }
         public bool DisplayRocky { get; set; } = true;
         public bool DisplayGaseous { get; set; }
@@ -30,9 +28,9 @@ namespace PRUNner.ViewModels
         public bool DisplayHighPressure { get; set; }
         public bool DisplayHighTemperature { get; set; }
 
-        public OptionalPlanetFinderDataVM OptionalFinderData { get; } = new();
+        public OptionalPlanetFinderDataObject OptionalFinderData { get; } = new();
         public string OptionalDataExtraSystemName { get; private set; } = "";
-        public bool DisplayOptionalDataExtraSystemName { get; private set; } = false;
+        public bool DisplayOptionalDataExtraSystemName { get; private set; }
         
         private bool _showPaginationAndHeaders;
         public bool ShowPaginationAndHeaders
@@ -87,20 +85,11 @@ namespace PRUNner.ViewModels
                 ExcludeHighTemperature = !DisplayHighTemperature
             };
 
-            var tickers = new List<string>() {Item1, Item2, Item3, Item4}
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .Select(MaterialData.Get)
+            var tickers = new List<MaterialData?>() {Item1.Material, Item2.Material, Item3.Material, Item4.Material}
                 .Where(x => x != null)
                 .ToArray();
-            
-            this.RaisePropertyChanged(nameof(DisplayItem1));
-            this.RaisePropertyChanged(nameof(DisplayItem2));
-            this.RaisePropertyChanged(nameof(DisplayItem3));
-            this.RaisePropertyChanged(nameof(DisplayItem4));         
-            this.RaisePropertyChanged(nameof(Item1));
-            this.RaisePropertyChanged(nameof(Item2));
-            this.RaisePropertyChanged(nameof(Item3));
-            this.RaisePropertyChanged(nameof(Item4));
+
+            LastSearch.Update(this);
 
             if (OptionalFinderData.ExtraSystem.System != null)
             {
@@ -115,7 +104,7 @@ namespace PRUNner.ViewModels
             this.RaisePropertyChanged(nameof(OptionalDataExtraSystemName));
             this.RaisePropertyChanged(nameof(DisplayOptionalDataExtraSystemName));
 
-            var optionalData = new Backend.PlanetFinder.OptionalPlanetFinderData
+            var optionalData = new OptionalPlanetFinderData
             {
                 AdditionalSystem = OptionalFinderData.ExtraSystem.System
             };

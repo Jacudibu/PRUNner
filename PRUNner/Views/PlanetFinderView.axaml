@@ -19,10 +19,10 @@
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Resource Filters"/>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding Item1}"/>
-                        <TextBox Text="{Binding Item2}" Margin="5,0,0,0"/>
-                        <TextBox Text="{Binding Item3}" Margin="5,0,0,0"/>
-                        <TextBox Text="{Binding Item4}" Margin="5,0,0,0"/>
+                        <TextBox Text="{Binding Item1.MaterialName}"/>
+                        <TextBox Text="{Binding Item2.MaterialName}" Margin="5,0,0,0"/>
+                        <TextBox Text="{Binding Item3.MaterialName}" Margin="5,0,0,0"/>
+                        <TextBox Text="{Binding Item4.MaterialName}" Margin="5,0,0,0"/>
                     </StackPanel>
                     
                     <Button Content="Search!" Command="{Binding Search}" Margin="10" HorizontalAlignment="Center"/>
@@ -77,10 +77,10 @@
     <StackPanel Orientation="Horizontal"  IsVisible="{Binding ShowPaginationAndHeaders}">
         <Button HorizontalContentAlignment="Center" Content="Planet" Width="100" Command="{Binding SortByName}"/>
         <Button HorizontalContentAlignment="Center" Width="160" Content="Construction Materials" Command="{Binding SortByBuildingMaterials}"/>
-        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding DisplayItem1}" Content="{Binding Item1}" Command="{Binding SortByRes1}"/>
-        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding DisplayItem2}" Content="{Binding Item2}" Command="{Binding SortByRes2}"/>
-        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding DisplayItem3}" Content="{Binding Item3}" Command="{Binding SortByRes3}"/>
-        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding DisplayItem4}" Content="{Binding Item4}" Command="{Binding SortByRes4}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding LastSearch.DisplayItem1}" Content="{Binding LastSearch.Item1Name}" Command="{Binding SortByRes1}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding LastSearch.DisplayItem2}" Content="{Binding LastSearch.Item2Name}" Command="{Binding SortByRes2}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding LastSearch.DisplayItem3}" Content="{Binding LastSearch.Item3Name}" Command="{Binding SortByRes3}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding LastSearch.DisplayItem4}" Content="{Binding LastSearch.Item4Name}" Command="{Binding SortByRes4}"/>
         <Button HorizontalContentAlignment="Center" Width="50" Content="ANT" Command="{Binding SortByAntaresDistance}"/>
         <Button HorizontalContentAlignment="Center" Width="50" Content="BEN" Command="{Binding SortByBentenDistance}"/>
         <Button HorizontalContentAlignment="Center" Width="50" Content="HRT" Command="{Binding SortByHortusDistance}"/>

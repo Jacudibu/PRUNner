@@ -1,13 +1,15 @@
 using Avalonia.Data;
 using PRUNner.Backend.Data;
+using PRUNner.Backend.Data.Enums;
 using ReactiveUI;
 
 namespace PRUNner.Models
 {
     public class BuildingTextBox : ReactiveObject
     {
-        private string _buildingName = "";
+        public BuildingData? Building { get; private set; }
 
+        private string _buildingName = "";
         public string BuildingName
         {
             get => _buildingName;
@@ -22,15 +24,21 @@ namespace PRUNner.Models
                     
                 value = value.ToUpper();
                 Building = BuildingData.Get(value);
-                if (Building == null)
+                if (Building == null || Building.Category < 0)
                 {
+                    Building = null;
                     throw new DataValidationException("Building " + value + " does not exist. :(");
+                }
+
+                if (Building.Category == BuildingCategory.Infrastructure)
+                {
+                    Building = null;
+                    throw new DataValidationException("Please don't add Infrastructure Buildings here.");
                 }
                         
                 this.RaiseAndSetIfChanged(ref _buildingName, value);
             }
         }
 
-        public BuildingData? Building { get; private set; }
     }
 }

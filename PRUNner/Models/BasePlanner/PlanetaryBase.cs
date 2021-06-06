@@ -8,13 +8,14 @@ using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.Models.BasePlanner
 {
+
     public class PlanetaryBase : ReactiveObject
     {
         public PlanetData Planet { get; }
-        public ObservableCollection<PlannedBuilding> Buildings { get; } = new();
-        
-        public Workforce RequiredWorkforce { get; } = new();
-        public Workforce AvailableWorkforce { get; } = new();
+        public ObservableCollection<PlanetBuilding> Buildings { get; } = new();
+
+        public PlanetWorkforce RequiredWorkforce { get; } = new();
+        public PlanetWorkforce AvailableWorkforce { get; } = new();
 
         public int TotalArea { get; } = Constants.BaseArea;
         [Reactive] public int UsedArea { get; private set; } = 0;
@@ -30,7 +31,7 @@ namespace PRUNner.Models.BasePlanner
             var addedBuilding = Buildings.SingleOrDefault(x => x.Building == building);
             if (addedBuilding == null)
             {
-                addedBuilding = new PlannedBuilding(building);
+                addedBuilding = new PlanetBuilding(building);
                 addedBuilding.WhenAnyValue(x => x.Amount).Subscribe(_ => OnBuildingChange());
                 Buildings.Add(addedBuilding);
             }
@@ -49,7 +50,7 @@ namespace PRUNner.Models.BasePlanner
             RequiredWorkforce.Reset();
             foreach (var building in Buildings)
             {
-                RequiredWorkforce.Add(building);
+                RequiredWorkforce.Add(building.Building.Workforce, building.Amount);
             }
         }
 

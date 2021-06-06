@@ -1,9 +1,10 @@
+using PRUNner.Backend.Data.Components;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.Models.BasePlanner
 {
-    public class Workforce : ReactiveObject
+    public class PlanetWorkforce : ReactiveObject
     {
         [Reactive] public int Pioneers { get; private set; }
         [Reactive] public int Settlers { get; private set; }
@@ -20,13 +21,13 @@ namespace PRUNner.Models.BasePlanner
             Scientists = 0;
         }
 
-        public void Add(PlannedBuilding building)
+        public void Add(BuildingWorkforce workforce, int factor)
         {
-            Pioneers += building.Building.Pioneers * building.Amount;
-            Settlers += building.Building.Settlers * building.Amount;
-            Technicians += building.Building.Technicians * building.Amount;
-            Engineers += building.Building.Engineers * building.Amount;
-            Scientists += building.Building.Scientists * building.Amount;
+            Pioneers += workforce.Pioneers * factor;
+            Settlers += workforce.Settlers * factor;
+            Technicians += workforce.Technicians * factor;
+            Engineers += workforce.Engineers * factor;
+            Scientists += workforce.Scientists * factor;
         }
     }
 }

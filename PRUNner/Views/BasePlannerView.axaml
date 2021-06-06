@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PRUNner.ViewModels"
-             xmlns:planetFinder="clr-namespace:PRUNner.Backend.PlanetFinder;assembly=PRUNner.Backend"
              xmlns:basePlanner="clr-namespace:PRUNner.Models.BasePlanner"
              mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="450"
              x:Class="PRUNner.Views.BasePlannerView">
@@ -31,7 +30,7 @@
         
         <StackPanel Margin="10,0,0,0">
             <TextBlock Text="Workforce" HorizontalAlignment="Center"/>
-            <Grid ColumnDefinitions="100,75,75" RowDefinitions="*,*,*,*,*,*" ShowGridLines="True" Width="250">
+            <Grid ColumnDefinitions="100,75,75" RowDefinitions="*,*,*,*,*,*" Width="250">
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text=""/>
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Required"/>
                 <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Text="Available"/>
@@ -60,7 +59,7 @@
     
     <ItemsControl Items="{Binding ActiveBase.Buildings}">
     <ItemsControl.ItemTemplate>
-    <DataTemplate DataType="basePlanner:PlannedBuilding">
+    <DataTemplate DataType="basePlanner:PlanetBuilding">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="{Binding Building.Ticker}" Width="50" VerticalAlignment="Center"/>
             <Button Content="-" Command="{Binding Reduce}"/>

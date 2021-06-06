@@ -4,13 +4,13 @@ using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.Models.BasePlanner
 {
-    public class PlannedBuilding : ReactiveObject
+    public class PlanetBuilding : ReactiveObject
     {
         public BuildingData Building { get; }
         
         [Reactive] public int Amount { get; set; }
 
-        public PlannedBuilding(BuildingData building)
+        public PlanetBuilding(BuildingData building)
         {
             Building = building;
         }

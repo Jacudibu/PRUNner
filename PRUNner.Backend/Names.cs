@@ -37,6 +37,7 @@ namespace PRUNner.Backend
             public const string HB2 = nameof(HB2);
             public const string HB3 = nameof(HB3);
             public const string HB4 = nameof(HB4);
+            public const string HB5 = nameof(HB5);
             public const string HBB = nameof(HBB);
             public const string HBC = nameof(HBC);
             public const string HBM = nameof(HBM);

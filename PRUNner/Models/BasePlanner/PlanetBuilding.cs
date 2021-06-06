@@ -10,11 +10,21 @@ namespace PRUNner.Models.BasePlanner
         
         [Reactive] public int Amount { get; set; }
 
+        public PlanetBuilding() // This feels like a hack, but otherwise we can't set the Design.DataContext in BuildingRow...
+        {
+            Building = null!;
+        }
+        
         public PlanetBuilding(BuildingData building)
         {
             Building = building;
         }
 
+        public int CalculateNeededArea()
+        {
+            return Building.AreaCost * Amount;
+        }
+        
         public void Add()
         {
             Amount++;
@@ -22,6 +32,11 @@ namespace PRUNner.Models.BasePlanner
 
         public void Reduce()
         {
+            if (Amount == 0)
+            {
+                return;
+            }
+            
             Amount--;
         }
     }

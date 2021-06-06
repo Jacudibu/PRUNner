@@ -29,5 +29,14 @@ namespace PRUNner.Models.BasePlanner
             Engineers += workforce.Engineers * factor;
             Scientists += workforce.Scientists * factor;
         }
+
+        public void SetRemainingWorkforce(PlanetWorkforce required, PlanetWorkforce available)
+        {
+            Pioneers = available.Pioneers - required.Pioneers;
+            Settlers = available.Settlers - required.Settlers;
+            Technicians = available.Technicians - required.Technicians;
+            Engineers = available.Engineers - required.Engineers;
+            Scientists = available.Scientists - required.Scientists;
+        }
     }
 }

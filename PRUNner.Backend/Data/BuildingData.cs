@@ -78,7 +78,7 @@ namespace PRUNner.Backend.Data
             if (poco.Engineers > 0) return BuildingCategory.Engineers;
             if (poco.Technicians > 0) return BuildingCategory.Technicians;
             if (poco.Settlers > 0) return BuildingCategory.Settlers;
-            if (poco.Scientists > 0) return BuildingCategory.Pioneers;
+            if (poco.Pioneers > 0) return BuildingCategory.Pioneers;
 
             return BuildingCategory.Infrastructure;
         }

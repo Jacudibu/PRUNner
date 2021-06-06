@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using FIOImport;
 using Newtonsoft.Json;
 using PRUNner.Backend;
@@ -56,10 +57,14 @@ namespace Tests.FIOImport
             Debugger.Break();
         }
         
-        [Fact(Skip = Skip)]
+        [Fact(Skip = null)]
         public void RawData()
         {
             var result = FioImporter.LoadAllFromCache();
+            foreach (var item in result.AllBuildings.Where(x => x.Expertise != null).Select(x => x.Expertise).Distinct().OrderBy(x => x))
+            {
+                _testOutputHelper.WriteLine(item);
+            }
             Debugger.Break();
         }
 

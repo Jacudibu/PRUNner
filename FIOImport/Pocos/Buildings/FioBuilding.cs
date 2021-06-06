@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+
 // ReSharper disable All
 
 namespace FIOImport.POCOs.Buildings
@@ -10,7 +11,7 @@ namespace FIOImport.POCOs.Buildings
         public List<FioRecipe> Recipes { get; set; }
         public string Name { get; set; }
         public string Ticker { get; set; }
-        public string Expertise { get; set; }
+        public string? Expertise { get; set; }
         public int Pioneers { get; set; }
         public int Settlers { get; set; }
         public int Technicians { get; set; }

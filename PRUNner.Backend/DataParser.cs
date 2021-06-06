@@ -22,10 +22,16 @@ namespace PRUNner.Backend
             {
                 SystemData.CreateFrom(system);
             }
+
+            foreach (var building in rawData.AllBuildings)
+            {
+                BuildingData.CreateFrom(building);
+            }
             
             MaterialData.PostProcessData(rawData.AllMaterials);
             PlanetData.PostProcessData(rawData.AllPlanets);
             SystemData.PostProcessData(rawData.AllSystems);
+            BuildingData.PostProcessData(rawData.AllBuildings);
         }
     }
 }

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PRUNner.ViewModels"
              xmlns:planetFinder="clr-namespace:PRUNner.Backend.PlanetFinder;assembly=PRUNner.Backend"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="450"
              x:Class="PRUNner.Views.PlanetFinderView">
     
     <Design.DataContext>
@@ -44,12 +44,17 @@
                     <CheckBox IsChecked="{Binding DisplayHighPressure}">High Pressure (HSE)</CheckBox>
                     <CheckBox IsChecked="{Binding DisplayHighTemperature}">High Temperature (TSH)</CheckBox>
                 </StackPanel>
-                
             </StackPanel>
-
-
-            
         </StackPanel>
+        
+        <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+            <TextBlock Text="Display Additional Data"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Distance to System: "/>
+                <TextBox Text="{Binding OptionalData.ExtraSystem.SystemName}"/>
+            </StackPanel>
+        </StackPanel>
+        
     </StackPanel>
     
     <StackPanel Orientation="Horizontal" Margin="0,10,0,10" IsVisible="{Binding ShowPaginationAndHeaders}">
@@ -74,7 +79,7 @@
         <TextBlock TextAlignment="Center" Width="50" Text="BEN"/>
         <TextBlock TextAlignment="Center" Width="50" Text="HRT"/>
         <TextBlock TextAlignment="Center" Width="50" Text="MOR"/>
-        <TextBlock TextAlignment="Center" Width="50" Text="Pyrgos"/>
+        <TextBlock TextAlignment="Center" Width="50" Text="{Binding OptionalDataExtraSystemName}" IsVisible="{Binding DisplayOptionalDataExtraSystemName}"/>
     </StackPanel>
     
     <ItemsControl Items="{Binding SearchResults}" IsVisible="{Binding ShowPaginationAndHeaders}">
@@ -91,7 +96,7 @@
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToBenten}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToHortus}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToMoria}"/>
-            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding DistancePyrgos}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding DistanceToExtraSystem}" IsVisible="{Binding DisplayDistanceToExtraSystem}"/>
             <Button Content="Plan a new Base" Command="{Binding OpenBasePlanner}"/>
         </StackPanel>
     </DataTemplate>

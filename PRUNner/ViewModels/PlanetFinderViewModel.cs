@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Avalonia.Data;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.PlanetFinder;
 using ReactiveUI;
@@ -28,6 +29,10 @@ namespace PRUNner.ViewModels
         public bool DisplayHighPressure { get; set; }
         public bool DisplayHighTemperature { get; set; }
 
+        public OptionalPlanetDataViewModel OptionalData { get; } = new();
+        public string OptionalDataExtraSystemName { get; private set; } = "";
+        public bool DisplayOptionalDataExtraSystemName { get; private set; } = false;
+        
         private bool _showPaginationAndHeaders;
         public bool ShowPaginationAndHeaders
         {
@@ -96,7 +101,25 @@ namespace PRUNner.ViewModels
             this.RaisePropertyChanged(nameof(Item3));
             this.RaisePropertyChanged(nameof(Item4));
 
-            _allResults = PlanetFinder.Find(filterCriteria, tickers!).OrderBy(x => x.DistancePyrgos).ToList();
+            if (OptionalData.ExtraSystem.System != null)
+            {
+                OptionalDataExtraSystemName = OptionalData.ExtraSystem.SystemName;
+                DisplayOptionalDataExtraSystemName = true;
+            }
+            else
+            {
+                OptionalDataExtraSystemName = "";
+                DisplayOptionalDataExtraSystemName = false;
+            }
+            this.RaisePropertyChanged(nameof(OptionalDataExtraSystemName));
+            this.RaisePropertyChanged(nameof(DisplayOptionalDataExtraSystemName));
+
+            var optionalData = new OptionalPlanetFinderData
+            {
+                AdditionalSystem = OptionalData.ExtraSystem.System
+            };
+
+            _allResults = PlanetFinder.Find(filterCriteria, tickers!, optionalData).ToList();
             CurrentPage = 1;
             TotalPages = _allResults.Count / ItemsPerPage + 1;
             ShowPaginationAndHeaders = _allResults.Count > 0;
@@ -124,6 +147,40 @@ namespace PRUNner.ViewModels
             }
             
             SearchResults = _allResults.Skip(ItemsPerPage * CurrentPage - ItemsPerPage).Take(ItemsPerPage);
+        }
+    }
+
+    public class OptionalPlanetDataViewModel : ViewModelBase
+    {
+        public OptionalPlanetDistance ExtraSystem { get; } = new();
+
+
+        public class OptionalPlanetDistance : ViewModelBase
+        {
+            private string _systemName = "";
+
+            public string SystemName
+            {
+                get => _systemName;
+                set
+                {
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        this.RaiseAndSetIfChanged(ref _systemName, "");
+                        return;
+                    }
+                    
+                    System = SystemData.Get(value);
+                    if (System == null)
+                    {
+                        throw new DataValidationException("System does not exist");
+                    }
+                        
+                    this.RaiseAndSetIfChanged(ref _systemName, value);
+                }
+            }
+
+            public SystemData? System { get; private set; }
         }
     }
 }

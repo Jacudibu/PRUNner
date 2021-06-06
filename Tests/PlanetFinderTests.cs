@@ -26,7 +26,7 @@ namespace Tests
         [Fact]
         public void FindingPlanet()
         {
-            var result = PlanetFinder.Find(FilterCriteria.T1Criteria, MaterialData.GetOrThrow(Names.Materials.FEO))
+            var result = PlanetFinder.Find(FilterCriteria.T1Criteria, new []{MaterialData.GetOrThrow(Names.Materials.FEO)}, new OptionalPlanetFinderData())
                 .OrderByDescending(x => x.Planet.GetResource(Names.Materials.FEO)!.Factor);
             
             _testOutputHelper.WriteLine("Displaying all T1 planets with FEO, sorted by concentration:");
@@ -85,7 +85,7 @@ namespace Tests
             
             const string origin = "CH-771";
             const string resource = "N";
-            var result = PlanetFinder.Find(FilterCriteria.None, resource)
+            var result = PlanetFinder.Find(FilterCriteria.None, new[] {resource}, new OptionalPlanetFinderData())
                 .Select(x => new DistanceSearchResult(x, origin))                
                 .OrderBy(x => x.Path.Count);
             

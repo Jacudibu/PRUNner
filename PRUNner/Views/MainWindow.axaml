@@ -13,9 +13,10 @@
     </Design.DataContext>
 
     <DockPanel>
-        <Panel DockPanel.Dock="Top" Height="30">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="30" HorizontalAlignment="Center">
+            <Button Content="Base Planner" Command="{Binding ViewBasePlanner}" HorizontalAlignment="Center"/>
             <Button Content="Planet Finder" Command="{Binding ViewPlanetFinder}" HorizontalAlignment="Center"/>
-        </Panel>
+        </StackPanel>
         
         <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}"/>
         

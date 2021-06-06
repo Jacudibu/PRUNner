@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PRUNner.ViewModels"
+             xmlns:planetFinder="clr-namespace:PRUNner.Backend.PlanetFinder;assembly=PRUNner.Backend"
+             xmlns:basePlanner="clr-namespace:PRUNner.Models.BasePlanner"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="450"
+             x:Class="PRUNner.Views.BasePlannerView">
+    
+    <Design.DataContext>
+        <viewModels:BasePlannerViewModel/>
+    </Design.DataContext>
+    
+<StackPanel>
+    <TextBlock Text="{Binding ActiveBase.Planet.Name}"/>
+    
+    <StackPanel Orientation="Horizontal">
+        <StackPanel>
+            <TextBlock Text="Area" HorizontalAlignment="Center"/>
+            <Grid ColumnDefinitions="100,75,75" RowDefinitions="*,*,*,*,*,*" Width="250">
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Total"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Text="Used"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Text="Available"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding ActiveBase.TotalArea}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding ActiveBase.UsedArea}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding ActiveBase.RemainingArea}"/>
+            </Grid>
+        </StackPanel>
+        
+        <StackPanel Margin="10,0,0,0">
+            <TextBlock Text="Workforce" HorizontalAlignment="Center"/>
+            <Grid ColumnDefinitions="100,75,75" RowDefinitions="*,*,*,*,*,*" ShowGridLines="True" Width="250">
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text=""/>
+                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Required"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Text="Available"/>
+                
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Pioneers"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ActiveBase.RequiredWorkforce.Pioneers}"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActiveBase.AvailableWorkforce.Pioneers}"/>       
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Settlers"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ActiveBase.RequiredWorkforce.Settlers}"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding ActiveBase.AvailableWorkforce.Settlers}"/>       
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Technicians"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ActiveBase.RequiredWorkforce.Technicians}"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ActiveBase.AvailableWorkforce.Technicians}"/>       
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Engineers"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ActiveBase.RequiredWorkforce.Engineers}"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding ActiveBase.AvailableWorkforce.Engineers}"/>       
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Scientists"/>
+                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding ActiveBase.RequiredWorkforce.Scientists}"/>
+                <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding ActiveBase.AvailableWorkforce.Scientists}"/>
+            </Grid>
+        </StackPanel>
+    </StackPanel>
+    
+    <TextBox Text="{Binding AddBuildingTextBox.BuildingName}"/>
+    <Button Content="AddBuilding" Command="{Binding AddBuilding}"/>
+    
+    <ItemsControl Items="{Binding ActiveBase.Buildings}">
+    <ItemsControl.ItemTemplate>
+    <DataTemplate DataType="basePlanner:PlannedBuilding">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Building.Ticker}" Width="50" VerticalAlignment="Center"/>
+            <Button Content="-" Command="{Binding Reduce}"/>
+            <TextBlock Text="{Binding Amount}" VerticalAlignment="Center" Margin="5,0,5,0"/>
+            <Button Content="+" Command="{Binding Add}"/>
+        </StackPanel>
+    </DataTemplate>
+    </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    
+    
+</StackPanel>
+    
+</UserControl>

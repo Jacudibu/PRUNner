@@ -1,34 +1,43 @@
-﻿using System;
-using System.Reactive;
-using PRUNner.Backend;
-using ReactiveUI;
+﻿using PRUNner.Backend;
+using PRUNner.Backend.Data;
+using PRUNner.Backend.PlanetFinder;
+using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private ViewModelBase _activeView;
-        public ViewModelBase ActiveView
-        {
-            get => _activeView;
-            set => this.RaiseAndSetIfChanged(ref _activeView, value);
-        }
+        [Reactive] public ViewModelBase ActiveView { get; private set; }
 
         private readonly PlanetFinderViewModel _planetFinderViewModel;
+        private readonly BasePlannerViewModel _basePlannerViewModel;
 
         public MainWindowViewModel()
         {
-            RxApp.DefaultExceptionHandler = new AnonymousObserver<Exception>(exception => throw exception);
             DataParser.LoadAndParseFromCache();
             
             _planetFinderViewModel = new PlanetFinderViewModel();
+            _basePlannerViewModel = new BasePlannerViewModel();
 
             ActiveView = _planetFinderViewModel;
+
+            PlanetFinderSearchResult.OnOpenBasePlanner += PlanetFinderSelectPlanetEvent;
         }
-        
+
         public void ViewPlanetFinder()
         {
             ActiveView = _planetFinderViewModel;
+        }
+
+        private void PlanetFinderSelectPlanetEvent(object? sender, PlanetData e)
+        {
+            _basePlannerViewModel.StartNewBase(e);
+            ViewBasePlanner();
+        }
+
+        public void ViewBasePlanner()
+        {
+            ActiveView = _basePlannerViewModel;
         }
     }
 }

@@ -20,11 +20,16 @@
         <Compile Update="Views\MainWindow.axaml.cs">
           <DependentUpon>MainWindow.axaml</DependentUpon>
         </Compile>
+        <Compile Update="Views\BasePlannerView.axaml.cs">
+          <DependentUpon>BasePlannerView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.6" />
         <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.6" />
+        <PackageReference Include="ReactiveUI.Fody" Version="13.3.2" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\FIOImport\FIOImport.csproj" />

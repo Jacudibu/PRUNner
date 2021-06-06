@@ -29,5 +29,19 @@ namespace PRUNner.Backend
             public const string FEO = nameof(FEO);
             public const string LST = nameof(LST);
         }
+
+        public static class Buildings
+        {
+            public const string CM = nameof(CM);
+            public const string HB1 = nameof(HB1);
+            public const string HB2 = nameof(HB2);
+            public const string HB3 = nameof(HB3);
+            public const string HB4 = nameof(HB4);
+            public const string HBB = nameof(HBB);
+            public const string HBC = nameof(HBC);
+            public const string HBM = nameof(HBM);
+            public const string HBL = nameof(HBL);
+            public const string STO = nameof(STO);
+        }
     }
 }

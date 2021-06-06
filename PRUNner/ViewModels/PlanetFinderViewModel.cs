@@ -6,6 +6,7 @@ using PRUNner.Backend.Enums;
 using PRUNner.Backend.PlanetFinder;
 using PRUNner.Models;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.ViewModels
 {
@@ -32,41 +33,13 @@ namespace PRUNner.ViewModels
         public string OptionalDataExtraSystemName { get; private set; } = "";
         public bool DisplayOptionalDataExtraSystemName { get; private set; }
         
-        private bool _showPaginationAndHeaders;
-        public bool ShowPaginationAndHeaders
-        {
-            get => _showPaginationAndHeaders;
-            set => this.RaiseAndSetIfChanged(ref _showPaginationAndHeaders, value);
-        }
-
-        private bool _noResultsFound;
-        public bool NoResultsFound
-        {
-            get => _noResultsFound;
-            set =>  this.RaiseAndSetIfChanged(ref _noResultsFound, value);
-        }
-
-        private int _currentPage;
-        public int CurrentPage
-        {
-            get => _currentPage;
-            set => this.RaiseAndSetIfChanged(ref _currentPage, value);
-        }
-
-        private int _totalPages;
-        public int TotalPages
-        {
-            get => _totalPages;
-            set => this.RaiseAndSetIfChanged(ref _totalPages, value);
-        }
+        [Reactive] public bool ShowPaginationAndHeaders { get; set; }
+        [Reactive] public bool NoResultsFound { get; set; }
+        [Reactive] public int CurrentPage { get; set; }
+        [Reactive] public int TotalPages { get; set; }
         
         private List<PlanetFinderSearchResult> _allResults = new();
-        private IEnumerable<PlanetFinderSearchResult> _currentlyShownSearchResults = new List<PlanetFinderSearchResult>();
-        public IEnumerable<PlanetFinderSearchResult> CurrentlyShownSearchResults
-        {
-            get => _currentlyShownSearchResults;
-            private set => this.RaiseAndSetIfChanged(ref _currentlyShownSearchResults, value);
-        }
+        [Reactive] public IEnumerable<PlanetFinderSearchResult> CurrentlyShownSearchResults { get; private set; } = new List<PlanetFinderSearchResult>();
 
         public int ItemsPerPage { get; set; } = 15;
 

@@ -57,7 +57,7 @@
                 <TextBlock Text="Additional Table Data"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="Distance to System: "/>
-                    <TextBox Text="{Binding OptionalData.ExtraSystem.SystemName}"/>
+                    <TextBox Text="{Binding OptionalFinderData.ExtraSystem.SystemName}"/>
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -75,20 +75,20 @@
     </StackPanel>
     
     <StackPanel Orientation="Horizontal"  IsVisible="{Binding ShowPaginationAndHeaders}">
-        <TextBlock TextAlignment="Center" Width="100" Text="Planet"/>
-        <TextBlock TextAlignment="Center" Width="160" Text="Construction Materials"/>
-        <TextBlock TextAlignment="Center" Width="50" IsVisible="{Binding DisplayItem1}" Text="{Binding Item1}"/>
-        <TextBlock TextAlignment="Center" Width="50" IsVisible="{Binding DisplayItem2}" Text="{Binding Item2}"/>
-        <TextBlock TextAlignment="Center" Width="50" IsVisible="{Binding DisplayItem3}" Text="{Binding Item3}"/>
-        <TextBlock TextAlignment="Center" Width="50" IsVisible="{Binding DisplayItem4}" Text="{Binding Item4}"/>
-        <TextBlock TextAlignment="Center" Width="50" Text="ANT"/>
-        <TextBlock TextAlignment="Center" Width="50" Text="BEN"/>
-        <TextBlock TextAlignment="Center" Width="50" Text="HRT"/>
-        <TextBlock TextAlignment="Center" Width="50" Text="MOR"/>
-        <TextBlock TextAlignment="Center" Width="50" Text="{Binding OptionalDataExtraSystemName}" IsVisible="{Binding DisplayOptionalDataExtraSystemName}"/>
+        <Button HorizontalContentAlignment="Center" Content="Planet" Width="100" Command="{Binding SortByName}"/>
+        <Button HorizontalContentAlignment="Center" Width="160" Content="Construction Materials" Command="{Binding SortByBuildingMaterials}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding DisplayItem1}" Content="{Binding Item1}" Command="{Binding SortByRes1}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding DisplayItem2}" Content="{Binding Item2}" Command="{Binding SortByRes2}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding DisplayItem3}" Content="{Binding Item3}" Command="{Binding SortByRes3}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" IsVisible="{Binding DisplayItem4}" Content="{Binding Item4}" Command="{Binding SortByRes4}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" Content="ANT" Command="{Binding SortByAntaresDistance}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" Content="BEN" Command="{Binding SortByBentenDistance}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" Content="HRT" Command="{Binding SortByHortusDistance}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" Content="MOR" Command="{Binding SortByMoriaDistance}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" Content="{Binding OptionalDataExtraSystemName}" IsVisible="{Binding DisplayOptionalDataExtraSystemName}" Command="{Binding SortByExtraSystemDistance}"/>
     </StackPanel>
     
-    <ItemsControl Items="{Binding SearchResults}" IsVisible="{Binding ShowPaginationAndHeaders}">
+    <ItemsControl Items="{Binding CurrentlyShownSearchResults}" IsVisible="{Binding ShowPaginationAndHeaders}">
     <ItemsControl.ItemTemplate>
     <DataTemplate DataType="planetFinder:PlanetFinderSearchResult">
         <StackPanel Orientation="Horizontal">

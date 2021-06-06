@@ -12,14 +12,18 @@ namespace PRUNner.Backend.PlanetFinder
         public string Resource3 { get; }
         public string Resource4 { get; }
 
+        public readonly double Resource1Yield; // needed for sorting
+        public readonly double Resource2Yield;
+        public readonly double Resource3Yield;
+        public readonly double Resource4Yield;
+
         public int DistanceToExtraSystem { get; }
         public bool DisplayDistanceToExtraSystem { get; }
 
-        public bool DisplayResource1 => !string.IsNullOrEmpty(Resource1);
-        public bool DisplayResource2 => !string.IsNullOrEmpty(Resource2);
-        public bool DisplayResource3 => !string.IsNullOrEmpty(Resource3);
-        public bool DisplayResource4 => !string.IsNullOrEmpty(Resource4);
-        
+        public bool DisplayResource1 => Resource1Yield > 0;
+        public bool DisplayResource2 => Resource2Yield > 0;
+        public bool DisplayResource3 => Resource3Yield > 0;
+        public bool DisplayResource4 => Resource4Yield > 0;
         
         public PlanetFinderSearchResult(PlanetData planet, MaterialData[] resources, OptionalPlanetFinderData optionalData) : this(planet, resources.Select(x => x.Ticker).ToArray(), optionalData)
         { }
@@ -28,10 +32,14 @@ namespace PRUNner.Backend.PlanetFinder
         {
             Planet = planet;
 
-            Resource1 = ParseResource(1, resources);
-            Resource2 = ParseResource(2, resources);
-            Resource3 = ParseResource(3, resources);
-            Resource4 = ParseResource(4, resources);
+            Resource1Yield = GetResourceYield(1, resources);
+            Resource2Yield = GetResourceYield(2, resources);
+            Resource3Yield = GetResourceYield(3, resources);
+            Resource4Yield = GetResourceYield(4, resources);
+            Resource1 = Resource1Yield.ToString("F2");
+            Resource2 = Resource2Yield.ToString("F2");
+            Resource3 = Resource3Yield.ToString("F2");
+            Resource4 = Resource4Yield.ToString("F2");
             
             if (optionalData.AdditionalSystem != null)
             {
@@ -45,11 +53,11 @@ namespace PRUNner.Backend.PlanetFinder
             }
         }
 
-        private string ParseResource(int resourceId, string[] resources)
+        private double GetResourceYield(int resourceId, string[] resources)
         {
             return resources.Length > resourceId - 1 
-                ? Planet.GetResource(resources[resourceId - 1])!.CalculateDailyProduction(1).ToString("F2") 
-                : "";
+                ? Planet.GetResource(resources[resourceId - 1])!.CalculateDailyProduction(1) 
+                : -1;
         }
 
         public void OpenBasePlanner()

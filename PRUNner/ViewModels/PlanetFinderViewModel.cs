@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Data;
 using PRUNner.Backend.Data;
+using PRUNner.Backend.Enums;
 using PRUNner.Backend.PlanetFinder;
 using ReactiveUI;
 
@@ -29,7 +30,7 @@ namespace PRUNner.ViewModels
         public bool DisplayHighPressure { get; set; }
         public bool DisplayHighTemperature { get; set; }
 
-        public OptionalPlanetDataViewModel OptionalData { get; } = new();
+        public OptionalPlanetFinderDataVM OptionalFinderData { get; } = new();
         public string OptionalDataExtraSystemName { get; private set; } = "";
         public bool DisplayOptionalDataExtraSystemName { get; private set; } = false;
         
@@ -62,11 +63,11 @@ namespace PRUNner.ViewModels
         }
         
         private List<PlanetFinderSearchResult> _allResults = new();
-        private IEnumerable<PlanetFinderSearchResult> _searchResults = new List<PlanetFinderSearchResult>();
-        public IEnumerable<PlanetFinderSearchResult> SearchResults
+        private IEnumerable<PlanetFinderSearchResult> _currentlyShownSearchResults = new List<PlanetFinderSearchResult>();
+        public IEnumerable<PlanetFinderSearchResult> CurrentlyShownSearchResults
         {
-            get => _searchResults;
-            private set => this.RaiseAndSetIfChanged(ref _searchResults, value);
+            get => _currentlyShownSearchResults;
+            private set => this.RaiseAndSetIfChanged(ref _currentlyShownSearchResults, value);
         }
 
         public int ItemsPerPage { get; set; } = 15;
@@ -101,9 +102,9 @@ namespace PRUNner.ViewModels
             this.RaisePropertyChanged(nameof(Item3));
             this.RaisePropertyChanged(nameof(Item4));
 
-            if (OptionalData.ExtraSystem.System != null)
+            if (OptionalFinderData.ExtraSystem.System != null)
             {
-                OptionalDataExtraSystemName = OptionalData.ExtraSystem.SystemName;
+                OptionalDataExtraSystemName = OptionalFinderData.ExtraSystem.SystemName;
                 DisplayOptionalDataExtraSystemName = true;
             }
             else
@@ -114,17 +115,22 @@ namespace PRUNner.ViewModels
             this.RaisePropertyChanged(nameof(OptionalDataExtraSystemName));
             this.RaisePropertyChanged(nameof(DisplayOptionalDataExtraSystemName));
 
-            var optionalData = new OptionalPlanetFinderData
+            var optionalData = new Backend.PlanetFinder.OptionalPlanetFinderData
             {
-                AdditionalSystem = OptionalData.ExtraSystem.System
+                AdditionalSystem = OptionalFinderData.ExtraSystem.System
             };
 
             _allResults = PlanetFinder.Find(filterCriteria, tickers!, optionalData).ToList();
-            CurrentPage = 1;
             TotalPages = _allResults.Count / ItemsPerPage + 1;
             ShowPaginationAndHeaders = _allResults.Count > 0;
             NoResultsFound = _allResults.Count == 0;
-            SearchResults = _allResults.Take(ItemsPerPage);
+            ResetView();
+        }
+
+        private void ResetView()
+        {
+            CurrentPage = 1;
+            CurrentlyShownSearchResults = _allResults.Take(ItemsPerPage);
         }
         
         public void NextPage()
@@ -135,7 +141,7 @@ namespace PRUNner.ViewModels
                 CurrentPage = 1;
             }
             
-            SearchResults = _allResults.Skip(ItemsPerPage * CurrentPage - ItemsPerPage).Take(ItemsPerPage);
+            CurrentlyShownSearchResults = _allResults.Skip(ItemsPerPage * CurrentPage - ItemsPerPage).Take(ItemsPerPage);
         }
         
         public void PreviousPage()
@@ -146,41 +152,40 @@ namespace PRUNner.ViewModels
                 CurrentPage = TotalPages;
             }
             
-            SearchResults = _allResults.Skip(ItemsPerPage * CurrentPage - ItemsPerPage).Take(ItemsPerPage);
+            CurrentlyShownSearchResults = _allResults.Skip(ItemsPerPage * CurrentPage - ItemsPerPage).Take(ItemsPerPage);
         }
-    }
 
-    public class OptionalPlanetDataViewModel : ViewModelBase
-    {
-        public OptionalPlanetDistance ExtraSystem { get; } = new();
-
-
-        public class OptionalPlanetDistance : ViewModelBase
+        private string _currentSortMode = "none";
+        private void Sort(string sortModeName, SortOrder defaultSortOrder, Func<PlanetFinderSearchResult, object> comparer)
         {
-            private string _systemName = "";
-
-            public string SystemName
+            if (_currentSortMode.Equals(sortModeName))
             {
-                get => _systemName;
-                set
-                {
-                    if (string.IsNullOrWhiteSpace(value))
-                    {
-                        this.RaiseAndSetIfChanged(ref _systemName, "");
-                        return;
-                    }
-                    
-                    System = SystemData.Get(value);
-                    if (System == null)
-                    {
-                        throw new DataValidationException("System does not exist");
-                    }
-                        
-                    this.RaiseAndSetIfChanged(ref _systemName, value);
-                }
+                _allResults = defaultSortOrder == SortOrder.Ascending 
+                    ? _allResults.OrderByDescending(comparer).ToList()
+                    : _allResults.OrderBy(comparer).ToList();
+                _currentSortMode = sortModeName + "Inverse";
             }
-
-            public SystemData? System { get; private set; }
+            else
+            {
+                _allResults = defaultSortOrder == SortOrder.Ascending 
+                    ? _allResults.OrderBy(comparer).ToList()
+                    : _allResults.OrderByDescending(comparer).ToList();
+                _currentSortMode = sortModeName;
+            }
+            
+            ResetView();
         }
+        
+        public void SortByName() => Sort(nameof(SortByName), SortOrder.Ascending, x => x.Planet.Name);
+        public void SortByBuildingMaterials() => Sort(nameof(SortByBuildingMaterials), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.BuildingMaterialString);
+        public void SortByRes1() => Sort(nameof(SortByRes1),  SortOrder.Descending, x => x.Resource1Yield);
+        public void SortByRes2() => Sort(nameof(SortByRes2),  SortOrder.Descending, x => x.Resource2Yield);
+        public void SortByRes3() => Sort(nameof(SortByRes3),  SortOrder.Descending, x => x.Resource3Yield);
+        public void SortByRes4() => Sort(nameof(SortByRes4),  SortOrder.Descending, x => x.Resource4Yield);
+        public void SortByAntaresDistance() => Sort(nameof(SortByAntaresDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToAntares);
+        public void SortByBentenDistance() => Sort(nameof(SortByBentenDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToBenten);
+        public void SortByHortusDistance() => Sort(nameof(SortByHortusDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToHortus);
+        public void SortByMoriaDistance() => Sort(nameof(SortByMoriaDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToMoria);
+        public void SortByExtraSystemDistance() => Sort(nameof(SortByExtraSystemDistance), SortOrder.Ascending, x => x.DistanceToExtraSystem);
     }
 }

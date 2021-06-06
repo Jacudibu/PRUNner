@@ -14,21 +14,21 @@ namespace PRUNner.ViewModels
             set => this.RaiseAndSetIfChanged(ref _activeView, value);
         }
 
-        private PlanetFinderViewModel PlanetFinderViewModel;
+        private readonly PlanetFinderViewModel _planetFinderViewModel;
 
         public MainWindowViewModel()
         {
             RxApp.DefaultExceptionHandler = new AnonymousObserver<Exception>(exception => throw exception);
             DataParser.LoadAndParseFromCache();
             
-            PlanetFinderViewModel = new PlanetFinderViewModel();
+            _planetFinderViewModel = new PlanetFinderViewModel();
 
-            ActiveView = PlanetFinderViewModel;
+            ActiveView = _planetFinderViewModel;
         }
         
         public void ViewPlanetFinder()
         {
-            ActiveView = PlanetFinderViewModel;
+            ActiveView = _planetFinderViewModel;
         }
     }
 }

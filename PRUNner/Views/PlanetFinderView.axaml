@@ -52,6 +52,17 @@
         </StackPanel>
     </StackPanel>
     
+    <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+        <Button Content="«" Command="{Binding PreviousPage}" Margin="50,0,5,0"/>
+        <TextBlock VerticalAlignment="Center" Text="Page "/>
+        <TextBlock VerticalAlignment="Center" Text="{Binding CurrentPage}"/>
+        <TextBlock VerticalAlignment="Center" Text=" / "/>
+        <TextBlock VerticalAlignment="Center" Text="{Binding TotalPages}"/>
+        <Button Content="»" Command="{Binding NextPage}" Margin="5,0,50,0"/>
+        <TextBlock VerticalAlignment="Center" Text="Items Per Page: "/>
+        <TextBox Text="{Binding ItemsPerPage}"/>
+    </StackPanel>
+    
     <StackPanel Orientation="Horizontal">
         <TextBlock TextAlignment="Center" Width="100" Text="Planet"/>
         <TextBlock TextAlignment="Center" Width="160" Text="Construction Materials"/>

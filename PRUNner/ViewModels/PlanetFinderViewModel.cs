@@ -28,6 +28,22 @@ namespace PRUNner.ViewModels
         public bool DisplayHighPressure { get; set; }
         public bool DisplayHighTemperature { get; set; }
 
+        private int _currentPage;
+        public int CurrentPage
+        {
+            get => _currentPage;
+            set => _currentPage = this.RaiseAndSetIfChanged(ref _currentPage, value);
+        }
+
+        private int _totalPages;
+        public int TotalPages
+        {
+            get => _totalPages;
+            set => _totalPages =  this.RaiseAndSetIfChanged(ref _totalPages, value);
+        }
+
+        public int ItemsPerPage { get; set; } = 15;
+
         public void Search()
         {
             var filterCriteria = new FilterCriteria()
@@ -56,16 +72,42 @@ namespace PRUNner.ViewModels
             this.RaisePropertyChanged(nameof(Item2));
             this.RaisePropertyChanged(nameof(Item3));
             this.RaisePropertyChanged(nameof(Item4));
-            
-            var result = PlanetFinder.Find(filterCriteria, tickers).OrderBy(x => x.DistancePyrgos).ToList();
-            SearchResults = result;
+
+            AllResults = PlanetFinder.Find(filterCriteria, tickers).OrderBy(x => x.DistancePyrgos).ToList();
+            CurrentPage = 1;
+            TotalPages = AllResults.Count / ItemsPerPage + 1;
+            SearchResults = AllResults.Take(ItemsPerPage);
         }
 
+        public List<PlanetFinderSearchResult> AllResults = new();
         private IEnumerable<PlanetFinderSearchResult> _searchResults = new List<PlanetFinderSearchResult>();
+
         public IEnumerable<PlanetFinderSearchResult> SearchResults
         {
             get => _searchResults;
             private set => this.RaiseAndSetIfChanged(ref _searchResults, value);
+        }
+
+        public void NextPage()
+        {
+            CurrentPage++;
+            if (CurrentPage > TotalPages)
+            {
+                CurrentPage = 1;
+            }
+            
+            SearchResults = AllResults.Skip(ItemsPerPage * CurrentPage - ItemsPerPage).Take(ItemsPerPage);
+        }
+        
+        public void PreviousPage()
+        {
+            CurrentPage--;
+            if (CurrentPage < 1)
+            {
+                CurrentPage = TotalPages;
+            }
+            
+            SearchResults = AllResults.Skip(ItemsPerPage * CurrentPage - ItemsPerPage).Take(ItemsPerPage);
         }
     }
 }

@@ -20,7 +20,6 @@ namespace PRUNner.Models
                     return;
                 }
 
-                value = value.ToUpper();
                 Material = MaterialData.Get(value);
                 if (Material == null)
                 {

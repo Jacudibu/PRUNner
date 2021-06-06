@@ -30,7 +30,7 @@ namespace PRUNner.Backend.Data.BaseClasses
         public static void CreateFrom(TPoco poco)
         {
             var result = new TData();
-            result.Id = result.GetIdFromPoco(poco);
+            result.Id = result.GetIdFromPoco(poco).ToUpper();
             result.FioId = result.GetFioIdFromPoco(poco);
             AllItems[result.Id] = result;
             AllItemsByPocoId[result.FioId] = result;
@@ -38,17 +38,17 @@ namespace PRUNner.Backend.Data.BaseClasses
 
         public static TData? Get(string id)
         {
-            return AllItems.TryGetValue(id, out var result) ? result : null;
+            return AllItems.TryGetValue(id.ToUpper(), out var result) ? result : null;
         }
 
         protected void AddAlias(TData obj, string alias)
         {
-            AllItems[alias] = obj;
+            AllItems[alias.ToUpper()] = obj;
         }
         
         public static TData GetOrThrow(string id)
         {
-            return AllItems[id];
+            return AllItems[id.ToUpper()];
         }
 
         public static ImmutableArray<TData> GetAll()

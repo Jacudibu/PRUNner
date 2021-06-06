@@ -22,7 +22,6 @@ namespace PRUNner.Models
                     return;
                 }
                     
-                value = value.ToUpper();
                 Building = BuildingData.Get(value);
                 if (Building == null || Building.Category < 0)
                 {

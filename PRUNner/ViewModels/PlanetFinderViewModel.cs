@@ -5,7 +5,6 @@ using PRUNner.Backend.Data;
 using PRUNner.Backend.Enums;
 using PRUNner.Backend.PlanetFinder;
 using PRUNner.Models;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.ViewModels
@@ -30,8 +29,8 @@ namespace PRUNner.ViewModels
         public bool DisplayHighTemperature { get; set; }
 
         public OptionalPlanetFinderDataObject OptionalFinderData { get; } = new();
-        public string OptionalDataExtraSystemName { get; private set; } = "";
-        public bool DisplayOptionalDataExtraSystemName { get; private set; }
+        [Reactive] public string OptionalDataExtraSystemName { get; private set; } = "";
+        [Reactive] public bool DisplayOptionalDataExtraSystemName { get; private set; }
         
         [Reactive] public bool ShowPaginationAndHeaders { get; set; }
         [Reactive] public bool NoResultsFound { get; set; }
@@ -66,7 +65,7 @@ namespace PRUNner.ViewModels
 
             if (OptionalFinderData.ExtraSystem.System != null)
             {
-                OptionalDataExtraSystemName = OptionalFinderData.ExtraSystem.SystemName;
+                OptionalDataExtraSystemName = OptionalFinderData.ExtraSystem.System.Name;
                 DisplayOptionalDataExtraSystemName = true;
             }
             else
@@ -74,8 +73,6 @@ namespace PRUNner.ViewModels
                 OptionalDataExtraSystemName = "";
                 DisplayOptionalDataExtraSystemName = false;
             }
-            this.RaisePropertyChanged(nameof(OptionalDataExtraSystemName));
-            this.RaisePropertyChanged(nameof(DisplayOptionalDataExtraSystemName));
 
             var optionalData = new OptionalPlanetFinderData
             {

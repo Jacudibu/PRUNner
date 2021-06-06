@@ -52,7 +52,7 @@
         </StackPanel>
     </StackPanel>
     
-    <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+    <StackPanel Orientation="Horizontal" Margin="0,10,0,10" IsVisible="{Binding ShowPaginationAndHeaders}">
         <Button Content="«" Command="{Binding PreviousPage}" Margin="50,0,5,0"/>
         <TextBlock VerticalAlignment="Center" Text="Page "/>
         <TextBlock VerticalAlignment="Center" Text="{Binding CurrentPage}"/>
@@ -63,7 +63,7 @@
         <TextBox Text="{Binding ItemsPerPage}"/>
     </StackPanel>
     
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal"  IsVisible="{Binding ShowPaginationAndHeaders}">
         <TextBlock TextAlignment="Center" Width="100" Text="Planet"/>
         <TextBlock TextAlignment="Center" Width="160" Text="Construction Materials"/>
         <TextBlock TextAlignment="Center" Width="50" IsVisible="{Binding DisplayItem1}" Text="{Binding Item1}"/>
@@ -77,7 +77,7 @@
         <TextBlock TextAlignment="Center" Width="50" Text="Pyrgos"/>
     </StackPanel>
     
-    <ItemsControl Items="{Binding SearchResults}">
+    <ItemsControl Items="{Binding SearchResults}" IsVisible="{Binding ShowPaginationAndHeaders}">
     <ItemsControl.ItemTemplate>
     <DataTemplate DataType="planetFinder:PlanetFinderSearchResult">
         <StackPanel Orientation="Horizontal">
@@ -98,6 +98,10 @@
     </ItemsControl.ItemTemplate>
     </ItemsControl>
         
+    <StackPanel IsVisible="{Binding NoResultsFound}">
+        <TextBlock Text="Nothing found, let's blame FIO! :(" Margin="300, 50"/>
+    </StackPanel>
+    
 </StackPanel>
     
 </UserControl>

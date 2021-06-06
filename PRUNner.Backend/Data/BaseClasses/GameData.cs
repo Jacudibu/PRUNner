@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace PRUNner.Backend.Data.BaseClasses
 {
     public abstract class GameData<TData, TPoco> where TData : GameData<TData, TPoco>, new()
     {
-        public static readonly Dictionary<string, TData> AllItems = new Dictionary<string, TData>();
-        internal static readonly Dictionary<string, TData> AllItemsByPocoId = new Dictionary<string, TData>();
+        protected static ImmutableArray<TData> AllItemsWithoutAliases; 
+        protected static readonly Dictionary<string, TData> AllItems = new();
+        internal static readonly Dictionary<string, TData> AllItemsByPocoId = new();
         
         internal string FioId { get; private set; }
         public string Id { get; private set; }
@@ -18,6 +20,7 @@ namespace PRUNner.Backend.Data.BaseClasses
         
         internal static void PostProcessData(TPoco[] pocos)
         {
+            AllItemsWithoutAliases = AllItems.Values.ToImmutableArray();
             foreach (var value in AllItemsByPocoId.Values)
             {
                 value.PostProcessData(pocos.Single(x => value.GetFioIdFromPoco(x).Equals(value.FioId)));
@@ -33,6 +36,26 @@ namespace PRUNner.Backend.Data.BaseClasses
             AllItemsByPocoId[result.FioId] = result;
         }
 
+        public static TData? Get(string id)
+        {
+            return AllItems.TryGetValue(id, out var result) ? result : null;
+        }
+
+        protected void AddAlias(TData obj, string alias)
+        {
+            AllItems[alias] = obj;
+        }
+        
+        public static TData GetOrThrow(string id)
+        {
+            return AllItems[id];
+        }
+
+        public static ImmutableArray<TData> GetAll()
+        {
+            return AllItemsWithoutAliases;
+        }
+        
         public override string ToString()
         {
             return Id;

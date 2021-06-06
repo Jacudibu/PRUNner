@@ -70,10 +70,10 @@
         <TextBlock TextAlignment="Center" Width="50" IsVisible="{Binding DisplayItem2}" Text="{Binding Item2}"/>
         <TextBlock TextAlignment="Center" Width="50" IsVisible="{Binding DisplayItem3}" Text="{Binding Item3}"/>
         <TextBlock TextAlignment="Center" Width="50" IsVisible="{Binding DisplayItem4}" Text="{Binding Item4}"/>
-        <TextBlock TextAlignment="Center" Width="50" Text="MOR"/>
+        <TextBlock TextAlignment="Center" Width="50" Text="ANT"/>
         <TextBlock TextAlignment="Center" Width="50" Text="BEN"/>
         <TextBlock TextAlignment="Center" Width="50" Text="HRT"/>
-        <TextBlock TextAlignment="Center" Width="50" Text="ANT"/>
+        <TextBlock TextAlignment="Center" Width="50" Text="MOR"/>
         <TextBlock TextAlignment="Center" Width="50" Text="Pyrgos"/>
     </StackPanel>
     
@@ -87,10 +87,10 @@
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" IsVisible="{Binding DisplayResource2}" Text="{Binding Resource2}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" IsVisible="{Binding DisplayResource3}" Text="{Binding Resource3}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" IsVisible="{Binding DisplayResource4}" Text="{Binding Resource4}"/>
-            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToMoria}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToAntares}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToBenten}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToHortus}"/>
-            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToAntares}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToMoria}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding DistancePyrgos}"/>
             <Button Content="Plan a new Base" Command="{Binding OpenBasePlanner}"/>
         </StackPanel>

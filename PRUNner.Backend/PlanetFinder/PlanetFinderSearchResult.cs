@@ -25,7 +25,7 @@ namespace PRUNner.Backend.PlanetFinder
         public PlanetFinderSearchResult(PlanetData planet, string[] resources)
         {
             Planet = planet;
-            DistancePyrgos = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["CH-771"]).Count;
+            DistancePyrgos = SystemPathFinder.FindShortestPath(planet.System, SystemData.Get("CH-771")).Count;
 
             Resource1 = ParseResource(1, resources);
             Resource2 = ParseResource(2, resources);

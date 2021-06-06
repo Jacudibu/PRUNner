@@ -15,7 +15,7 @@ namespace Tests
 
         static PlanetFinderTests()
         {
-            ParsedData.LoadAndParseFromCache();
+            DataParser.LoadAndParseFromCache();
         }
 
         public PlanetFinderTests(ITestOutputHelper testOutputHelper)
@@ -26,13 +26,13 @@ namespace Tests
         [Fact]
         public void FindingPlanet()
         {
-            var result = PlanetFinder.Find(FilterCriteria.T1Criteria, MaterialData.AllItems["FEO"])
-                .OrderByDescending(x => x.Planet.GetResource("FEO")!.Factor);
+            var result = PlanetFinder.Find(FilterCriteria.T1Criteria, MaterialData.GetOrThrow(Names.Materials.FEO))
+                .OrderByDescending(x => x.Planet.GetResource(Names.Materials.FEO)!.Factor);
             
             _testOutputHelper.WriteLine("Displaying all T1 planets with FEO, sorted by concentration:");
             foreach (var searchResult in result)
             {
-                _testOutputHelper.WriteLine($"{searchResult.Planet.Id} ({searchResult.Planet.Name}) – {searchResult.Planet.GetResource("FEO")?.Factor}");
+                _testOutputHelper.WriteLine($"{searchResult.Planet.Id} ({searchResult.Planet.Name}) – {searchResult.Planet.GetResource(Names.Materials.FEO)?.Factor}");
             }
         }
 
@@ -50,10 +50,10 @@ namespace Tests
             {
                 Planet = searchResult.Planet;
                 From = Planet.System;
-                To = SystemData.AllItems[targetSystem];
+                To = SystemData.GetOrThrow(targetSystem);
                 Path = SystemPathFinder.FindShortestPath(From, To);
-                PathToMoria = SystemPathFinder.FindShortestPath(From, SystemData.AllItems["OT-580"]);
-                PathToBenten = SystemPathFinder.FindShortestPath(From, SystemData.AllItems["UV-351"]);
+                PathToMoria = SystemPathFinder.FindShortestPath(From, SystemData.GetOrThrow(Names.Systems.Moria));
+                PathToBenten = SystemPathFinder.FindShortestPath(From, SystemData.GetOrThrow(Names.Systems.Benten));
             }
 
             public override string ToString()
@@ -74,7 +74,7 @@ namespace Tests
         [Fact]
         public void PathingSingleJump()
         {
-            var result = SystemPathFinder.FindShortestPath(SystemData.AllItems["SO-953"], SystemData.AllItems["CH-771"]);
+            var result = SystemPathFinder.FindShortestPath(SystemData.GetOrThrow("SO-953"), SystemData.GetOrThrow("CH-771"));
             Assert.Single(result);
         }
         

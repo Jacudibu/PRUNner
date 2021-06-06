@@ -19,7 +19,7 @@ namespace PRUNner.ViewModels
         public MainWindowViewModel()
         {
             RxApp.DefaultExceptionHandler = new AnonymousObserver<Exception>(exception => throw exception);
-            ParsedData.LoadAndParseFromCache();
+            DataParser.LoadAndParseFromCache();
             
             PlanetFinderViewModel = new PlanetFinderViewModel();
 

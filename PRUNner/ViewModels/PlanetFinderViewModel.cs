@@ -83,7 +83,8 @@ namespace PRUNner.ViewModels
 
             var tickers = new List<string>() {Item1, Item2, Item3, Item4}
                 .Where(x => !string.IsNullOrWhiteSpace(x))
-                .Select(x => MaterialData.AllItems[x])
+                .Select(MaterialData.Get)
+                .Where(x => x != null)
                 .ToArray();
             
             this.RaisePropertyChanged(nameof(DisplayItem1));
@@ -95,7 +96,7 @@ namespace PRUNner.ViewModels
             this.RaisePropertyChanged(nameof(Item3));
             this.RaisePropertyChanged(nameof(Item4));
 
-            _allResults = PlanetFinder.Find(filterCriteria, tickers).OrderBy(x => x.DistancePyrgos).ToList();
+            _allResults = PlanetFinder.Find(filterCriteria, tickers!).OrderBy(x => x.DistancePyrgos).ToList();
             CurrentPage = 1;
             TotalPages = _allResults.Count / ItemsPerPage + 1;
             ShowPaginationAndHeaders = _allResults.Count > 0;

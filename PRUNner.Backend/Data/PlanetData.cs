@@ -29,6 +29,7 @@ namespace PRUNner.Backend.Data
         internal override void PostProcessData(FioPlanet poco)
         {
             Name = poco.PlanetName;
+            AddAlias(this, Name);
             
             Fertility = poco.Fertility;
             Gravity = poco.Gravity;
@@ -103,18 +104,18 @@ namespace PRUNner.Backend.Data
     public class PlanetFinderCache
     {
         public string BuildingMaterialString { get; }
-        public int DistanceToMoria { get; }
+        public int DistanceToAntares { get; }
         public int DistanceToBenten { get; }
         public int DistanceToHortus { get; }
-        public int DistanceToAntares { get; }
-        
+        public int DistanceToMoria { get; }
+
         public PlanetFinderCache(PlanetData planet)
         {
             BuildingMaterialString = CreateBuildingMaterialString(planet);
-            DistanceToMoria = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["OT-580"]).Count;
-            DistanceToBenten = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["UV-351"]).Count;
-            DistanceToHortus = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["VH-331"]).Count;
-            DistanceToAntares = SystemPathFinder.FindShortestPath(planet.System, SystemData.AllItems["ZV-307"]).Count;
+            DistanceToAntares = SystemPathFinder.FindShortestPath(planet.System, SystemData.GetOrThrow(Names.Systems.AntaresI)).Count;
+            DistanceToBenten = SystemPathFinder.FindShortestPath(planet.System, SystemData.GetOrThrow(Names.Systems.Benten)).Count;
+            DistanceToHortus = SystemPathFinder.FindShortestPath(planet.System, SystemData.GetOrThrow(Names.Systems.Hortus)).Count;
+            DistanceToMoria = SystemPathFinder.FindShortestPath(planet.System, SystemData.GetOrThrow(Names.Systems.Moria)).Count;
         }
         
         private static string CreateBuildingMaterialString(PlanetData planet)

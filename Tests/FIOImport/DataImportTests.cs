@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using FIOImport;
 using Newtonsoft.Json;
+using PRUNner.Backend;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -43,7 +44,7 @@ namespace Tests.FIOImport
         [Fact(Skip = Skip)]
         public void ImportSpecificPlanet()
         {
-            var result = FioImporter.ImportPlanetData("Montem");
+            var result = FioImporter.ImportPlanetData(Names.Planets.Montem);
             var json = JsonConvert.SerializeObject(result);
             _testOutputHelper.WriteLine(json);
         }
@@ -65,7 +66,7 @@ namespace Tests.FIOImport
         [Fact(Skip = Skip)]
         public void ParsedData()
         {
-            var result = PRUNner.Backend.ParsedData.LoadAndParseFromCache();
+            DataParser.LoadAndParseFromCache();
             Debugger.Break();
         }
     }

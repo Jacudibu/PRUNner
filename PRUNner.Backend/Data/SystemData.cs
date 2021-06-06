@@ -39,6 +39,8 @@ namespace PRUNner.Backend.Data
 
             NaturalId = poco.NaturalId;
             Name = poco.Name;
+            AddAlias(this, Name);
+            
             StarType = Enum.Parse<StarType>(poco.Type, true);
             PositionX = poco.PositionX;
             PositionY = poco.PositionY;

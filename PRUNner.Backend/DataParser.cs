@@ -1,17 +1,13 @@
-using System.Collections.Generic;
 using FIOImport;
 using PRUNner.Backend.Data;
 
 namespace PRUNner.Backend
 {
-    public class ParsedData
+    public static class DataParser
     {
-        public Dictionary<string, MaterialData> AllMaterials = MaterialData.AllItems;
-        public Dictionary<string, PlanetData> AllPlanets = PlanetData.AllItems;
-        public Dictionary<string, SystemData> AllSystems = SystemData.AllItems;
-
-        internal ParsedData(RawData rawData)
+        public static void LoadAndParseFromCache()
         {
+            var rawData = FioImporter.LoadAllFromCache();
             foreach (var material in rawData.AllMaterials)
             {
                 MaterialData.CreateFrom(material);
@@ -30,12 +26,6 @@ namespace PRUNner.Backend
             MaterialData.PostProcessData(rawData.AllMaterials);
             PlanetData.PostProcessData(rawData.AllPlanets);
             SystemData.PostProcessData(rawData.AllSystems);
-        }
-        
-        public static ParsedData LoadAndParseFromCache()
-        {
-            var rawData = FioImporter.LoadAllFromCache();
-            return new ParsedData(rawData);
         }
     }
 }

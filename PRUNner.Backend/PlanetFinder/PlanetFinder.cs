@@ -8,7 +8,7 @@ namespace PRUNner.Backend.PlanetFinder
     {
         public static IEnumerable<PlanetFinderSearchResult> Find(FilterCriteria filterCriteria, params string[] resourceFilter)
         {
-            return PlanetData.AllItems.Values
+            return PlanetData.GetAll()
                 .Where(filterCriteria.DoesPlanetFitCriteria)
                 .Where(x => DoesPlanetHaveAllResources(x, resourceFilter))
                 .Select(x => new PlanetFinderSearchResult(x, resourceFilter));            
@@ -16,7 +16,7 @@ namespace PRUNner.Backend.PlanetFinder
         
         public static IEnumerable<PlanetFinderSearchResult> Find(FilterCriteria filterCriteria, params MaterialData[] resourceFilter)
         {
-            return PlanetData.AllItems.Values
+            return PlanetData.GetAll()
                 .Where(filterCriteria.DoesPlanetFitCriteria)
                 .Where(x => DoesPlanetHaveAllResources(x, resourceFilter))
                 .Select(x => new PlanetFinderSearchResult(x, resourceFilter));

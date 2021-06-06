@@ -19,7 +19,8 @@ namespace PRUNner.Models
                     this.RaiseAndSetIfChanged(ref _materialName, "");
                     return;
                 }
-                
+
+                value = value.ToUpper();
                 Material = MaterialData.Get(value);
                 if (Material == null)
                 {

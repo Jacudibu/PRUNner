@@ -20,6 +20,7 @@ namespace PRUNner.Models
                     return;
                 }
                     
+                value = value.ToUpper();
                 System = SystemData.Get(value);
                 if (System == null)
                 {

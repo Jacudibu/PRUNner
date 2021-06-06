@@ -10,7 +10,7 @@
 </Design.DataContext>
 
 <StackPanel Orientation="Horizontal">
-    <TextBlock Text="{Binding Building.Ticker}" Width="50" VerticalAlignment="Center"/>
+    <TextBlock Text="{Binding Building.Ticker}" Width="35" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,5,0"/>
     <Button Content="-" Command="{Binding Reduce}"/>
     <TextBlock Text="{Binding Amount}" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0,5,0" Width="20"/>
     <Button Content="+" Command="{Binding Add}"/>

@@ -15,13 +15,13 @@ namespace PRUNner.Models.BasePlanner
         public PlanetaryBaseInfrastructure InfrastructureBuildings { get; } = new();
         public ObservableCollection<PlanetBuilding> ProductionBuildings { get; } = new();
 
-        public PlanetWorkforce RequiredWorkforce { get; } = new();
-        public PlanetWorkforce AvailableWorkforce { get; } = new();
-        public PlanetWorkforce RemainingWorkforce { get; } = new();
+        public PlanetWorkforce WorkforceRequired { get; } = new();
+        public PlanetWorkforce WorkforceCapacity { get; } = new();
+        public PlanetWorkforce WorkforceCurrent { get; } = new();
         
-        public int TotalArea { get; } = Constants.BaseArea;
-        [Reactive] public int UsedArea { get; private set; } = 0;
-        [Reactive] public int RemainingArea { get; private set; } = Constants.BaseArea;
+        public int AreaTotal { get; } = Constants.BaseArea;
+        [Reactive] public int AreaDeveloped { get; private set; } = 0;
+        [Reactive] public int AreaAvailable { get; private set; } = Constants.BaseArea;
 
         public PlanetaryBase(PlanetData planet)
         {
@@ -55,19 +55,19 @@ namespace PRUNner.Models.BasePlanner
 
         private void RecalculateWorkforce()
         {
-            RequiredWorkforce.Reset();
+            WorkforceRequired.Reset();
             foreach (var building in ProductionBuildings)
             {
-                RequiredWorkforce.Add(building.Building.Workforce, building.Amount);
+                WorkforceRequired.Add(building.Building.Workforce, building.Amount);
             }
 
-            AvailableWorkforce.Reset();
+            WorkforceCapacity.Reset();
             foreach (var building in InfrastructureBuildings.All)
             {
-                AvailableWorkforce.Add(building.Building.AdditionalWorkforceSpace, building.Amount);
+                WorkforceCapacity.Add(building.Building.AdditionalWorkforceSpace, building.Amount);
             }
 
-            RemainingWorkforce.SetRemainingWorkforce(RequiredWorkforce, AvailableWorkforce);
+            WorkforceCurrent.SetRemainingWorkforce(WorkforceRequired, WorkforceCapacity);
         }
 
         private void RecalculateSpace()
@@ -75,8 +75,8 @@ namespace PRUNner.Models.BasePlanner
             var usedArea = ProductionBuildings.Sum(x => x.CalculateNeededArea())
                 + InfrastructureBuildings.All.Sum(x => x.CalculateNeededArea());
             
-            UsedArea = usedArea;
-            RemainingArea = TotalArea - usedArea;
+            AreaDeveloped = usedArea;
+            AreaAvailable = AreaTotal - usedArea;
         }
     }
 }

@@ -8,8 +8,8 @@ namespace PRUNner.Models.BasePlanner
         public static readonly WorkforceSatisfactionFactors Pioneers = new(0.02,  10/3d, 4, ove: 5/6d, pwo: 1/11d, cof: 2/13d);
         public static readonly WorkforceSatisfactionFactors Settlers = new(0.01, 10/3d, 4, exo: 1, pt: 5/6d, rep: 1/11d, kom: 2/13d);
         public static readonly WorkforceSatisfactionFactors Technicians = new(0.005, 10/3d, 4, med: 5/6d, hms: 1, scn: 1);
-        public static readonly WorkforceSatisfactionFactors Engineers = new(0.005, 10/3d, 4);
-        public static readonly WorkforceSatisfactionFactors Scientists = new(0.005, 10/3d, 4);
+        public static readonly WorkforceSatisfactionFactors Engineers = new(0.7944, 0, 0, vg: 1/11d, gin: 2/13d);
+        public static readonly WorkforceSatisfactionFactors Scientists = new(0.7944, 0, 0, nst: 1/11d, win: 2/13d);
         
         private readonly double _baseFactor; 
         private readonly double DW; 

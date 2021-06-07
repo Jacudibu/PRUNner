@@ -23,8 +23,8 @@ namespace PRUNner.Models.BasePlanner
             Pioneers = GetWorkforceHabitationPercentage(capacity.Pioneers, required.Pioneers) * WorkforceSatisfactionFactors.Pioneers.Calculate(consumables);
             Settlers = GetWorkforceHabitationPercentage(capacity.Settlers, required.Settlers) *  WorkforceSatisfactionFactors.Settlers.Calculate(consumables);
             Technicians = GetWorkforceHabitationPercentage(capacity.Technicians, required.Technicians) *  WorkforceSatisfactionFactors.Technicians.Calculate(consumables);
-            Engineers = GetWorkforceHabitationPercentage(capacity.Engineers, required.Engineers) *  0.7944; // WorkforceSatisfactionFactors.Engineers.Calculate(consumables); // TODO: we don't know the ratios yet
-            Scientists = GetWorkforceHabitationPercentage(capacity.Scientists, required.Scientists) *  0.7944; // WorkforceSatisfactionFactors.Scientists.Calculate(consumables);
+            Engineers = GetWorkforceHabitationPercentage(capacity.Engineers, required.Engineers) * WorkforceSatisfactionFactors.Engineers.Calculate(consumables);
+            Scientists = GetWorkforceHabitationPercentage(capacity.Scientists, required.Scientists) * WorkforceSatisfactionFactors.Scientists.Calculate(consumables);
             
             PioneersString = Pioneers.ToString("P1");
             SettlersString = Settlers.ToString("P1");

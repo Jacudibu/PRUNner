@@ -3,27 +3,59 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:basePlanner="clr-namespace:PRUNner.Models.BasePlanner"
+             xmlns:controls="clr-namespace:PRUNner.Controls"
+             xmlns:components="clr-namespace:PRUNner.Backend.Data.Components;assembly=PRUNner.Backend"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PRUNner.Controls.BuildingRow">
-<Design.DataContext>
-    <basePlanner:PlanetBuilding/>
-</Design.DataContext>
+    <Design.DataContext>
+        <basePlanner:PlanetBuilding />
+    </Design.DataContext>
 
-<StackPanel Orientation="Horizontal">
-    <TextBlock Text="{Binding Building.Ticker}" Width="35" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,5,0"/>
-    <Button Content="-" Command="{Binding Reduce}"/>
-    <TextBlock Text="{Binding Amount}" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0,5,0" Width="20"/>
-    <Button Content="+" Command="{Binding Add}"/>
-    <ItemsControl Items="{Binding Production}" Margin="0,5,0,0" IsVisible="{Binding IsProductionBuilding}">
-    <ItemsControl.ItemTemplate>
-    <DataTemplate DataType="basePlanner:PlanetBuildingProduction">
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Width="200" Text="{Binding ActiveRecipe.RecipeName}"/>
-            <TextBox Text="{Binding Percentage}"/>
-        </StackPanel>
-    </DataTemplate>
-    </ItemsControl.ItemTemplate>
-    </ItemsControl>  
-</StackPanel>
-    
+    <StackPanel Orientation="Horizontal">
+        <controls:ItemBox DataContext="{Binding Building}" Margin="2" />
+        <!-- <TextBlock Text="{Binding Building.Ticker}" Width="35" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,5,0"/> -->
+        <Button Content="-" Command="{Binding Reduce}" />
+        <TextBlock Text="{Binding Amount}" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0,5,0"
+                   Width="20" />
+        <Button Content="+" Command="{Binding Add}" />
+        <ItemsControl Items="{Binding Production}" IsVisible="{Binding IsProductionBuilding}" VerticalAlignment="Center" Margin="5,0,0,0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="basePlanner:PlanetBuildingProduction">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox VerticalAlignment="Center" Text="{Binding Percentage}" Width="20"/>
+                        <TextBlock VerticalAlignment="Center" Text="%" Margin="0,0,5,0"/>
+                        
+                        <ItemsControl Items="{Binding ActiveRecipe.Inputs}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="components:MaterialIO">
+                                    <controls:ItemBox DataContext="{Binding .}" Margin="2,0,0, 0" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock VerticalAlignment="Center" Text="==>" />
+
+                        <ItemsControl Items="{Binding ActiveRecipe.Outputs}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="components:MaterialIO">
+                                    <controls:ItemBox DataContext="{Binding .}"  Margin="0,0,2, 0"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+
 </UserControl>

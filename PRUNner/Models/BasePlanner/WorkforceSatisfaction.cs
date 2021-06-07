@@ -11,13 +11,6 @@ namespace PRUNner.Models.BasePlanner
         [Reactive] public double Engineers { get; private set; }
         [Reactive] public double Scientists { get; private set; }
         
-        
-        [Reactive] public string PioneersString { get; private set; } = "";
-        [Reactive] public string SettlersString { get; private set; } = "";
-        [Reactive] public string TechniciansString { get; private set; } = "";
-        [Reactive] public string EngineersString { get; private set; } = "";
-        [Reactive] public string ScientistsString { get; private set; } = "";
-
         public void Recalculate(ProvidedConsumables consumables, PlanetWorkforce capacity, PlanetWorkforce required)
         {
             Pioneers = GetWorkforceHabitationPercentage(capacity.Pioneers, required.Pioneers) * WorkforceSatisfactionFactors.Pioneers.Calculate(consumables);
@@ -25,12 +18,6 @@ namespace PRUNner.Models.BasePlanner
             Technicians = GetWorkforceHabitationPercentage(capacity.Technicians, required.Technicians) *  WorkforceSatisfactionFactors.Technicians.Calculate(consumables);
             Engineers = GetWorkforceHabitationPercentage(capacity.Engineers, required.Engineers) * WorkforceSatisfactionFactors.Engineers.Calculate(consumables);
             Scientists = GetWorkforceHabitationPercentage(capacity.Scientists, required.Scientists) * WorkforceSatisfactionFactors.Scientists.Calculate(consumables);
-            
-            PioneersString = Pioneers.ToString("P1");
-            SettlersString = Settlers.ToString("P1");
-            TechniciansString = Technicians.ToString("P1");
-            EngineersString = Engineers.ToString("P1");
-            ScientistsString = Scientists.ToString("P1");
         }
 
         private static double GetWorkforceHabitationPercentage(double capacity, double required)

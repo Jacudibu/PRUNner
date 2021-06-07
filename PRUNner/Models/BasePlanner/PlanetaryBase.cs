@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using DynamicData.Binding;
 using PRUNner.Backend;
 using PRUNner.Backend.Data;
 using ReactiveUI;
@@ -18,6 +19,9 @@ namespace PRUNner.Models.BasePlanner
         public PlanetWorkforce WorkforceRequired { get; } = new();
         public PlanetWorkforce WorkforceCapacity { get; } = new();
         public PlanetWorkforce WorkforceRemaining { get; } = new();
+        public WorkforceSatisfaction WorkforceSatisfaction { get; } = new();
+        
+        public ProvidedConsumables ProvidedConsumables { get; } = new();
         
         public int AreaTotal { get; } = Constants.BaseArea;
         [Reactive] public int AreaDeveloped { get; private set; } = 0;
@@ -30,7 +34,21 @@ namespace PRUNner.Models.BasePlanner
             {
                 infrastructureBuilding.WhenAnyValue(x => x.Amount).Subscribe(_ => OnBuildingChange());
             }
+
+            ProvidedConsumables.WhenAnyPropertyChanged().Subscribe(value =>
+            {
+                if (value != null)
+                {
+                    WorkforceSatisfaction.Recalculate(value, WorkforceCapacity, WorkforceRequired);
+                }
+            });
+
+            WorkforceRemaining.WhenAnyPropertyChanged().Subscribe(_ =>
+            {
+                WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
+            });
             
+            WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
             OnBuildingChange();
         }
 

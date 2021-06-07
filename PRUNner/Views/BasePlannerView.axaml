@@ -31,32 +31,49 @@
         
         <StackPanel Margin="10,0,0,0">
             <TextBlock Text="Workforce" HorizontalAlignment="Center"/>
-            <Grid ColumnDefinitions="80,75,75,75" RowDefinitions="*,*,*,*,*,*" Width="305">
+            <Grid ColumnDefinitions="80,75,75,75,50,50,80" RowDefinitions="*,*,*,*,*,*" Width="485">
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text=""/>
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Required"/>
                 <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Text="Capacity"/>
                 <TextBlock Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Text="Remaining"/>
-                
-                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Pioneers"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRequired.Pioneers}"/>
-                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceCapacity.Pioneers}"/>
-                <TextBlock Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRemaining.Pioneers}"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Settlers"/>
-                <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRequired.Settlers}"/>
-                <TextBlock Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceCapacity.Settlers}"/>
-                <TextBlock Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRemaining.Settlers}"/>
-                <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Technicians"/>
-                <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRequired.Technicians}"/>
-                <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceCapacity.Technicians}"/>
-                <TextBlock Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRemaining.Technicians}"/>
-                <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Text="Engineers"/>
-                <TextBlock Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRequired.Engineers}"/>
-                <TextBlock Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceCapacity.Engineers}"/>
-                <TextBlock Grid.Row="4" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRemaining.Engineers}"/>
-                <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Text="Scientists"/>
-                <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRequired.Scientists}"/>
-                <TextBlock Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceCapacity.Scientists}"/>
-                <TextBlock Grid.Row="5" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRemaining.Scientists}"/>
+                <TextBlock Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Text="Lux 1"/>
+                <TextBlock Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" Text="Lux 2"/>
+                <TextBlock Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" Text="Satisfaction"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Pioneers"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRequired.Pioneers}"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceCapacity.Pioneers}"/>
+                <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRemaining.Pioneers}"/>
+                <CheckBox Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.ProvidedConsumables.PWO}" ToolTip.Tip="PWO"/>
+                <CheckBox Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.ProvidedConsumables.COF}" ToolTip.Tip="COF"/>
+                <TextBlock Grid.Row="1" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceSatisfaction.PioneersString}"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Settlers"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRequired.Settlers}"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceCapacity.Settlers}"/>
+                <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRemaining.Settlers}"/>
+                <CheckBox Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.ProvidedConsumables.REP}" ToolTip.Tip="REP"/>
+                <CheckBox Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.ProvidedConsumables.KOM}" ToolTip.Tip="KOM"/>
+                <TextBlock Grid.Row="2" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceSatisfaction.SettlersString}"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Technicians"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRequired.Technicians}"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceCapacity.Technicians}"/>
+                <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRemaining.Technicians}"/>
+                <CheckBox Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.ProvidedConsumables.SC}" ToolTip.Tip="SC"/>
+                <CheckBox Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.ProvidedConsumables.ALE}" ToolTip.Tip="ALE"/>
+                <TextBlock Grid.Row="3" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceSatisfaction.TechniciansString}"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Engineers"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRequired.Engineers}"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceCapacity.Engineers}"/>
+                <TextBlock Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRemaining.Engineers}"/>
+                <CheckBox Grid.Row="4" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.ProvidedConsumables.VG}" ToolTip.Tip="CG"/>
+                <CheckBox Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.ProvidedConsumables.GIN}" ToolTip.Tip="GIN"/>
+                <TextBlock Grid.Row="4" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceSatisfaction.EngineersString}"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Scientists"/>
+                <TextBlock Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRequired.Scientists}"/>
+                <TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceCapacity.Scientists}"/>
+                <TextBlock Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceRemaining.Scientists}"/>
+                <CheckBox Grid.Row="5" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.ProvidedConsumables.NST}" ToolTip.Tip="NST"/>
+                <CheckBox Grid.Row="5" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.ProvidedConsumables.WIN}"  ToolTip.Tip="WIN"/>
+                <TextBlock Grid.Row="5" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveBase.WorkforceSatisfaction.ScientistsString}"/>
             </Grid>
         </StackPanel>
         
@@ -86,18 +103,23 @@
         </StackPanel>
     </StackPanel>
     
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-        <TextBox Text="{Binding AddBuildingTextBox.BuildingName}" Width="100"/>
-        <Button Content="AddBuilding" Command="{Binding AddBuilding}"/>
-    </StackPanel>
+    <Border BorderThickness="1" BorderBrush="LightGray">
+        <StackPanel>
+            <TextBlock Text="Production Buildings"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBox Text="{Binding AddBuildingTextBox.BuildingName}" Width="100"/>
+                <Button Content="AddBuilding" Command="{Binding AddBuilding}"/>
+            </StackPanel>
 
-    <ItemsControl Items="{Binding ActiveBase.ProductionBuildings}">
-    <ItemsControl.ItemTemplate>
-    <DataTemplate DataType="basePlanner:PlanetBuilding">
-        <controls:BuildingRow DataContext="{Binding .}"/>
-    </DataTemplate>
-    </ItemsControl.ItemTemplate>
-    </ItemsControl>
+            <ItemsControl Items="{Binding ActiveBase.ProductionBuildings}">
+            <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="basePlanner:PlanetBuilding">
+                <controls:BuildingRow DataContext="{Binding .}"/>
+            </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Border>
     
     
 </StackPanel>

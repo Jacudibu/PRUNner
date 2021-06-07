@@ -30,13 +30,13 @@ namespace PRUNner.Models.BasePlanner
             Scientists += workforce.Scientists * factor;
         }
 
-        public void SetRemainingWorkforce(PlanetWorkforce required, PlanetWorkforce available)
+        public void SetRemainingWorkforce(PlanetWorkforce required, PlanetWorkforce capacity)
         {
-            Pioneers = available.Pioneers - required.Pioneers;
-            Settlers = available.Settlers - required.Settlers;
-            Technicians = available.Technicians - required.Technicians;
-            Engineers = available.Engineers - required.Engineers;
-            Scientists = available.Scientists - required.Scientists;
+            Pioneers = capacity.Pioneers - required.Pioneers;
+            Settlers = capacity.Settlers - required.Settlers;
+            Technicians = capacity.Technicians - required.Technicians;
+            Engineers = capacity.Engineers - required.Engineers;
+            Scientists = capacity.Scientists - required.Scientists;
         }
     }
 }

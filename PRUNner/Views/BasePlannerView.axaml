@@ -5,6 +5,7 @@
              xmlns:viewModels="clr-namespace:PRUNner.ViewModels"
              xmlns:basePlanner="clr-namespace:PRUNner.Models.BasePlanner"
              xmlns:controls="clr-namespace:PRUNner.Controls"
+             xmlns:components="clr-namespace:PRUNner.Backend.Data.Components;assembly=PRUNner.Backend"
              mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="450"
              x:Class="PRUNner.Views.BasePlannerView">
     
@@ -13,11 +14,22 @@
     </Design.DataContext>
     
 <StackPanel>
-    <TextBlock Text="{Binding ActiveBase.Planet.Name}"/>
-    
     <StackPanel Orientation="Horizontal">
         <StackPanel>
-            <TextBlock Text="Area" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding ActiveBase.Planet.Name}" FontSize="20" Margin="10"/>
+            <ItemsControl Items="{Binding ActiveBase.Planet.Resources}">
+            <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="components:ResourceData">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="100" HorizontalAlignment="Right" Text="{Binding Material.Name}"/>
+                    <TextBlock Width="75" HorizontalAlignment="Center" Text="{Binding ResourceType}"/>
+                    <TextBlock Width="50" HorizontalAlignment="Right" Text="{Binding Factor, StringFormat={}{0:P2}}"/>
+                </StackPanel>
+            </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+            <TextBlock Text="Area" HorizontalAlignment="Center" Margin="0, 10, 0, 5"/>
             <Grid ColumnDefinitions="100,75,75" RowDefinitions="*,*,*,*,*,*" Width="250">
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Developed"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Available"/>
@@ -104,6 +116,7 @@
         
         <StackPanel Margin="10,0,0,0">
             <TextBlock Text="Advanced Settings (extra window later on)" HorizontalAlignment="Center"/>
+            <TextBlock Text="Basic Consumable Coverage" HorizontalAlignment="Left"/>
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <CheckBox Content="DW" IsChecked="{Binding ActiveBase.ProvidedConsumables.DW}"/>

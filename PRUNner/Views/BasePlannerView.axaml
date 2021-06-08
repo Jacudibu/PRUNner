@@ -22,9 +22,14 @@
                 <StackPanel Width="100">
                     <TextBlock Text="Resources" Classes="h2" HorizontalAlignment="Center"/>
                     <ItemsControl Items="{Binding ActiveBase.Planet.Resources}" Margin="0,5,0,0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" Spacing="2"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="components:ResourceData">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                        <StackPanel Orientation="Horizontal">
                             <controls:ItemBoxControl DataContext="{Binding .}"/>
                             <TextBlock Width="75" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding ResourceType}"/>
                         </StackPanel>

@@ -19,7 +19,13 @@ namespace PRUNner.Models.BasePlanner
             {
                 foreach (var production in building.Production)
                 {
-                    foreach (var input in production.ActiveRecipe!.Inputs)
+                    if (production.ActiveRecipe == null)
+                    {
+                        // Happens with EXT/COL/RIG when the planet has no resource to extract
+                        continue;
+                    }
+                    
+                    foreach (var input in production.ActiveRecipe.Inputs)
                     {
                         var amount = CalculateAmount(building, production, input);
                         AddInput(input.Material, amount);

@@ -17,7 +17,12 @@
             <controls:BuildingCounterControl />
             <Button HorizontalAlignment="Center" Content="Add Recipe" Command="{Binding AddProduction}" />
         </StackPanel>
-        <ItemsControl Items="{Binding Production}" VerticalAlignment="Top" Margin="2,0,0,0">
+        <ItemsControl Items="{Binding Production}" VerticalAlignment="Top">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" Spacing="2"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="basePlanner:PlanetBuildingProductionQueueElement">
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
@@ -31,13 +36,12 @@
                                             <ItemsControl Items="{Binding Inputs}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" />
+                                                        <StackPanel Orientation="Horizontal" Spacing="2" />
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate DataType="components:MaterialIO">
-                                                        <controls:ItemBoxControl DataContext="{Binding .}"
-                                                                                 Margin="2,0,0, 0" />
+                                                        <controls:ItemBoxControl DataContext="{Binding .}"/>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
@@ -51,13 +55,12 @@
                                             <ItemsControl Items="{Binding Outputs}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" />
+                                                        <StackPanel Orientation="Horizontal" Spacing="2"/>
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate DataType="components:MaterialIO">
-                                                        <controls:ItemBoxControl DataContext="{Binding .}"
-                                                                                 Margin="0,0,2, 0" />
+                                                        <controls:ItemBoxControl DataContext="{Binding .}"/>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>

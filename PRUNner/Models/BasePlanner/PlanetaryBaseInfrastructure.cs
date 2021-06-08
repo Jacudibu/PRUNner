@@ -33,8 +33,8 @@ namespace PRUNner.Models.BasePlanner
                 HBB, HBC, HBM, HBL,
                 STO
             }.ToImmutableList();
-            
-            CM.Add();
+
+            CM.Amount = 1;
         }
 
         public readonly ImmutableList<PlanetBuilding> All;

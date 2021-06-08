@@ -85,21 +85,6 @@ namespace PRUNner.Models.BasePlanner
             return Building.AreaCost * Amount;
         }
         
-        public void Add()
-        {
-            Amount++;
-        }
-
-        public void Reduce()
-        {
-            if (Amount == 0)
-            {
-                return;
-            }
-            
-            Amount--;
-        }
-
         public void AddProduction()
         {
             var production = new PlanetBuildingProductionQueueElement(this);

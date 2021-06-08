@@ -163,7 +163,7 @@
     
     <StackPanel Orientation="Horizontal">
         <Border BorderThickness="1" BorderBrush="LightGray" MinWidth="700">
-            <StackPanel>
+            <StackPanel Margin="3,3,3,3">
                 <TextBlock Text="Production Buildings"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <TextBox Text="{Binding AddBuildingTextBox.BuildingName}" Width="100"/>

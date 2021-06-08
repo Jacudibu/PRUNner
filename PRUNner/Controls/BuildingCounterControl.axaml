@@ -13,6 +13,6 @@
     
     <StackPanel Orientation="Horizontal">
         <controls:ItemBoxControl DataContext="{Binding Building}" Margin="2" />
-        <NumericUpDown Value="{Binding Amount}" HorizontalContentAlignment="Right" Padding="0,5,25,5" Height="30" Width="100"/>
+        <NumericUpDown Classes="compact" Value="{Binding Amount}"/>
     </StackPanel>
 </UserControl>

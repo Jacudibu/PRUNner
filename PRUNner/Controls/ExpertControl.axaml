@@ -12,7 +12,7 @@
     
     <StackPanel Orientation="Horizontal">
         <TextBlock Text="{Binding Expertise}" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,5,0" Width="135"/>
-        <NumericUpDown Value="{Binding Count}" HorizontalContentAlignment="Right" Padding="0,5,25,5" Height="30" Width="100"/>
+        <NumericUpDown Value="{Binding Count}" Classes="compact"/>
         <TextBlock Text="{Binding EfficiencyGain, StringFormat={}{0:P2}}" VerticalAlignment="Center" TextAlignment="Right" Width="55"/>
     </StackPanel>
     

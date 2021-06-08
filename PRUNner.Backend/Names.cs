@@ -43,6 +43,11 @@ namespace PRUNner.Backend
             public const string HBM = nameof(HBM);
             public const string HBL = nameof(HBL);
             public const string STO = nameof(STO);
+         
+            public const string COL = nameof(COL);
+            public const string EXT = nameof(EXT);
+            public const string RIG = nameof(RIG);
+            
         }
     }
 }

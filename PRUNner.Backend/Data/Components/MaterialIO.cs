@@ -24,5 +24,11 @@ namespace PRUNner.Backend.Data.Components
             Material = MaterialData.GetOrThrow(poco.CommodityTicker);
             Amount = poco.Amount;
         }
+
+        public MaterialIO(MaterialData material, int amount)
+        {
+            Material = material;
+            Amount = amount;
+        }
     }
 }

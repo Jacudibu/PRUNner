@@ -24,7 +24,7 @@ namespace PRUNner.Models.BasePlanner
         public ProvidedConsumables ProvidedConsumables { get; } = new();
         
         public int AreaTotal { get; } = Constants.BaseArea;
-        [Reactive] public int AreaDeveloped { get; private set; } = 0;
+        [Reactive] public int AreaDeveloped { get; private set; }
         [Reactive] public int AreaAvailable { get; private set; } = Constants.BaseArea;
 
         public PlanetaryBase(PlanetData planet)
@@ -57,7 +57,7 @@ namespace PRUNner.Models.BasePlanner
             var addedBuilding = ProductionBuildings.SingleOrDefault(x => x.Building == building);
             if (addedBuilding == null)
             {
-                addedBuilding = new PlanetBuilding(building);
+                addedBuilding = PlanetBuilding.FromProductionBuilding(Planet, building);
                 addedBuilding.WhenAnyValue(x => x.Amount).Subscribe(_ => OnBuildingChange());
                 ProductionBuildings.Add(addedBuilding);
             }

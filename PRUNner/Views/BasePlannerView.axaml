@@ -94,22 +94,22 @@
             
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
-                    <controls:BuildingRow DataContext="{Binding ActiveBase.InfrastructureBuildings.HB1}"/>
-                    <controls:BuildingRow DataContext="{Binding ActiveBase.InfrastructureBuildings.HB2}"/>
-                    <controls:BuildingRow DataContext="{Binding ActiveBase.InfrastructureBuildings.HB3}"/>
-                    <controls:BuildingRow DataContext="{Binding ActiveBase.InfrastructureBuildings.HB4}"/>
-                    <controls:BuildingRow DataContext="{Binding ActiveBase.InfrastructureBuildings.HB5}"/>
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HB1}"/>
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HB2}"/>
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HB3}"/>
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HB4}"/>
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HB5}"/>
                 </StackPanel>
                 
                 <StackPanel Margin="10,0,0,0">
-                    <controls:BuildingRow DataContext="{Binding ActiveBase.InfrastructureBuildings.HBB}"/>
-                    <controls:BuildingRow DataContext="{Binding ActiveBase.InfrastructureBuildings.HBC}"/>
-                    <controls:BuildingRow DataContext="{Binding ActiveBase.InfrastructureBuildings.HBM}"/>
-                    <controls:BuildingRow DataContext="{Binding ActiveBase.InfrastructureBuildings.HBL}"/>
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HBB}"/>
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HBC}"/>
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HBM}"/>
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HBL}"/>
                 </StackPanel>
                 
                 <StackPanel Margin="10,0,0,0">
-                    <controls:BuildingRow DataContext="{Binding ActiveBase.InfrastructureBuildings.STO}"/>
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.STO}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
@@ -156,7 +156,7 @@
             <ItemsControl Items="{Binding ActiveBase.ProductionBuildings}">
             <ItemsControl.ItemTemplate>
             <DataTemplate DataType="basePlanner:PlanetBuilding">
-                <controls:BuildingRow DataContext="{Binding .}"/>
+                <controls:ProductionLineControl DataContext="{Binding .}"/>
             </DataTemplate>
             </ItemsControl.ItemTemplate>
             </ItemsControl>

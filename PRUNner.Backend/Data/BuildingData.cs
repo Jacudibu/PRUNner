@@ -78,6 +78,14 @@ namespace PRUNner.Backend.Data
             if (poco.Engineers > 0) return BuildingCategory.Engineers;
             if (poco.Technicians > 0) return BuildingCategory.Technicians;
             if (poco.Settlers > 0) return BuildingCategory.Settlers;
+
+            if (poco.Ticker.Equals(Names.Buildings.COL) 
+                || poco.Ticker.Equals(Names.Buildings.EXT) 
+                || poco.Ticker.Equals(Names.Buildings.RIG))
+            {
+                return BuildingCategory.Resources;
+            }
+            
             if (poco.Pioneers > 0) return BuildingCategory.Pioneers;
 
             return BuildingCategory.Infrastructure;

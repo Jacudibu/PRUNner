@@ -3,9 +3,9 @@ using Avalonia.Markup.Xaml;
 
 namespace PRUNner.Controls
 {
-    public class BuildingRow : UserControl
+    public class BuildingCounterControl : UserControl
     {
-        public BuildingRow()
+        public BuildingCounterControl()
         {
             InitializeComponent();
         }

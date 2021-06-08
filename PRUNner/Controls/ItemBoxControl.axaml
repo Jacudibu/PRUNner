@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="33" d:DesignHeight="33"
-             x:Class="PRUNner.Controls.ItemBox">
+             x:Class="PRUNner.Controls.ItemBoxControl">
     
     <Border Name="Frame" BorderThickness="0" CornerRadius="1" Background="#3355BB" Width="34" Height="34" HorizontalAlignment="Left">
         <Panel>

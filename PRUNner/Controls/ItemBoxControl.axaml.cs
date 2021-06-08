@@ -10,7 +10,7 @@ using PRUNner.Backend.Data.Enums;
 
 namespace PRUNner.Controls
 {
-    public class ItemBox : UserControl
+    public class ItemBoxControl : UserControl
     {
         public class ColorPair
         {
@@ -73,7 +73,7 @@ namespace PRUNner.Controls
         private readonly TextBlock _itemName; 
         private readonly TextBlock _number; 
         
-        public ItemBox()
+        public ItemBoxControl()
         {
             InitializeComponent();
 

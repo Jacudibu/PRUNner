@@ -19,6 +19,7 @@ namespace PRUNner.Backend.Data
         public BuildingCategory Category { get; private set; }
         public int AreaCost { get; private set; }
         public BuildingWorkforce Workforce { get; private set; } = null!;
+        public BuildingWorkforceRatio WorkforceRatio { get; private set; } = null!;
         public BuildingWorkforce AdditionalWorkforceSpace { get; private set; } = null!;
 
         internal override string GetIdFromPoco(FioBuilding poco) => poco.Ticker;
@@ -31,6 +32,7 @@ namespace PRUNner.Backend.Data
             Category = DetermineCategory(poco);
             
             Workforce = new BuildingWorkforce(poco);
+            WorkforceRatio = new BuildingWorkforceRatio(Workforce);
             AdditionalWorkforceSpace = DetermineAdditionalWorkforceSpace();
 
             AreaCost = poco.AreaCost;

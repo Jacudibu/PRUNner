@@ -100,10 +100,16 @@ namespace PRUNner.Models.BasePlanner
         {
             var expertBonus = expertAllocation.GetEfficiencyBonus(Building.Expertise);
             var hqBonus = hq.GetFactionEfficiencyFactorForIndustry(Building.Expertise);
+            var satisfaction = 0d;
+            satisfaction += workforceSatisfaction.Pioneers * Building.WorkforceRatio.Pioneers;
+            satisfaction += workforceSatisfaction.Settlers * Building.WorkforceRatio.Settlers;
+            satisfaction += workforceSatisfaction.Technicians * Building.WorkforceRatio.Technicians;
+            satisfaction += workforceSatisfaction.Engineers * Building.WorkforceRatio.Engineers;
+            satisfaction += workforceSatisfaction.Scientists * Building.WorkforceRatio.Scientists;
             
             foreach (var recipe in AvailableRecipes)
             {
-                recipe.UpdateProductionEfficiency(1 + expertBonus + hqBonus);
+                recipe.UpdateProductionEfficiency(satisfaction + expertBonus + hqBonus);
             }
         }
     }   

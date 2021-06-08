@@ -94,6 +94,14 @@ namespace PRUNner.Controls
                     _numberFrame.IsVisible = false;
                     _number.IsVisible = false;
                     break;
+                case ResourceData resourceData:
+                    _frame.Background = MaterialColors[resourceData.Material.Category].Background;
+                    _itemName.Foreground = MaterialColors[resourceData.Material.Category].Foreground;
+                    _itemName.Text = resourceData.Material.Ticker;
+                    _numberFrame.IsVisible = true;
+                    _number.IsVisible = true;
+                    _number.Text = Math.Round(resourceData.CalculateDailyProduction(1)).ToString("F0");
+                    break;
                 case MaterialIO materialIO:
                     _frame.Background = MaterialColors[materialIO.Material.Category].Background;
                     _itemName.Foreground = MaterialColors[materialIO.Material.Category].Foreground;

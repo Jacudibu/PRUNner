@@ -4,6 +4,8 @@ namespace PRUNner.Models.BasePlanner
 {
     public class PlanetBuildingProductionQueueElement
     {
+        public PlanetBuildingProductionQueueElement() {}
+        
         public PlanetBuildingProductionQueueElement(PlanetBuilding building)
         {
             Building = building;

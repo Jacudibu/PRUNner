@@ -6,6 +6,7 @@
              xmlns:basePlanner="clr-namespace:PRUNner.Models.BasePlanner"
              xmlns:controls="clr-namespace:PRUNner.Controls"
              xmlns:components="clr-namespace:PRUNner.Backend.Data.Components;assembly=PRUNner.Backend"
+             xmlns:System="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="450"
              x:Class="PRUNner.Views.BasePlannerView">
     
@@ -39,6 +40,11 @@
                 <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding ActiveBase.AreaAvailable}"/>
                 <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding ActiveBase.AreaTotal}"/>
             </Grid>
+            
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Headquarters: "/>
+                <ComboBox Name="HqComboBox" SelectedItem="{Binding ActiveBase.Headquarters.Faction}" Items="{Binding ActiveBase.Headquarters.AvailableFactions}"/>
+            </StackPanel>
         </StackPanel>
         
         <StackPanel Margin="10,0,0,0">

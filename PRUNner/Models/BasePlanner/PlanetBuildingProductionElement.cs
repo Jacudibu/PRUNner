@@ -24,7 +24,7 @@ namespace PRUNner.Models.BasePlanner
             Inputs = productionData.Inputs.ToList();
             Outputs = productionData.Outputs.ToList();
             _baseDurationMs = productionData.DurationInMilliseconds;
-            ParseDurationString();
+            UpdateProductionEfficiency(1);
         }
 
         private const long ColTime = 6 * 60 * 60 * 1000;
@@ -54,12 +54,12 @@ namespace PRUNner.Models.BasePlanner
             
             Inputs = new List<MaterialIO>();
             Outputs = new List<MaterialIO>() {new(resourceData.Material, realAmount) };
-            ParseDurationString();
+            UpdateProductionEfficiency(1);
         }
 
         private void ParseDurationString()
         {
-            var timespan = TimeSpan.FromMilliseconds(_baseDurationMs);
+            var timespan = TimeSpan.FromMilliseconds(Duration);
 
             var builder = new StringBuilder();
             if (timespan.Days > 0)
@@ -81,6 +81,12 @@ namespace PRUNner.Models.BasePlanner
             }
 
             DurationString = builder.ToString();
+        }
+
+        public void UpdateProductionEfficiency(double efficiencyFactor)
+        {
+            Duration = (long) Math.Round(_baseDurationMs * (2 - efficiencyFactor));
+            ParseDurationString();
         }
     }
 }

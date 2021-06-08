@@ -18,7 +18,7 @@ namespace PRUNner.Models.BasePlanner
         [Reactive] public int Amount { get; set; }
         
         public bool IsProductionBuilding => Building.Category != BuildingCategory.Infrastructure;
-        public List<PlanetBuildingProductionElement> AvailableRecipes { get; }
+        public ObservableCollection<PlanetBuildingProductionElement> AvailableRecipes { get; }
         
         public ObservableCollection<PlanetBuildingProductionQueueElement> Production { get; } = new();
         
@@ -53,13 +53,13 @@ namespace PRUNner.Models.BasePlanner
             }
             else
             {
-                AvailableRecipes = Building.Production.Select(x =>  new PlanetBuildingProductionElement(x)).ToList();
+                AvailableRecipes = new ObservableCollection<PlanetBuildingProductionElement>(Building.Production.Select(x =>  new PlanetBuildingProductionElement(x)));
             }
             
             AddProduction();
         }
 
-        private List<PlanetBuildingProductionElement> GetResourceRecipeList(PlanetData planetData, BuildingData building)
+        private ObservableCollection<PlanetBuildingProductionElement> GetResourceRecipeList(PlanetData planetData, BuildingData building)
         {
             IEnumerable<ResourceData> resources;
             switch (building.Ticker)
@@ -77,7 +77,7 @@ namespace PRUNner.Models.BasePlanner
                     throw new ArgumentOutOfRangeException(nameof(building.Ticker), building.Ticker, null);
             }
 
-             return resources.Select(x => new PlanetBuildingProductionElement(x)).ToList();
+             return new ObservableCollection<PlanetBuildingProductionElement>(resources.Select(x => new PlanetBuildingProductionElement(x)));
         }
 
         public int CalculateNeededArea()
@@ -95,5 +95,16 @@ namespace PRUNner.Models.BasePlanner
         {
             Production.Remove(element);
         }
-    }
+
+        public void UpdateProductionEfficiency(WorkforceSatisfaction workforceSatisfaction, ExpertAllocation expertAllocation, Headquarters hq)
+        {
+            var expertBonus = expertAllocation.GetEfficiencyBonus(Building.Expertise);
+            var hqBonus = hq.GetFactionEfficiencyFactorForIndustry(Building.Expertise);
+            
+            foreach (var recipe in AvailableRecipes)
+            {
+                recipe.UpdateProductionEfficiency(1 + expertBonus + hqBonus);
+            }
+        }
+    }   
 }

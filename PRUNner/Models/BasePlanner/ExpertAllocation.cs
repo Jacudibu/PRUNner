@@ -52,7 +52,7 @@ namespace PRUNner.Models.BasePlanner
         }
     }
     
-    public class ExpertAllocation
+    public class ExpertAllocation : ReactiveObject
     {
         [Reactive] public Expert Agriculture { get; set; } = new(IndustryType.Agriculture); 
         [Reactive] public Expert Chemistry { get; set; } = new(IndustryType.Chemistry); 
@@ -62,6 +62,23 @@ namespace PRUNner.Models.BasePlanner
         [Reactive] public Expert FuelRefining { get; set; } = new Expert(IndustryType.FuelRefining); 
         [Reactive] public Expert Manufacturing { get; set; } = new(IndustryType.Manufacturing); 
         [Reactive] public Expert Metallurgy { get; set; } = new(IndustryType.Metallurgy); 
-        [Reactive] public Expert ResourceExtraction { get; set; } = new(IndustryType.ResourceExtraction); 
+        [Reactive] public Expert ResourceExtraction { get; set; } = new(IndustryType.ResourceExtraction);
+
+        public double GetEfficiencyBonus(IndustryType expertise)
+        {
+            return expertise switch
+            {
+                IndustryType.Agriculture => Agriculture.EfficiencyGain,
+                IndustryType.Chemistry => Chemistry.EfficiencyGain,
+                IndustryType.Construction => Construction.EfficiencyGain,
+                IndustryType.Electronics => Electronics.EfficiencyGain,
+                IndustryType.FoodIndustries => FoodIndustries.EfficiencyGain,
+                IndustryType.FuelRefining => FuelRefining.EfficiencyGain,
+                IndustryType.Manufacturing => Manufacturing.EfficiencyGain,
+                IndustryType.Metallurgy => Metallurgy.EfficiencyGain,
+                IndustryType.ResourceExtraction => ResourceExtraction.EfficiencyGain,
+                _ => throw new ArgumentOutOfRangeException(nameof(expertise), expertise, null)
+            };
+        }
     }
 }

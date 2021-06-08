@@ -156,7 +156,7 @@
             <ItemsControl Items="{Binding ActiveBase.ProductionBuildings}">
             <ItemsControl.ItemTemplate>
             <DataTemplate DataType="basePlanner:PlanetBuilding">
-                <controls:ProductionLineControl DataContext="{Binding .}"/>
+                <controls:ProductionLineControl DataContext="{Binding .}" Margin="0,0,0,5"/>
             </DataTemplate>
             </ItemsControl.ItemTemplate>
             </ItemsControl>

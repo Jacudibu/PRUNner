@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using PRUNner.Backend;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.Data.Components;
@@ -12,57 +11,6 @@ using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.Models.BasePlanner
 {
-    public class PlanetBuildingProductionElement : ReactiveObject
-    {
-        public List<MaterialIO> Inputs { get; }
-        public List<MaterialIO> Outputs { get; }
-        public string DurationString { get; private set; } = null!;
-        
-        private readonly long _baseDurationMs;
-
-        public PlanetBuildingProductionElement(ProductionData productionData)
-        {
-            Inputs = productionData.Inputs.ToList();
-            Outputs = productionData.Outputs.ToList();
-            _baseDurationMs = productionData.DurationInMilliseconds;
-            ParseDurationString();
-        }
-
-        public PlanetBuildingProductionElement(ResourceData resourceData)
-        {
-            Inputs = new List<MaterialIO>();
-            Outputs = new List<MaterialIO>() {new(resourceData.Material, 1) };
-            _baseDurationMs = 12 * 60 * 60 * 1000;
-            ParseDurationString();
-        }
-
-        private void ParseDurationString()
-        {
-            var timespan = TimeSpan.FromMilliseconds(_baseDurationMs);
-
-            var builder = new StringBuilder();
-            if (timespan.Days > 0)
-            {
-                builder.Append(timespan.Days);
-                builder.Append("d ");
-            }
-            
-            if (timespan.Hours > 0)
-            {
-                builder.Append(timespan.Hours);
-                builder.Append("h ");
-            }
-            
-            if (timespan.Minutes > 0)
-            {
-                builder.Append(timespan.Minutes);
-                builder.Append('m');
-            }
-
-            DurationString = builder.ToString();
-        }
-    }
-    
     public class PlanetBuilding : ReactiveObject
     {
         public BuildingData Building { get; }

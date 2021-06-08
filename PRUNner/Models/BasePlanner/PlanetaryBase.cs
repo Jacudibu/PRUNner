@@ -22,6 +22,7 @@ namespace PRUNner.Models.BasePlanner
         public PlanetWorkforce WorkforceCapacity { get; } = new();
         public PlanetWorkforce WorkforceRemaining { get; } = new();
         public WorkforceSatisfaction WorkforceSatisfaction { get; } = new();
+        public PlanetProductionTable ProductionTable { get; } = new();
         
         public ProvidedConsumables ProvidedConsumables { get; } = new();
         
@@ -76,6 +77,8 @@ namespace PRUNner.Models.BasePlanner
             {
                 building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, Headquarters);
             }
+            
+            ProductionTable.Update(ProductionBuildings);
         }
 
         public void AddBuilding(BuildingData building)
@@ -95,6 +98,7 @@ namespace PRUNner.Models.BasePlanner
         {
             RecalculateWorkforce();
             RecalculateSpace();
+            ProductionTable.Update(ProductionBuildings);
         }
 
         private void RecalculateWorkforce()
@@ -121,6 +125,11 @@ namespace PRUNner.Models.BasePlanner
             
             AreaDeveloped = usedArea;
             AreaAvailable = AreaTotal - usedArea;
+        }
+
+        private void RecalculateInAndOutputs()
+        {
+            
         }
     }
 }

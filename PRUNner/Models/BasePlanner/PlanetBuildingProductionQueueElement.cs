@@ -1,11 +1,11 @@
 using System.Linq;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.Models.BasePlanner
 {
-    public class PlanetBuildingProductionQueueElement
+    public class PlanetBuildingProductionQueueElement : ReactiveObject
     {
-        public PlanetBuildingProductionQueueElement() {}
-        
         public PlanetBuildingProductionQueueElement(PlanetBuilding building)
         {
             Building = building;
@@ -14,7 +14,7 @@ namespace PRUNner.Models.BasePlanner
 
         public PlanetBuilding Building { get; }
         public PlanetBuildingProductionElement? ActiveRecipe { get; set; }
-        public double Percentage { get; set; } = 100;
+        [Reactive] public double Percentage { get; set; } = 100;
 
         public void Remove()
         {

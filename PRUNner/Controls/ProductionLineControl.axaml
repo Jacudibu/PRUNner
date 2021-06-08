@@ -14,7 +14,7 @@
     <StackPanel Orientation="Horizontal">
         <StackPanel>
             <controls:BuildingCounterControl />
-            <Button Content="Add Product" Command="{Binding AddProduction}" />
+            <Button HorizontalAlignment="Center" Content="Add Recipe" Command="{Binding AddProduction}" />
         </StackPanel>
         <ItemsControl Items="{Binding Production}" VerticalAlignment="Top" Margin="2,0,0,0">
             <ItemsControl.ItemTemplate>

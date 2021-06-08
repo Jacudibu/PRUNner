@@ -14,7 +14,7 @@ namespace PRUNner.Models.BasePlanner
         public List<MaterialIO> Inputs { get; }
         public List<MaterialIO> Outputs { get; }
         [Reactive] public string DurationString { get; private set; } = null!;
-        [Reactive] public long Duration { get; private set; }
+        [Reactive] public double DurationInMilliseconds { get; private set; }
 
         private readonly long _baseDurationMs;
         
@@ -59,7 +59,7 @@ namespace PRUNner.Models.BasePlanner
 
         private void ParseDurationString()
         {
-            var timespan = TimeSpan.FromMilliseconds(Duration);
+            var timespan = TimeSpan.FromMilliseconds(DurationInMilliseconds);
 
             var builder = new StringBuilder();
             if (timespan.Days > 0)
@@ -85,7 +85,7 @@ namespace PRUNner.Models.BasePlanner
 
         public void UpdateProductionEfficiency(double efficiencyFactor)
         {
-            Duration = (long) Math.Round(_baseDurationMs * (2 - efficiencyFactor));
+            DurationInMilliseconds = _baseDurationMs * (2 - efficiencyFactor);
             ParseDurationString();
         }
     }

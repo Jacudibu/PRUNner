@@ -16,6 +16,7 @@ namespace PRUNner.Models.BasePlanner
         public PlanetaryBaseInfrastructure InfrastructureBuildings { get; } = new();
         public ObservableCollection<PlanetBuilding> ProductionBuildings { get; } = new();
 
+        public ExpertAllocation ExpertAllocation { get; } = new();
         public PlanetWorkforce WorkforceRequired { get; } = new();
         public PlanetWorkforce WorkforceCapacity { get; } = new();
         public PlanetWorkforce WorkforceRemaining { get; } = new();

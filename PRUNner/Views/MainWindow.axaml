@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="PRUNner.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="PRUNner">
+        Title="PRUNner" Width="1600" Height="800">
 
     <Design.DataContext>
         <viewModels:MainWindowViewModel/>

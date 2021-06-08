@@ -15,12 +15,12 @@
     </Design.DataContext>
     
 <StackPanel>
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal" Margin="5,10,5,0">
         <StackPanel>
-            <TextBlock Text="{Binding ActiveBase.Planet.Name}" FontSize="20" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding ActiveBase.Planet.Name}" Classes="h1" HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal">
                 <StackPanel Width="100">
-                    <TextBlock Text="Resources" HorizontalAlignment="Center" Margin="0, 10, 0, 5"/>
+                    <TextBlock Text="Resources" Classes="h2" HorizontalAlignment="Center"/>
                     <ItemsControl Items="{Binding ActiveBase.Planet.Resources}" Margin="0,5,0,0">
                     <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="components:ResourceData">
@@ -34,27 +34,28 @@
                 </StackPanel>
                 
                 <StackPanel Margin="20,0,0,0">
-                    <TextBlock Text="Area" HorizontalAlignment="Center" Margin="0, 10, 0, 5"/>
-                    <Grid ColumnDefinitions="70,30" RowDefinitions="*,*,*" Width="100">
-                        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Total"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Developed"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Available"/>
-
-                        <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding ActiveBase.AreaTotal}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding ActiveBase.AreaDeveloped}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding ActiveBase.AreaAvailable}"/>
+                    <TextBlock Text="Area" Classes="h2" HorizontalAlignment="Center"/>
+                    <Grid ColumnDefinitions="70,30" RowDefinitions="25,25,25" Width="100">
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Total"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Developed"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Available"/>
+ 
+                        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding ActiveBase.AreaTotal}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding ActiveBase.AreaDeveloped}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding ActiveBase.AreaAvailable}"/>
                     </Grid>
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                <TextBlock Text="Headquarters: "/>
-                <ComboBox Name="HqComboBox" SelectedItem="{Binding ActiveBase.Headquarters.Faction}" Items="{Binding ActiveBase.Headquarters.AvailableFactions}"/>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <TextBlock VerticalAlignment="Center" Classes="h2" Text="Headquarters" />
+                <ComboBox VerticalAlignment="Center" SelectedItem="{Binding ActiveBase.Headquarters.Faction}" Items="{Binding ActiveBase.Headquarters.AvailableFactions}"
+                          MinWidth="110"/>
             </StackPanel>
         </StackPanel>
         
-        <StackPanel Margin="10,0,0,0">
-            <TextBlock Text="Workforce" HorizontalAlignment="Center"/>
+        <StackPanel Margin="30,0,0,0">
+            <TextBlock Text="Workforce" Classes="h2" HorizontalAlignment="Center"/>
             <Grid ColumnDefinitions="80,75,75,75,50,50,80" RowDefinitions="*,*,*,*,*,*" Width="485">
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text=""/>
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Required"/>
@@ -102,7 +103,7 @@
         </StackPanel>
         
         <StackPanel Margin="10,0,0,0">
-            <TextBlock Text="Infrastructure Buildings" HorizontalAlignment="Center"/>
+            <TextBlock Text="Infrastructure Buildings" Classes="h2" HorizontalAlignment="Center"/>
             
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
@@ -127,7 +128,7 @@
         </StackPanel>
         
         <StackPanel>
-            <TextBlock Text="Experts" HorizontalAlignment="Center"/>
+            <TextBlock Text="Experts" Classes="h2" HorizontalAlignment="Center"/>
             <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Agriculture}"/>
             <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Chemistry}"/>
             <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Construction}"/>
@@ -170,7 +171,7 @@
     <StackPanel Orientation="Horizontal">
         <Border BorderThickness="1" BorderBrush="LightGray" MinWidth="700">
             <StackPanel Margin="3,3,3,3">
-                <TextBlock Text="Production Buildings"/>
+                <TextBlock Text="Production Buildings" Classes="h2"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <TextBox Text="{Binding AddBuildingTextBox.BuildingName}" Width="100"/>
                     <Button Content="AddBuilding" Command="{Binding AddBuilding}"/>
@@ -187,7 +188,7 @@
         </Border>
         
         <StackPanel Margin="20,0,0,0">
-            <TextBlock Text="Total Production Overview" HorizontalAlignment="Center" FontWeight="DemiBold"/>
+            <TextBlock Text="Total Production Overview" Classes="h2" HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Width="35" TextAlignment="Center" Text=""/>
                 <TextBlock Width="100" TextAlignment="Center" Text="Inputs"/>

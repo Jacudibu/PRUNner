@@ -124,12 +124,25 @@ namespace PRUNner.App.Controls
                     _itemName.Text = planetProductionRow.Material.Ticker;
                     _numberFrame.IsVisible = true;
                     _number.IsVisible = true;
-                    _number.Text = Math.Round(planetProductionRow.Balance).ToString("F0");
+
+                    _number.Text = planetProductionRow.Balance.ToString("F1");
+                    
                     if (planetProductionRow.Balance < 0)
                     {
                         _number.Foreground = SolidColorBrush.Parse("red");
                     }
                     break;
+            }
+
+            _numberFrame.Width = 6 + _number.Text.Length * 5;
+            if (_number.Text.Contains('.'))
+            {
+                _numberFrame.Width -= 4;
+            }
+
+            if (_number.Text.Contains('-'))
+            {
+                _numberFrame.Width -= 3;
             }
         }
 

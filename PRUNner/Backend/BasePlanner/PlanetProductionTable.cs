@@ -58,7 +58,7 @@ namespace PRUNner.Backend.BasePlanner
             
             foreach (var row in Rows)
             {
-                if (Math.Abs(row.Balance) < 0.5)
+                if (Math.Abs(row.Balance) < 0.1)
                 {
                     continue;
                 }

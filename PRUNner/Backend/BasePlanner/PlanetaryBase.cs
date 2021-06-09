@@ -1,7 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using DynamicData.Binding;
 using PRUNner.Backend.Data;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -34,18 +33,15 @@ namespace PRUNner.Backend.BasePlanner
             Planet = planet;
             foreach (var infrastructureBuilding in InfrastructureBuildings.All)
             {
-                infrastructureBuilding.WhenAnyValue(x => x.Amount).Subscribe(_ => OnBuildingChange());
+                infrastructureBuilding.Changed.Subscribe(_ => OnBuildingChange());
             }
 
-            ProvidedConsumables.WhenAnyPropertyChanged().Subscribe(value =>
+            ProvidedConsumables.Changed.Subscribe(_ =>
             {
-                if (value != null)
-                {
-                    WorkforceSatisfaction.Recalculate(value, WorkforceCapacity, WorkforceRequired);
-                }
+                WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
             });
 
-            WorkforceRemaining.WhenAnyPropertyChanged().Subscribe(_ =>
+            WorkforceRemaining.Changed.Subscribe(_ =>
             {
                 WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
             });
@@ -86,7 +82,7 @@ namespace PRUNner.Backend.BasePlanner
             if (addedBuilding == null)
             {
                 addedBuilding = PlanetBuilding.FromProductionBuilding(Planet, building);
-                addedBuilding.WhenAnyValue(x => x.Amount).Subscribe(_ => OnBuildingChange());
+                addedBuilding.Changed.Subscribe(_ => OnBuildingChange());
                 ProductionBuildings.Add(addedBuilding);
             }
 

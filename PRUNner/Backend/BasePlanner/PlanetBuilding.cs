@@ -15,8 +15,7 @@ namespace PRUNner.Backend.BasePlanner
         public BuildingData Building { get; }
         
         [Reactive] public int Amount { get; set; }
-        
-        public bool IsProductionBuilding => Building.Category != BuildingCategory.Infrastructure;
+
         public ObservableCollection<PlanetBuildingProductionElement> AvailableRecipes { get; }
         
         public ObservableCollection<PlanetBuildingProductionQueueElement> Production { get; } = new();

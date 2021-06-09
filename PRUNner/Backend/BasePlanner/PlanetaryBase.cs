@@ -47,13 +47,6 @@ namespace PRUNner.Backend.BasePlanner
                 WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
             });
 
-            WorkforceRemaining.Changed.Subscribe(_ =>
-            {
-                WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
-            });
-            
-            WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
-
             WorkforceSatisfaction.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
             _empire.Headquarters.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
             
@@ -135,6 +128,7 @@ namespace PRUNner.Backend.BasePlanner
             }
 
             WorkforceRemaining.SetRemainingWorkforce(WorkforceRequired, WorkforceCapacity);
+            WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
         }
 
         private void RecalculateSpace()
@@ -154,7 +148,10 @@ namespace PRUNner.Backend.BasePlanner
         public void FinishLoading()
         {
             _loading = false;
-            OnBuildingChange();
+            RecalculateWorkforce();
+            RecalculateBuildingEfficiencies();
+            RecalculateSpace();
+            OnProductionChange();     
         }
     }
 }

@@ -10,15 +10,27 @@ namespace PRUNner.Backend.BasePlanner
 {
     public class PlanetProductionTable : ReactiveObject
     {
+        private readonly PlanetaryBase _planetaryBase;
+        public PlanetProductionTable(PlanetaryBase planetaryBase)
+        {
+            _planetaryBase = planetaryBase;
+        }
+
         public ObservableCollection<PlanetProductionRow> Rows { get; } = new();
         public ObservableCollection<PlanetProductionRow> Inputs { get; } = new();
         public ObservableCollection<PlanetProductionRow> Outputs { get; } = new();
-        
+
         public void Update(IEnumerable<PlanetBuilding> buildings)
         {
             Rows.Clear();
             Inputs.Clear();
             Outputs.Clear();
+            
+            WorkforceConsumptionFactors.Pioneers.AddUsedConsumables(_planetaryBase.ProvidedConsumables, _planetaryBase.WorkforceRequired.Pioneers, _planetaryBase.WorkforceCapacity.Pioneers, AddInput);
+            WorkforceConsumptionFactors.Settlers.AddUsedConsumables(_planetaryBase.ProvidedConsumables, _planetaryBase.WorkforceRequired.Settlers, _planetaryBase.WorkforceCapacity.Settlers, AddInput);
+            WorkforceConsumptionFactors.Technicians.AddUsedConsumables(_planetaryBase.ProvidedConsumables, _planetaryBase.WorkforceRequired.Technicians, _planetaryBase.WorkforceCapacity.Technicians, AddInput);
+            WorkforceConsumptionFactors.Engineers.AddUsedConsumables(_planetaryBase.ProvidedConsumables, _planetaryBase.WorkforceRequired.Engineers, _planetaryBase.WorkforceCapacity.Engineers, AddInput);
+            WorkforceConsumptionFactors.Scientists.AddUsedConsumables(_planetaryBase.ProvidedConsumables, _planetaryBase.WorkforceRequired.Scientists, _planetaryBase.WorkforceCapacity.Scientists, AddInput);
             
             foreach (var building in buildings)
             {

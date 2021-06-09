@@ -22,7 +22,7 @@
 
         <StackPanel Margin="0,20,0,0" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Width="100" TextAlignment="Center" Text="Name" />
+                <TextBlock Width="100" TextAlignment="Center" Text="Planet" />
                 <TextBlock Width="100" TextAlignment="Center" Text="$/day" />
             </StackPanel>
             <ItemsControl x:Name="PlanetList" Items="{Binding Empire.PlanetaryBases}">
@@ -35,9 +35,10 @@
                     <DataTemplate DataType="basePlanner:PlanetaryBase">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"
-                                       Text="{Binding Planet.Name, StringFormat={}{0:F2}}" />
+                                       Text="{Binding Planet.Name}" />
                             <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"
-                                       Text="{Binding NetProfit, StringFormat={}{0:F2}}" />
+                                       Text="{Binding NetProfit, StringFormat={}{0:F0}}"
+                                       HorizontalAlignment="Right"/>
                             <Button Content="View" VerticalAlignment="Center"
                                     Command="{Binding ElementName=PlanetList, Path=DataContext.ViewBase, FallbackValue=null}"
                                     CommandParameter="{Binding .}" />

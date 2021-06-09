@@ -9,6 +9,7 @@ namespace PRUNner.Backend.BasePlanner
 {
     public class PlanetaryBase : ReactiveObject
     {
+        private bool _loading;
         private readonly Empire _empire;
         public PlanetData Planet { get; }
 
@@ -20,7 +21,7 @@ namespace PRUNner.Backend.BasePlanner
         public PlanetWorkforce WorkforceCapacity { get; } = new();
         public PlanetWorkforce WorkforceRemaining { get; } = new();
         public WorkforceSatisfaction WorkforceSatisfaction { get; } = new();
-        public PlanetProductionTable ProductionTable { get; } = new();
+        public PlanetProductionTable ProductionTable { get; }
         
         public ProvidedConsumables ProvidedConsumables { get; } = new();
         
@@ -31,8 +32,11 @@ namespace PRUNner.Backend.BasePlanner
 
         public PlanetaryBase(Empire empire, PlanetData planet)
         {
+            BeginLoading();
+            
             _empire = empire;
             Planet = planet;
+            ProductionTable = new PlanetProductionTable(this);
             foreach (var infrastructureBuilding in InfrastructureBuildings.All)
             {
                 infrastructureBuilding.Changed.Subscribe(_ => OnBuildingChange());
@@ -64,12 +68,17 @@ namespace PRUNner.Backend.BasePlanner
             ExpertAllocation.Manufacturing.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
             ExpertAllocation.Metallurgy.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
             ExpertAllocation.ResourceExtraction.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
-            
-            OnBuildingChange();
+         
+            FinishLoading();
         }
 
         private void RecalculateBuildingEfficiencies()
         {
+            if (_loading)
+            {
+                return;
+            }
+            
             foreach (var building in ProductionBuildings)
             {
                 building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, _empire.Headquarters);
@@ -95,6 +104,11 @@ namespace PRUNner.Backend.BasePlanner
 
         private void OnBuildingChange()
         {
+            if (_loading)
+            {
+                return;
+            }
+            
             RecalculateWorkforce();
             RecalculateSpace();
             OnProductionChange();
@@ -130,6 +144,17 @@ namespace PRUNner.Backend.BasePlanner
             
             AreaDeveloped = usedArea;
             AreaAvailable = AreaTotal - usedArea;
+        }
+
+        public void BeginLoading()
+        {
+            _loading = true;
+        }
+
+        public void FinishLoading()
+        {
+            _loading = false;
+            OnBuildingChange();
         }
     }
 }

@@ -19,8 +19,8 @@ namespace PRUNner.Backend.BasePlanner
             get => _inputs;
             set
             {
-                Balance -= value;
                 this.RaiseAndSetIfChanged(ref _inputs, value);
+                Balance = _outputs - _inputs;
             }
         }
 
@@ -31,8 +31,8 @@ namespace PRUNner.Backend.BasePlanner
             get => _outputs;
             set
             {
-                Balance += value;
                 this.RaiseAndSetIfChanged(ref _outputs, value);
+                Balance = _outputs - _inputs;
             }
         }
 
@@ -43,7 +43,7 @@ namespace PRUNner.Backend.BasePlanner
             private set
             {
                 this.RaiseAndSetIfChanged(ref _balance, value);
-                Value = Balance * Material.PriceData.NC1.Average;
+                Value = _balance * Material.PriceData.NC1.Average;
             }
         }
 

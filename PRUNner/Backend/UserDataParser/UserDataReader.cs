@@ -51,12 +51,14 @@ namespace PRUNner.Backend.UserDataParser
         public static PlanetaryBase ReadPlanet(Empire empire, JObject obj)
         {
             var result = empire.AddPlanetaryBase(PlanetData.Get(obj.GetValue(nameof(PlanetaryBase.Planet))!.ToObject<string>()!)!);
+            result.BeginLoading();
             
             ReadInfrastructureBuildings((JObject) obj[nameof(PlanetaryBase.InfrastructureBuildings)]!, result.InfrastructureBuildings);
             ReadProductionBuildings((JArray) obj[nameof(PlanetaryBase.ProductionBuildings)]!, result);
             ReadExpertAllocation((JObject) obj[nameof(PlanetaryBase.ExpertAllocation)]!, result.ExpertAllocation);
             ReadConsumableData((JObject) obj[nameof(PlanetaryBase.ProvidedConsumables)]!, result.ProvidedConsumables);
 
+            result.FinishLoading();
             return result;
         }
 

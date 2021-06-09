@@ -51,11 +51,11 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
-                <TextBlock VerticalAlignment="Center" Classes="h2" Text="Headquarters" />
-                <ComboBox VerticalAlignment="Center" SelectedItem="{Binding ActiveBase.Headquarters.Faction}" Items="{Binding ActiveBase.Headquarters.AvailableFactions}"
-                          MinWidth="110"/>
-            </StackPanel>
+            <!-- <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0"> -->
+            <!--     <TextBlock VerticalAlignment="Center" Classes="h2" Text="Headquarters" /> -->
+            <!--     <ComboBox VerticalAlignment="Center" SelectedItem="{Binding ActiveBase.Headquarters.Faction}" Items="{Binding ActiveBase.Headquarters.AvailableFactions}" -->
+            <!--               MinWidth="110"/> -->
+            <!-- </StackPanel> -->
         </StackPanel>
         
         <StackPanel Margin="30,0,0,0">

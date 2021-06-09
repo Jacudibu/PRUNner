@@ -7,12 +7,47 @@ namespace PRUNner.Backend.UserDataParser
 {
     public static class UserDataWriter
     {
-        public static void Save(PlanetaryBase planetaryBase)
+        public static void Save(Empire empire)
         {
             Directory.CreateDirectory(UserDataPaths.UserDataFolder);
-            File.WriteAllText(UserDataPaths.UserDataFolder + UserDataPaths.PlanetFile, WritePlanetaryBase(planetaryBase).ToString());
+
+            var jToken = WriteEmpire(empire);
+            
+            
+            File.WriteAllText(UserDataPaths.UserDataFolder + UserDataPaths.EmpireFile, jToken.ToString());
         }
-        
+
+        public static JToken WriteEmpire(Empire empire)
+        {
+            JObject result = new();
+
+            result.Add(nameof(Empire.Headquarters), WriteHeadquarters(empire.Headquarters));
+            result.Add(nameof(Empire.PlanetaryBases), WritePlanetaryBases(empire.PlanetaryBases));
+
+            return result;
+        }
+
+        private static JToken WriteHeadquarters(Headquarters headquarters)
+        {
+            JObject result = new();
+
+            result.Add(nameof(Headquarters.Faction), headquarters.Faction.ToString());
+            
+            return result;
+        }
+
+        private static JToken WritePlanetaryBases(ObservableCollection<PlanetaryBase> planetaryBases)
+        {
+            JArray result = new();
+
+            foreach (var planetaryBase in planetaryBases)
+            {
+                result.Add(WritePlanetaryBase(planetaryBase));
+            }
+            
+            return result;
+        }
+
         public static JToken WritePlanetaryBase(PlanetaryBase planetaryBase)
         {
             JObject result = new();

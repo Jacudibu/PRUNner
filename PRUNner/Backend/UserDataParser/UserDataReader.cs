@@ -1,8 +1,10 @@
+using System;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using PRUNner.Backend.BasePlanner;
 using PRUNner.Backend.Data;
+using PRUNner.Backend.Enums;
 
 namespace PRUNner.Backend.UserDataParser
 {
@@ -10,18 +12,42 @@ namespace PRUNner.Backend.UserDataParser
     {
         public static Empire Load()
         {
-            var empire = new Empire();
-            if (!File.Exists(UserDataPaths.UserDataFolder + UserDataPaths.PlanetFile))
+            if (!File.Exists(UserDataPaths.UserDataFolder + UserDataPaths.EmpireFile))
             {
-                return empire;
+                return new Empire();
             }
             
-            var jObject = JObject.Parse(File.ReadAllText(UserDataPaths.UserDataFolder + UserDataPaths.PlanetFile));
-            ReadPlanet(empire, jObject);
+            var jObject = JObject.Parse(File.ReadAllText(UserDataPaths.UserDataFolder + UserDataPaths.EmpireFile));
+            var result = ReadEmpire(jObject);
 
-            return empire;
+            return result;
         }
-        
+
+        public static Empire ReadEmpire(JObject jObject)
+        {
+            var result = new Empire();
+
+            ReadHeadquarters((JObject) jObject[nameof(Empire.Headquarters)]!, result.Headquarters);
+            ReadPlanetaryBases((JArray) jObject[nameof(Empire.PlanetaryBases)]!, result);
+
+            return result;
+        }
+
+        private static void ReadHeadquarters(JObject jObject, Headquarters headquarters)
+        {
+            headquarters.Faction = Enum.Parse<Faction>(jObject[nameof(Headquarters.Faction)].Value<string>(), true);
+        }
+
+        private static void ReadPlanetaryBases(JArray jArray, Empire empire)
+        {
+            empire.PlanetaryBases.Clear();
+            
+            foreach (var jObject in jArray.Cast<JObject>())
+            {
+                ReadPlanet(empire, jObject);
+            }
+        }
+
         public static PlanetaryBase ReadPlanet(Empire empire, JObject obj)
         {
             var result = empire.AddPlanetaryBase(PlanetData.Get(obj.GetValue(nameof(PlanetaryBase.Planet))!.ToObject<string>()!)!);

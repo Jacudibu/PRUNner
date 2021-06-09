@@ -1,11 +1,12 @@
 ﻿using PRUNner.Backend.BasePlanner;
 using PRUNner.Backend.Data;
+using ReactiveUI;
 
 namespace PRUNner.App.ViewModels
 {
     public class EmpireViewModel : ViewModelBase
     {
-        public Empire Empire { get; set; } = new();
+        public Empire Empire { get; private set; } = new();
 
         private readonly MainWindowViewModel? _mainWindow;
 
@@ -26,6 +27,12 @@ namespace PRUNner.App.ViewModels
         {
             _mainWindow?.BasePlannerViewModel.SetActiveBase(planetaryBase);
             _mainWindow?.ViewBasePlanner();
+        }
+
+        public void SetEmpire(Empire empire)
+        {
+            Empire = empire;
+            this.RaisePropertyChanged(nameof(Empire));
         }
     }
 }

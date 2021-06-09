@@ -63,12 +63,12 @@ namespace PRUNner.App.ViewModels
         
         public void SaveToDisk()
         {
-            UserDataWriter.Save(BasePlannerViewModel.ActiveBase);
+            UserDataWriter.Save(EmpireViewModel.Empire);
         }
 
         public void LoadFromDisk()
         {
-            EmpireViewModel.Empire = UserDataReader.Load();
+            EmpireViewModel.SetEmpire(UserDataReader.Load());
             BasePlannerViewModel.SetActiveBase(EmpireViewModel.Empire.PlanetaryBases.FirstOrDefault());
         }
     }

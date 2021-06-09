@@ -21,20 +21,21 @@ namespace FIOImport
         private const string AllMaterialsPath = CacheFolder + "allMaterials.json";
         private const string AllSystemsPath = CacheFolder + "systemStars.json";
         private const string AllPlanetIdentifiersPath = CacheFolder + "allPlanetIdentifiers.json";
+        private const string RainPricesPath = CacheFolder + "rainPrices.json";
         
         public static RawData ImportAll()
         {
             Directory.CreateDirectory(CacheFolder);
             Directory.CreateDirectory(PlanetFolder);
             
-            return new RawData(ImportBuildings(), ImportMaterials(), ImportAllPlanetData(), ImportSystems());
+            return new RawData(ImportBuildings(), ImportMaterials(), ImportAllPlanetData(), ImportSystems(), ImportPrices());
         }
-        
+
         public static RawData LoadAllFromCache()
         {
             if (Directory.Exists(CacheFolder))
             {
-                return new RawData(LoadBuildings(), LoadMaterials(), LoadAllPlanetData(), LoadSystems());
+                return new RawData(LoadBuildings(), LoadMaterials(), LoadAllPlanetData(), LoadSystems(), LoadPrices());
             }
 
             Console.WriteLine("Unable to find cached data, downloading...");
@@ -76,6 +77,24 @@ namespace FIOImport
 
             return result!;
         }
+        
+        public static FioRainPrices[] LoadPrices()
+        {
+            var json = File.ReadAllText(RainPricesPath);
+            var result = JsonConvert.DeserializeObject<FioRainPrices[]>(json);
+
+            return result!;
+        }
+        
+        public static FioRainPrices[] ImportPrices()
+        {
+            var json = Client.GetStringAsync("https://rest.fnar.net/rain/prices").GetAwaiter().GetResult();
+            var result = JsonConvert.DeserializeObject<FioRainPrices[]>(json);
+            
+            File.WriteAllText(RainPricesPath, json);
+
+            return result!;
+        }        
         
         public static FioPlanetIdentifier[] LoadPlanetIdentifiers()
         {

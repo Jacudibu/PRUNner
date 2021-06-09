@@ -16,7 +16,8 @@ namespace PRUNner.Backend.Data
         public string Name { get; private set; }
         public double Weight { get; private set; }
         public double Volume { get; private set; }
-
+        public MaterialPriceData PriceData { get; } = new();
+        
         internal override string GetIdFromPoco(FioMaterial poco) => poco.Ticker;
         internal override string GetFioIdFromPoco(FioMaterial poco) => poco.MatId;
 

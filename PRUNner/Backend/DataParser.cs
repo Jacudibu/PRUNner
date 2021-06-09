@@ -1,4 +1,5 @@
 using FIOImport;
+using FIOImport.Pocos;
 using PRUNner.Backend.Data;
 
 namespace PRUNner.Backend
@@ -32,6 +33,21 @@ namespace PRUNner.Backend
             PlanetData.PostProcessData(rawData.AllPlanets);
             SystemData.PostProcessData(rawData.AllSystems);
             BuildingData.PostProcessData(rawData.AllBuildings);
+            
+            LoadPriceData(rawData.RainPrices);
+        }
+
+        public static void UpdatePriceData()
+        {
+            LoadPriceData(FioImporter.ImportPrices());
+        }
+        
+        private static void LoadPriceData(FioRainPrices[] fioPrices)
+        {
+            foreach (var price in fioPrices)
+            {
+                MaterialData.Get(price.Ticker)?.PriceData.Update(price);
+            }
         }
     }
 }

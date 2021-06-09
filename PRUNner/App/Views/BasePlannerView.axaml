@@ -198,6 +198,7 @@
                 <TextBlock Width="100" TextAlignment="Center" Text="Inputs"/>
                 <TextBlock Width="100" TextAlignment="Center" Text="Outputs"/>
                 <TextBlock Width="100" TextAlignment="Center" Text="Balance"/>
+                <TextBlock Width="100" TextAlignment="Center" Text="$/day"/>
             </StackPanel>
             <ItemsControl Items="{Binding ActiveBase.ProductionTable.Rows}">
             <ItemsControl.ItemTemplate>
@@ -207,6 +208,7 @@
                     <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Inputs, StringFormat={}{0:F2}}" />
                     <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Outputs, StringFormat={}{0:F2}}" />
                     <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Balance, StringFormat={}{0:F2}}"/>
+                    <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Value, StringFormat={}{0:F2}}"/>
                 </StackPanel>
             </DataTemplate>
             </ItemsControl.ItemTemplate>

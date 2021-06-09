@@ -1,4 +1,5 @@
-﻿using PRUNner.Backend;
+﻿using System;
+using PRUNner.Backend;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.PlanetFinder;
 using PRUNner.Backend.UserDataParser;
@@ -41,6 +42,16 @@ namespace PRUNner.App.ViewModels
             ActiveView = _basePlannerViewModel;
         }
 
+        public void UpdatePriceData()
+        {
+            DataParser.UpdatePriceData();
+        }
+
+        public void BlameFio()
+        {
+            Console.WriteLine("Nah, too lazy");
+        }
+        
         public void SaveToDisk()
         {
             UserDataWriter.Save(_basePlannerViewModel.ActiveBase);

@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="33" d:DesignHeight="33"
+             x:Class="PRUNner.App.Controls.ItemBoxControl">
+    
+    <Border Name="Frame" BorderThickness="0" CornerRadius="1" Background="#3355BB" Width="34" Height="34" HorizontalAlignment="Left">
+        <Panel>
+            <TextBlock Name="ItemName" Text="ASDF" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#99BBFF" FontWeight="Bold" FontSize="10"/>
+            <Border Name="NumberFrame" CornerRadius="3,0,0,0" Width="20" Height="12" Background="#23282B" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <TextBlock Name="Number" Text="50" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#bbb" FontWeight="Normal" FontSize="8"/>
+            </Border>
+        </Panel>
+    </Border>
+</UserControl>

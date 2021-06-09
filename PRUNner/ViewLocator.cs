@@ -4,7 +4,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using PRUNner.ViewModels;
+using PRUNner.App.ViewModels;
 
 namespace PRUNner
 {

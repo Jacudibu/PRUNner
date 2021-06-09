@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:PRUNner.App.Controls"
+             xmlns:basePlanner1="clr-namespace:PRUNner.Backend.BasePlanner"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PRUNner.App.Controls.BuildingCounterControl">
+    
+    <Design.DataContext>
+        <basePlanner1:PlanetBuilding />
+    </Design.DataContext>
+    
+    <StackPanel Orientation="Horizontal">
+        <controls:ItemBoxControl DataContext="{Binding Building}" Margin="2" />
+        <NumericUpDown Classes="compact" Value="{Binding Amount}"/>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,79 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:PRUNner.App.Controls"
+             xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
+             xmlns:components="clr-namespace:PRUNner.Backend.Data.Components"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PRUNner.App.Controls.ProductionLineControl">
+    <Design.DataContext>
+        <basePlanner:PlanetBuilding />
+    </Design.DataContext>
+
+    <Border BorderThickness="1" BorderBrush="LightGray" Margin="0,0,0,2">
+    <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
+        <StackPanel VerticalAlignment="Center">
+            <controls:BuildingCounterControl />
+            <Button HorizontalAlignment="Center" Content="Add Recipe" Command="{Binding AddProduction}" />
+        </StackPanel>
+        <ItemsControl Items="{Binding Production}" VerticalAlignment="Top">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" Spacing="2"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="basePlanner:PlanetBuildingProductionQueueElement">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                        <TextBox VerticalAlignment="Center" Text="{Binding Percentage}" Width="20" />
+                        <TextBlock VerticalAlignment="Center" Text="%" Margin="0,0,5,0" />
+
+                        <ComboBox SelectedItem="{Binding ActiveRecipe}" Items="{Binding Building.AvailableRecipes}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <ItemsControl Items="{Binding Inputs}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" Spacing="2" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="components:MaterialIO">
+                                                        <controls:ItemBoxControl DataContext="{Binding .}"/>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock HorizontalAlignment="Center" Text="==>" />
+                                                <TextBlock HorizontalAlignment="Center" Text="{Binding DurationString}"
+                                                           Margin="5,0" />
+                                            </StackPanel>
+
+                                            <ItemsControl Items="{Binding Outputs}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" Spacing="2"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="components:MaterialIO">
+                                                        <controls:ItemBoxControl DataContext="{Binding .}"/>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        
+                        <Button Content="x" Command="{Binding Remove}" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+    </Border>
+</UserControl>

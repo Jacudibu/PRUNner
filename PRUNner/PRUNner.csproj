@@ -6,22 +6,16 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <Folder Include="Models\" />
         <Compile Update="**\*.xaml.cs">
             <DependentUpon>%(Filename)</DependentUpon>
         </Compile>
         <AvaloniaResource Include="**\*.xaml">
             <SubType>Designer</SubType>
         </AvaloniaResource>
+        <AvaloniaResource Include="App\Assets\avalonia-logo.ico" />
         <AvaloniaResource Include="Assets\**" />
-        <Compile Update="App.axaml.cs">
+        <Compile Update="App\App.axaml.cs">
           <DependentUpon>App.axaml</DependentUpon>
-        </Compile>
-        <Compile Update="Views\MainWindow.axaml.cs">
-          <DependentUpon>MainWindow.axaml</DependentUpon>
-        </Compile>
-        <Compile Update="Views\BasePlannerView.axaml.cs">
-          <DependentUpon>BasePlannerView.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
     </ItemGroup>
@@ -33,6 +27,8 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\FIOImport\FIOImport.csproj" />
-      <ProjectReference Include="..\PRUNner.Backend\PRUNner.Backend.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Styles\NumericUpDownCompact.axaml" />
     </ItemGroup>
 </Project>

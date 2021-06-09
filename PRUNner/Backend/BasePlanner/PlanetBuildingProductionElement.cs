@@ -11,6 +11,7 @@ namespace PRUNner.Backend.BasePlanner
 {
     public class PlanetBuildingProductionElement : ReactiveObject
     {
+        public readonly string RecipeName;
         public List<MaterialIO> Inputs { get; }
         public List<MaterialIO> Outputs { get; }
         [Reactive] public string DurationString { get; private set; } = null!;
@@ -21,6 +22,7 @@ namespace PRUNner.Backend.BasePlanner
 
         public PlanetBuildingProductionElement(ProductionData productionData)
         {
+            RecipeName = productionData.RecipeName;
             Inputs = productionData.Inputs.ToList();
             Outputs = productionData.Outputs.ToList();
             _baseDurationMs = productionData.DurationInMilliseconds;
@@ -38,6 +40,7 @@ namespace PRUNner.Backend.BasePlanner
         
         public PlanetBuildingProductionElement(ResourceData resourceData)
         {
+            RecipeName = resourceData.Material.Ticker;
             var factor = resourceData.ResourceType switch
             {
                 ResourceType.Gaseous => ColFactor,

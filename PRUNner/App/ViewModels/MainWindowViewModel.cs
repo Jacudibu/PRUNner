@@ -1,6 +1,7 @@
 ﻿using PRUNner.Backend;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.PlanetFinder;
+using PRUNner.Backend.UserDataParser;
 using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.App.ViewModels
@@ -38,6 +39,16 @@ namespace PRUNner.App.ViewModels
         public void ViewBasePlanner()
         {
             ActiveView = _basePlannerViewModel;
+        }
+
+        public void SaveToDisk()
+        {
+            UserDataWriter.Save(_basePlannerViewModel.ActiveBase);
+        }
+
+        public void LoadFromDisk()
+        {
+            _basePlannerViewModel.SetActiveBase(UserDataReader.Load());
         }
     }
 }

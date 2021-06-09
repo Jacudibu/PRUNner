@@ -125,10 +125,5 @@ namespace PRUNner.Backend.BasePlanner
             AreaDeveloped = usedArea;
             AreaAvailable = AreaTotal - usedArea;
         }
-
-        private void RecalculateInAndOutputs()
-        {
-            
-        }
     }
 }

@@ -16,6 +16,8 @@
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="30" HorizontalAlignment="Center">
             <Button Content="Base Planner" Command="{Binding ViewBasePlanner}" HorizontalAlignment="Center"/>
             <Button Content="Planet Finder" Command="{Binding ViewPlanetFinder}" HorizontalAlignment="Center"/>
+            <Button Content="Save" Command="{Binding SaveToDisk}" HorizontalAlignment="Center"/>
+            <Button Content="Load" Command="{Binding LoadFromDisk}" HorizontalAlignment="Center"/>
         </StackPanel>
         
         <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}"/>

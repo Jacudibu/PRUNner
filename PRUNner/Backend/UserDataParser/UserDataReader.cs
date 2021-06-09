@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
@@ -20,35 +19,31 @@ namespace PRUNner.Backend.UserDataParser
             var result = new PlanetaryBase(PlanetData.Get(obj.GetValue(nameof(PlanetaryBase.Planet))!.ToObject<string>()!)!);
             
             ReadInfrastructureBuildings((JObject) obj[nameof(PlanetaryBase.InfrastructureBuildings)]!, result.InfrastructureBuildings);
-            ReadProductionBuildings((JArray) obj[nameof(PlanetaryBase.ProductionBuildings)]!, result.Planet, result.ProductionBuildings);
+            ReadProductionBuildings((JArray) obj[nameof(PlanetaryBase.ProductionBuildings)]!, result);
             ReadExpertAllocation((JObject) obj[nameof(PlanetaryBase.ExpertAllocation)]!, result.ExpertAllocation);
             ReadConsumableData((JObject) obj[nameof(PlanetaryBase.ProvidedConsumables)]!, result.ProvidedConsumables);
 
             return result;
         }
 
-        private static void ReadProductionBuildings(JArray buildingArray, PlanetData planet, ObservableCollection<PlanetBuilding> productionBuildings)
+        private static void ReadProductionBuildings(JArray buildingArray, PlanetaryBase planetaryBase)
         {
-            productionBuildings.Clear();
+            planetaryBase.ProductionBuildings.Clear();
 
             foreach (var buildingObject in buildingArray.Cast<JObject>())
             {
-                var building = PlanetBuilding.FromProductionBuilding(planet, BuildingData.GetOrThrow(buildingObject.GetValue(nameof(PlanetBuilding.Building))?.ToObject<string>() ?? ""));
+                var building = planetaryBase.AddBuilding(BuildingData.GetOrThrow(buildingObject.GetValue(nameof(PlanetBuilding.Building))?.ToObject<string>() ?? ""));
                 building.Amount = buildingObject.GetValue(nameof(PlanetBuilding.Amount))?.ToObject<int>() ?? 0;
 
                 building.Production.Clear();
                 foreach (var productionObject in buildingObject.GetValue(nameof(PlanetBuilding.Production))!.Cast<JObject>())
                 {
-                    var production = new PlanetBuildingProductionQueueElement(building);
+                    var production = building.AddProduction();
                     production.Percentage = productionObject.GetValue(nameof(PlanetBuildingProductionQueueElement.Percentage))!.ToObject<double>();
                     var recipeName = productionObject.GetValue(nameof(PlanetBuildingProductionQueueElement.ActiveRecipe))!.ToObject<string>();
 
                     production.ActiveRecipe = building.AvailableRecipes.SingleOrDefault(x => x.RecipeName.Equals(recipeName));
-
-                    building.Production.Add(production);
                 }
-
-                productionBuildings.Add(building);
             }
         }
 

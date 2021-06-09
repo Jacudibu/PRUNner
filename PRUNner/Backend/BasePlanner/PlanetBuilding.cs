@@ -82,16 +82,22 @@ namespace PRUNner.Backend.BasePlanner
         {
             return Building.AreaCost * Amount;
         }
+
+        public delegate void OnProductionUpdateEvent();
+        public event OnProductionUpdateEvent? OnProductionUpdate;
         
-        public void AddProduction()
+        public PlanetBuildingProductionQueueElement AddProduction()
         {
             var production = new PlanetBuildingProductionQueueElement(this);
             Production.Add(production);
+            production.Changed.Subscribe(_ => OnProductionUpdate?.Invoke());
+            return production;
         }
 
         public void RemoveProduction(PlanetBuildingProductionQueueElement element)
         {
             Production.Remove(element);
+            OnProductionUpdate?.Invoke();
         }
 
         public void UpdateProductionEfficiency(WorkforceSatisfaction workforceSatisfaction, ExpertAllocation expertAllocation, Headquarters hq)

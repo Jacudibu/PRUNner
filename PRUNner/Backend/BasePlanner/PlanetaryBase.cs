@@ -76,23 +76,30 @@ namespace PRUNner.Backend.BasePlanner
             ProductionTable.Update(ProductionBuildings);
         }
 
-        public void AddBuilding(BuildingData building)
+        public PlanetBuilding AddBuilding(BuildingData building)
         {
             var addedBuilding = ProductionBuildings.SingleOrDefault(x => x.Building == building);
             if (addedBuilding == null)
             {
                 addedBuilding = PlanetBuilding.FromProductionBuilding(Planet, building);
                 addedBuilding.Changed.Subscribe(_ => OnBuildingChange());
+                addedBuilding.OnProductionUpdate += OnProductionChange;
                 ProductionBuildings.Add(addedBuilding);
             }
 
             addedBuilding.Amount++;
+            return addedBuilding;
         }
 
         private void OnBuildingChange()
         {
             RecalculateWorkforce();
             RecalculateSpace();
+            OnProductionChange();
+        }
+
+        private void OnProductionChange()
+        {
             ProductionTable.Update(ProductionBuildings);
         }
 

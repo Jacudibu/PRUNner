@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,10 +11,14 @@ namespace PRUNner.Backend.BasePlanner
     public class PlanetProductionTable : ReactiveObject
     {
         public ObservableCollection<PlanetProductionRow> Rows { get; } = new();
-
+        public ObservableCollection<PlanetProductionRow> Inputs { get; } = new();
+        public ObservableCollection<PlanetProductionRow> Outputs { get; } = new();
+        
         public void Update(IEnumerable<PlanetBuilding> buildings)
         {
             Rows.Clear();
+            Inputs.Clear();
+            Outputs.Clear();
             
             foreach (var building in buildings)
             {
@@ -39,7 +44,26 @@ namespace PRUNner.Backend.BasePlanner
                 }
             }
             
+            foreach (var row in Rows)
+            {
+                if (Math.Abs(row.Balance) < 0.5)
+                {
+                    continue;
+                }
+
+                if (row.Balance > 0)
+                {
+                    Outputs.Add(row);
+                }
+                else
+                {
+                    Inputs.Add(row);
+                }
+            }
+            
             this.RaisePropertyChanged(nameof(Rows));
+            this.RaisePropertyChanged(nameof(Outputs));
+            this.RaisePropertyChanged(nameof(Inputs));
         }
 
         private const long MsPerDay = 24 * 60 * 60 * 1000;

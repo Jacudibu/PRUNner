@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using PRUNner.Backend.BasePlanner;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.Data.Components;
 using PRUNner.Backend.Data.Enums;
@@ -116,6 +117,18 @@ namespace PRUNner.App.Controls
                     _itemName.Text = buildingData.Ticker;
                     _numberFrame.IsVisible = false;
                     _number.IsVisible = false;
+                    break;
+                case PlanetProductionRow planetProductionRow:
+                    _frame.Background = MaterialColors[planetProductionRow.Material.Category].Background;
+                    _itemName.Foreground = MaterialColors[planetProductionRow.Material.Category].Foreground;
+                    _itemName.Text = planetProductionRow.Material.Ticker;
+                    _numberFrame.IsVisible = true;
+                    _number.IsVisible = true;
+                    _number.Text = Math.Round(planetProductionRow.Balance).ToString("F0");
+                    if (planetProductionRow.Balance < 0)
+                    {
+                        _number.Foreground = SolidColorBrush.Parse("red");
+                    }
                     break;
             }
         }

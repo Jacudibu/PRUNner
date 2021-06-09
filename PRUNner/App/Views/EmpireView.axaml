@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PRUNner.App.ViewModels"
              xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
+             xmlns:controls="clr-namespace:PRUNner.App.Controls"
              mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="450"
              x:Class="PRUNner.App.Views.EmpireView">
 
@@ -25,16 +26,58 @@
                 <TextBlock Width="100" TextAlignment="Center" Text="$/day" />
             </StackPanel>
             <ItemsControl x:Name="PlanetList" Items="{Binding Empire.PlanetaryBases}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" Spacing="5" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="basePlanner:PlanetaryBase">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"
                                        Text="{Binding Planet.Name, StringFormat={}{0:F2}}" />
                             <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"
                                        Text="{Binding NetProfit, StringFormat={}{0:F2}}" />
-                            <Button Content="View"
+                            <Button Content="View" VerticalAlignment="Center"
                                     Command="{Binding ElementName=PlanetList, Path=DataContext.ViewBase, FallbackValue=null}"
                                     CommandParameter="{Binding .}" />
+
+                            <StackPanel Margin="10,0,0,0">
+                                <StackPanel Orientation="Horizontal" IsVisible="{Binding ProductionTable.Inputs.Count}">
+                                    <TextBlock Text="Inputs " Width="60" TextAlignment="Right" VerticalAlignment="Center" />
+                                    <ItemsControl Items="{Binding ProductionTable.Inputs}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="2" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="basePlanner:PlanetProductionRow">
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                                    <controls:ItemBoxControl DataContext="{Binding .}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0" IsVisible="{Binding ProductionTable.Outputs.Count}">
+                                    <TextBlock Text="Outputs " Width="60" TextAlignment="Right" VerticalAlignment="Center" />
+                                    <ItemsControl Items="{Binding ProductionTable.Outputs}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="2" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="basePlanner:PlanetProductionRow">
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                                    <controls:ItemBoxControl DataContext="{Binding .}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </StackPanel>
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

@@ -1,6 +1,5 @@
 ﻿using PRUNner.App.Models;
 using PRUNner.Backend.BasePlanner;
-using PRUNner.Backend.Data;
 using ReactiveUI;
 
 namespace PRUNner.App.ViewModels
@@ -11,11 +10,6 @@ namespace PRUNner.App.ViewModels
 
         public BuildingTextBox AddBuildingTextBox { get; } = new();
         
-        public void StartNewBase(PlanetData planetData)
-        {
-            ActiveBase = new PlanetaryBase(planetData);
-        }
-
         public void SetActiveBase(PlanetaryBase planetaryBase)
         {
             ActiveBase = planetaryBase;

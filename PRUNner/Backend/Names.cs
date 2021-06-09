@@ -48,6 +48,10 @@ namespace PRUNner.Backend
             public const string EXT = nameof(EXT);
             public const string RIG = nameof(RIG);
             
+            public const string FRM = nameof(FRM);
+            
+            public const string ORC = nameof(ORC);
+            
         }
     }
 }

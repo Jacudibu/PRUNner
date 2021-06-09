@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using PRUNner.Backend;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.PlanetFinder;
@@ -11,37 +12,45 @@ namespace PRUNner.App.ViewModels
     {
         [Reactive] public ViewModelBase ActiveView { get; private set; }
 
-        private readonly PlanetFinderViewModel _planetFinderViewModel;
-        private readonly BasePlannerViewModel _basePlannerViewModel;
+        public readonly EmpireViewModel EmpireViewModel;
+        public readonly BasePlannerViewModel BasePlannerViewModel;
+        public readonly PlanetFinderViewModel PlanetFinderViewModel;
 
         public MainWindowViewModel()
         {
             DataParser.LoadAndParseFromCache();
             
-            _planetFinderViewModel = new PlanetFinderViewModel();
-            _basePlannerViewModel = new BasePlannerViewModel();
+            EmpireViewModel = new EmpireViewModel(this);
+            BasePlannerViewModel = new BasePlannerViewModel();
+            PlanetFinderViewModel = new PlanetFinderViewModel();
 
-            ActiveView = _planetFinderViewModel;
+            ActiveView = PlanetFinderViewModel;
 
             PlanetFinderSearchResult.OnOpenBasePlanner += PlanetFinderSelectPlanetEvent;
         }
 
         public void ViewPlanetFinder()
         {
-            ActiveView = _planetFinderViewModel;
+            ActiveView = PlanetFinderViewModel;
         }
 
-        private void PlanetFinderSelectPlanetEvent(object? sender, PlanetData e)
+        private void PlanetFinderSelectPlanetEvent(object? sender, PlanetData planet)
         {
-            _basePlannerViewModel.StartNewBase(e);
+            var planetaryBase = EmpireViewModel.StartNewBase(planet);
+            BasePlannerViewModel.SetActiveBase(planetaryBase);
             ViewBasePlanner();
         }
 
+        public void ViewEmpire()
+        {
+            ActiveView = EmpireViewModel;
+        }
+        
         public void ViewBasePlanner()
         {
-            ActiveView = _basePlannerViewModel;
+            ActiveView = BasePlannerViewModel;
         }
-
+        
         public void UpdatePriceData()
         {
             DataParser.UpdatePriceData();
@@ -54,12 +63,13 @@ namespace PRUNner.App.ViewModels
         
         public void SaveToDisk()
         {
-            UserDataWriter.Save(_basePlannerViewModel.ActiveBase);
+            UserDataWriter.Save(BasePlannerViewModel.ActiveBase);
         }
 
         public void LoadFromDisk()
         {
-            _basePlannerViewModel.SetActiveBase(UserDataReader.Load());
+            EmpireViewModel.Empire = UserDataReader.Load();
+            BasePlannerViewModel.SetActiveBase(EmpireViewModel.Empire.PlanetaryBases.FirstOrDefault());
         }
     }
 }

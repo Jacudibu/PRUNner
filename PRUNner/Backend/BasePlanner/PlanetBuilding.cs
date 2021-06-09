@@ -15,6 +15,7 @@ namespace PRUNner.Backend.BasePlanner
         public BuildingData Building { get; }
         
         [Reactive] public int Amount { get; set; }
+        private readonly double _fertilityBonus;
 
         public ObservableCollection<PlanetBuildingProductionElement> AvailableRecipes { get; }
         
@@ -23,6 +24,7 @@ namespace PRUNner.Backend.BasePlanner
         public PlanetBuilding() // This feels like a hack, but otherwise we can't set the Design.DataContext in BuildingRow...
         {
             Building = null!;
+            _fertilityBonus = 0;
         }
 
         public static PlanetBuilding FromInfrastructureBuilding(BuildingData building)
@@ -44,6 +46,7 @@ namespace PRUNner.Backend.BasePlanner
         private PlanetBuilding(PlanetData planet, BuildingData building)
         {
             Building = building;
+            _fertilityBonus = building.AffectedByFertility ? planet.Fertility * 0.3 : 0;
             
             if (Building.Category == BuildingCategory.Resources)
             {
@@ -57,19 +60,19 @@ namespace PRUNner.Backend.BasePlanner
             AddProduction();
         }
 
-        private ObservableCollection<PlanetBuildingProductionElement> GetResourceRecipeList(PlanetData planetData, BuildingData building)
+        private ObservableCollection<PlanetBuildingProductionElement> GetResourceRecipeList(PlanetData planet, BuildingData building)
         {
             IEnumerable<ResourceData> resources;
             switch (building.Ticker)
             {
                 case Names.Buildings.COL:
-                    resources = planetData.Resources.Where(x => x.ResourceType == ResourceType.Gaseous);
+                    resources = planet.Resources.Where(x => x.ResourceType == ResourceType.Gaseous);
                     break;
                 case Names.Buildings.EXT:
-                    resources = planetData.Resources.Where(x => x.ResourceType == ResourceType.Mineral);
+                    resources = planet.Resources.Where(x => x.ResourceType == ResourceType.Mineral);
                     break;
                 case Names.Buildings.RIG:
-                    resources = planetData.Resources.Where(x => x.ResourceType == ResourceType.Liquid);
+                    resources = planet.Resources.Where(x => x.ResourceType == ResourceType.Liquid);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(building.Ticker), building.Ticker, null);
@@ -113,7 +116,7 @@ namespace PRUNner.Backend.BasePlanner
             
             foreach (var recipe in AvailableRecipes)
             {
-                recipe.UpdateProductionEfficiency(satisfaction + expertBonus + hqBonus);
+                recipe.UpdateProductionEfficiency(satisfaction + expertBonus + hqBonus + _fertilityBonus);
             }
         }
     }   

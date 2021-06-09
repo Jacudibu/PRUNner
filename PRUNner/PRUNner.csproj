@@ -18,6 +18,10 @@
           <DependentUpon>App.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="App\Views\EmpireView.axaml.cs">
+          <DependentUpon>EmpireView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.6" />

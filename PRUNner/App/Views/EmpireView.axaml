@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PRUNner.App.ViewModels"
+             xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
+             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="450"
+             x:Class="PRUNner.App.Views.EmpireView">
+
+    <Design.DataContext>
+        <viewModels:EmpireViewModel />
+    </Design.DataContext>
+
+    <StackPanel>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <TextBlock VerticalAlignment="Center" Classes="h2" Text="Headquarters" />
+            <ComboBox VerticalAlignment="Center" SelectedItem="{Binding Empire.Headquarters.Faction}"
+                      Items="{Binding Empire.Headquarters.AvailableFactions}"
+                      MinWidth="110" />
+        </StackPanel>
+
+        <StackPanel Margin="0,20,0,0" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="100" TextAlignment="Center" Text="Name" />
+                <TextBlock Width="100" TextAlignment="Center" Text="$/day" />
+            </StackPanel>
+            <ItemsControl x:Name="PlanetList" Items="{Binding Empire.PlanetaryBases}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="basePlanner:PlanetaryBase">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                            <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"
+                                       Text="{Binding Planet.Name, StringFormat={}{0:F2}}" />
+                            <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"
+                                       Text="{Binding NetProfit, StringFormat={}{0:F2}}" />
+                            <Button Content="View"
+                                    Command="{Binding ElementName=PlanetList, Path=DataContext.ViewBase, FallbackValue=null}"
+                                    CommandParameter="{Binding .}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

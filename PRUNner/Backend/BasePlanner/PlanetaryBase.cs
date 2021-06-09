@@ -9,12 +9,12 @@ namespace PRUNner.Backend.BasePlanner
 {
     public class PlanetaryBase : ReactiveObject
     {
+        private readonly Empire _empire;
         public PlanetData Planet { get; }
 
         public PlanetaryBaseInfrastructure InfrastructureBuildings { get; } = new();
         public ObservableCollection<PlanetBuilding> ProductionBuildings { get; } = new();
 
-        public Headquarters Headquarters { get; } = new();
         public ExpertAllocation ExpertAllocation { get; } = new();
         public PlanetWorkforce WorkforceRequired { get; } = new();
         public PlanetWorkforce WorkforceCapacity { get; } = new();
@@ -27,9 +27,11 @@ namespace PRUNner.Backend.BasePlanner
         public int AreaTotal { get; } = Constants.BaseArea;
         [Reactive] public int AreaDeveloped { get; private set; }
         [Reactive] public int AreaAvailable { get; private set; } = Constants.BaseArea;
+        [Reactive] public double NetProfit { get; private set; }
 
-        public PlanetaryBase(PlanetData planet)
+        public PlanetaryBase(Empire empire, PlanetData planet)
         {
+            _empire = empire;
             Planet = planet;
             foreach (var infrastructureBuilding in InfrastructureBuildings.All)
             {
@@ -49,7 +51,7 @@ namespace PRUNner.Backend.BasePlanner
             WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
 
             WorkforceSatisfaction.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
-            Headquarters.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
+            _empire.Headquarters.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
             
             // TODO: Figure out why this here does not work, then use Observable.Merge instead of subscribing a dozen times.
             // ExpertAllocation.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
@@ -70,7 +72,7 @@ namespace PRUNner.Backend.BasePlanner
         {
             foreach (var building in ProductionBuildings)
             {
-                building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, Headquarters);
+                building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, _empire.Headquarters);
             }
             
             ProductionTable.Update(ProductionBuildings);
@@ -101,6 +103,7 @@ namespace PRUNner.Backend.BasePlanner
         private void OnProductionChange()
         {
             ProductionTable.Update(ProductionBuildings);
+            NetProfit = ProductionTable.Rows.Sum(x => x.Value);
         }
 
         private void RecalculateWorkforce()

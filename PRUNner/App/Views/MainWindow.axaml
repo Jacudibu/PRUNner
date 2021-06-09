@@ -14,6 +14,7 @@
 
     <DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="30" HorizontalAlignment="Center">
+            <Button Content="Empire Overview" Command="{Binding ViewEmpire}" HorizontalAlignment="Center" />
             <Button Content="Base Planner" Command="{Binding ViewBasePlanner}" HorizontalAlignment="Center" />
             <Button Content="Planet Finder" Command="{Binding ViewPlanetFinder}" HorizontalAlignment="Center" />
             <Button Content="Update Price Data" Command="{Binding UpdatePriceData}" HorizontalAlignment="Center" />

@@ -8,15 +8,23 @@ namespace PRUNner.Backend.UserDataParser
 {
     public static class UserDataReader
     {
-        public static PlanetaryBase Load()
+        public static Empire Load()
         {
+            var empire = new Empire();
+            if (!File.Exists(UserDataPaths.UserDataFolder + UserDataPaths.PlanetFile))
+            {
+                return empire;
+            }
+            
             var jObject = JObject.Parse(File.ReadAllText(UserDataPaths.UserDataFolder + UserDataPaths.PlanetFile));
-            return ReadPlanet(jObject);
+            ReadPlanet(empire, jObject);
+
+            return empire;
         }
         
-        public static PlanetaryBase ReadPlanet(JObject obj)
+        public static PlanetaryBase ReadPlanet(Empire empire, JObject obj)
         {
-            var result = new PlanetaryBase(PlanetData.Get(obj.GetValue(nameof(PlanetaryBase.Planet))!.ToObject<string>()!)!);
+            var result = empire.AddPlanetaryBase(PlanetData.Get(obj.GetValue(nameof(PlanetaryBase.Planet))!.ToObject<string>()!)!);
             
             ReadInfrastructureBuildings((JObject) obj[nameof(PlanetaryBase.InfrastructureBuildings)]!, result.InfrastructureBuildings);
             ReadProductionBuildings((JArray) obj[nameof(PlanetaryBase.ProductionBuildings)]!, result);

@@ -15,6 +15,7 @@ namespace PRUNner.Backend.Data
 
         public string Name { get; private set; } = null!;
         public string Ticker { get; private set; } = null!;
+        public bool AffectedByFertility { get; private set; }
         public IndustryType Expertise { get; private set; }
         public BuildingCategory Category { get; private set; }
         public int AreaCost { get; private set; }
@@ -41,6 +42,7 @@ namespace PRUNner.Backend.Data
                 Expertise = Enum.Parse<IndustryType>(poco.Expertise.Replace("_", string.Empty), true);
             }
 
+            AffectedByFertility = Ticker.Equals(Names.Buildings.FRM) || Ticker.Equals(Names.Buildings.ORC);
             BuildingCosts = poco.BuildingCosts.Select(x => new MaterialIO(x)).ToImmutableArray();
             Production = poco.Recipes.Select(x => new ProductionData(this, x)).ToImmutableArray();
         }

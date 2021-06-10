@@ -14,7 +14,7 @@
     </Design.DataContext>
     
 <DockPanel>
-    <StackPanel Orientation="Horizontal" Margin="5,10,5,0" DockPanel.Dock="Top">
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="5,10,5,0">
         <StackPanel>
             <TextBlock Text="{Binding ActiveBase.Planet.Name}" Classes="h1" HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal">
@@ -166,53 +166,55 @@
         <!-- </StackPanel> -->
     </StackPanel>
     
-    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-        <ScrollViewer>
-            <Border BorderThickness="1" BorderBrush="LightGray" Width="700"> <!-- Enough to fit AIR (made by APF) -->
-                <StackPanel Margin="3,3,3,3">
-                    <TextBlock Text="Production Buildings" Classes="h2"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <TextBox Text="{Binding AddBuildingTextBox.BuildingName}" Width="100"/>
-                        <Button Content="AddBuilding" Command="{Binding AddBuilding}"/>
-                    </StackPanel>
-
-                    <ItemsControl Items="{Binding ActiveBase.ProductionBuildings}" Margin="5,0,0,0">
+    <Grid DockPanel.Dock="Bottom" RowDefinitions="Auto, *" ColumnDefinitions="Auto, Auto" Margin="3,3,3,3">
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,5">
+            <TextBlock Text="Production Buildings" Classes="h2"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBox Text="{Binding AddBuildingTextBox.BuildingName}" Width="100"/>
+                <Button Content="AddBuilding" Command="{Binding AddBuilding}"/>
+            </StackPanel>    
+        </StackPanel>
+        <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="LightGray" Width="700" HorizontalAlignment="Left"> <!-- Enough to fit AIR (produced by APF) -->
+            <ScrollViewer>
+                <ItemsControl Items="{Binding ActiveBase.ProductionBuildings}" Margin="5,0,0,0">
                     <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="basePlanner:PlanetBuilding">
-                        <controls:ProductionLineControl DataContext="{Binding .}" Margin="0,0,0,5"/>
-                    </DataTemplate>
+                        <DataTemplate DataType="basePlanner:PlanetBuilding">
+                            <controls:ProductionLineControl DataContext="{Binding .}" Margin="0,0,0,5"/>
+                        </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </Border>
-        </ScrollViewer>
-        
-        <ScrollViewer>
-            <StackPanel Margin="20,0,0,0">
-                <TextBlock Text="Total Production Overview" Classes="h2" HorizontalAlignment="Center"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Width="35" TextAlignment="Center" Text=""/>
-                    <TextBlock Width="100" TextAlignment="Center" Text="Inputs"/>
-                    <TextBlock Width="100" TextAlignment="Center" Text="Outputs"/>
-                    <TextBlock Width="100" TextAlignment="Center" Text="Balance"/>
-                    <TextBlock Width="100" TextAlignment="Center" Text="$/day"/>
-                </StackPanel>
-                <ItemsControl Items="{Binding ActiveBase.ProductionTable.Rows}">
-                <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="basePlanner:PlanetProductionRow">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
-                        <controls:ItemBoxControl Width="35" DataContext="{Binding Material}"/>    
-                        <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Inputs, StringFormat={}{0:F2}}" />
-                        <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Outputs, StringFormat={}{0:F2}}" />
-                        <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Balance, StringFormat={}{0:F2}}"/>
-                        <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Value, StringFormat={}{0:F2}}"/>
-                    </StackPanel>
-                </DataTemplate>
-                </ItemsControl.ItemTemplate>
                 </ItemsControl>
+            </ScrollViewer>
+        </Border>
+    
+        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Margin="40,0,0,0">
+            <TextBlock Text="Total Production Overview" Classes="h2" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="35" TextAlignment="Center" Text=""/>
+                <TextBlock Width="100" TextAlignment="Center" Text="Inputs"/>
+                <TextBlock Width="100" TextAlignment="Center" Text="Outputs"/>
+                <TextBlock Width="100" TextAlignment="Center" Text="Balance"/>
+                <TextBlock Width="100" TextAlignment="Center" Text="$/day"/>
             </StackPanel>
-        </ScrollViewer>
-    </StackPanel>
+        </StackPanel>
+        <Border Grid.Row="1" Grid.Column="1" BorderThickness="1" Margin="40,0,0,0" BorderBrush="LightGray">
+            <ScrollViewer>
+                <ItemsControl Items="{Binding ActiveBase.ProductionTable.Rows}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="basePlanner:PlanetProductionRow">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                                <controls:ItemBoxControl Width="35" DataContext="{Binding Material}"/>
+                                <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Inputs, StringFormat={}{0:F2}}" />
+                                <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Outputs, StringFormat={}{0:F2}}" />
+                                <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Balance, StringFormat={}{0:F2}}"/>
+                                <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Value, StringFormat={}{0:F2}}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+
     
 </DockPanel>
     

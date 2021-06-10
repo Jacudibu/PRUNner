@@ -27,6 +27,8 @@ namespace PRUNner.App.ViewModels
             ActiveView = PlanetFinderViewModel;
 
             PlanetFinderSearchResult.OnOpenBasePlanner += PlanetFinderSelectPlanetEvent;
+            
+            LoadFromDisk();
         }
 
         public void ViewPlanetFinder()

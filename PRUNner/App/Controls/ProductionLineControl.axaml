@@ -33,10 +33,10 @@
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <ItemsControl Items="{Binding Inputs}">
+                                            <ItemsControl Items="{Binding Outputs}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" Spacing="2" />
+                                                        <StackPanel Orientation="Horizontal" Spacing="2"/>
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
@@ -45,17 +45,18 @@
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
-
+                                            
                                             <StackPanel VerticalAlignment="Center">
-                                                <TextBlock HorizontalAlignment="Center" Text="==>" />
-                                                <TextBlock HorizontalAlignment="Center" Text="{Binding DurationString}"
+                                                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="⬅"
+                                                           Margin="5,0"/>
+                                                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding DurationString}"
                                                            Margin="5,0" />
                                             </StackPanel>
-
-                                            <ItemsControl Items="{Binding Outputs}">
+                                            
+                                            <ItemsControl Items="{Binding Inputs}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" Spacing="2"/>
+                                                        <StackPanel Orientation="Horizontal" Spacing="2" />
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>

@@ -44,7 +44,8 @@ namespace PRUNner.Backend.Data
 
             AffectedByFertility = Ticker.Equals(Names.Buildings.FRM) || Ticker.Equals(Names.Buildings.ORC);
             BuildingCosts = poco.BuildingCosts.Select(x => new MaterialIO(x)).ToImmutableArray();
-            Production = poco.Recipes.Select(x => new ProductionData(this, x)).ToImmutableArray();
+            Production = poco.Recipes.Select(x => new ProductionData(this, x))
+                .OrderBy(x => x.Outputs.FirstOrDefault()?.Material.Ticker ?? x.ToString()).ToImmutableArray();
         }
 
         private BuildingWorkforce DetermineAdditionalWorkforceSpace()

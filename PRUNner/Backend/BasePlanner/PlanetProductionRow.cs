@@ -43,7 +43,7 @@ namespace PRUNner.Backend.BasePlanner
             private set
             {
                 this.RaiseAndSetIfChanged(ref _balance, value);
-                Value = _balance * Material.PriceData.NC1.Average;
+                Value = _balance * Material.PriceData.GetPrice();
             }
         }
 

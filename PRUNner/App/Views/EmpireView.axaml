@@ -5,6 +5,8 @@
              xmlns:viewModels="clr-namespace:PRUNner.App.ViewModels"
              xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
              xmlns:controls="clr-namespace:PRUNner.App.Controls"
+             xmlns:markupExtensions="clr-namespace:PRUNner.App.MarkupExtensions"
+             xmlns:enums="clr-namespace:PRUNner.Backend.Enums"
              mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="450"
              x:Class="PRUNner.App.Views.EmpireView">
 
@@ -14,10 +16,9 @@
 
     <StackPanel>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
-            <TextBlock VerticalAlignment="Center" Classes="h2" Text="Headquarters" />
-            <ComboBox VerticalAlignment="Center" SelectedItem="{Binding Empire.Headquarters.Faction}"
-                      Items="{Binding Empire.Headquarters.AvailableFactions}"
-                      MinWidth="110" />
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Classes="h2" Text="Headquarters" />
+            <ComboBox Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:Faction}}}"
+                SelectedItem="{Binding Empire.Headquarters.Faction}"/> 
         </StackPanel>
 
         <StackPanel Margin="0,20,0,0" HorizontalAlignment="Center">

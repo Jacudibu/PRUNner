@@ -11,12 +11,29 @@ namespace PRUNner.Backend.UserDataParser
         {
             Directory.CreateDirectory(UserDataPaths.UserDataFolder);
 
-            var jToken = WriteEmpire(empire);
-            
-            
-            File.WriteAllText(UserDataPaths.UserDataFolder + UserDataPaths.EmpireFile, jToken.ToString());
+            var result = new JObject
+            {
+                [nameof(GlobalSettings)] = WriteGlobalSettings(),
+                [nameof(Empire)] = WriteEmpire(empire)
+            };
+
+            File.WriteAllText(UserDataPaths.UserDataFolder + UserDataPaths.EmpireFile, result.ToString());
         }
 
+        public static JToken WriteGlobalSettings()
+        {
+            JObject result = new();
+
+            var priceDataArray = new JArray();
+            foreach (var priceDataPollType in GlobalSettings.PriceDataPreferenceOrder)
+            {
+                priceDataArray.Add(priceDataPollType.ToString());
+            }
+            result[nameof(GlobalSettings.PriceDataPreferenceOrder)] = priceDataArray;
+            
+            return result;
+        }
+        
         public static JToken WriteEmpire(Empire empire)
         {
             JObject result = new();

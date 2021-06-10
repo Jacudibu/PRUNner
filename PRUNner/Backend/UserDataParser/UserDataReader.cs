@@ -18,9 +18,21 @@ namespace PRUNner.Backend.UserDataParser
             }
             
             var jObject = JObject.Parse(File.ReadAllText(UserDataPaths.UserDataFolder + UserDataPaths.EmpireFile));
-            var result = ReadEmpire(jObject);
+            var result = ReadEmpire((JObject) jObject[nameof(Empire)]!);
+            ReadGlobalSettings((JObject) jObject[nameof(GlobalSettings)]!);
 
             return result;
+        }
+
+        public static void ReadGlobalSettings(JObject jObject)
+        {
+            GlobalSettings.PriceDataPreferenceOrder.Clear();
+            var jArray = (JArray) jObject[nameof(GlobalSettings.PriceDataPreferenceOrder)]!;
+            foreach (var jToken in jArray)
+            {
+                var value = Enum.Parse<PriceDataPollType>(jToken.ToObject<string>());
+                GlobalSettings.PriceDataPreferenceOrder.Add(value);
+            }
         }
 
         public static Empire ReadEmpire(JObject jObject)

@@ -25,6 +25,10 @@
 
         <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}" />
 
+        <Border DockPanel.Dock="Bottom" Background="LightGray" Height="16" VerticalAlignment="Bottom">
+            <TextBlock Text="{Binding StatusBar}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10" Margin="3,0,0,0"/>
+        </Border>
+        
     </DockPanel>
 
 </Window>

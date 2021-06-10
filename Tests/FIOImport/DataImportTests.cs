@@ -21,7 +21,7 @@ namespace Tests.FIOImport
         [Fact(Skip = Skip)]
         public void ImportBuildings()
         {
-            var result = FioImporter.ImportBuildings();
+            var result = FioImporter.DownloadBuildings();
             var json = JsonConvert.SerializeObject(result);
             _testOutputHelper.WriteLine(json);
         }
@@ -29,7 +29,7 @@ namespace Tests.FIOImport
         [Fact(Skip = Skip)]
         public void ImportMaterials()
         {
-            var result = FioImporter.ImportMaterials();
+            var result = FioImporter.DownloadMaterials();
             var json = JsonConvert.SerializeObject(result);
             _testOutputHelper.WriteLine(json);
         }
@@ -45,7 +45,7 @@ namespace Tests.FIOImport
         [Fact(Skip = Skip)]
         public void ImportSpecificPlanet()
         {
-            var result = FioImporter.ImportPlanetData(Names.Planets.Montem);
+            var result = FioImporter.LoadFromCacheOrDownloadPlanetData(Names.Planets.Montem);
             var json = JsonConvert.SerializeObject(result);
             _testOutputHelper.WriteLine(json);
         }

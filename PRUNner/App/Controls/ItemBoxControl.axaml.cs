@@ -68,9 +68,10 @@ namespace PRUNner.App.Controls
         };
         
         public static readonly ColorPair BuildingColorPair = new(new Color(255, 52, 140, 160), new Color(255, 77, 165, 185), new Color(255, 179, 255, 255));
-        
+
         private readonly Border _frame; 
         private readonly Border _numberFrame; 
+        private readonly TextBlock _toolTip;
         private readonly TextBlock _itemName; 
         private readonly TextBlock _number; 
         
@@ -80,6 +81,7 @@ namespace PRUNner.App.Controls
 
             _frame = this.FindControl<Border>("Frame");
             _numberFrame = this.FindControl<Border>("NumberFrame");
+            _toolTip = this.FindControl<TextBlock>("ToolTip");
             _itemName = this.FindControl<TextBlock>("ItemName");
             _number = this.FindControl<TextBlock>("Number");
         }
@@ -92,6 +94,7 @@ namespace PRUNner.App.Controls
                     _frame.Background = MaterialColors[materialData.Category].Background;
                     _itemName.Foreground = MaterialColors[materialData.Category].Foreground;
                     _itemName.Text = materialData.Ticker;
+                    _toolTip.Text = materialData.Name;
                     _numberFrame.IsVisible = false;
                     _number.IsVisible = false;
                     break;
@@ -99,6 +102,7 @@ namespace PRUNner.App.Controls
                     _frame.Background = MaterialColors[resourceData.Material.Category].Background;
                     _itemName.Foreground = MaterialColors[resourceData.Material.Category].Foreground;
                     _itemName.Text = resourceData.Material.Ticker;
+                    _toolTip.Text = resourceData.Material.Name;
                     _numberFrame.IsVisible = true;
                     _number.IsVisible = true;
                     _number.Text = Math.Round(resourceData.CalculateDailyProduction(1)).ToString("F0");
@@ -107,6 +111,7 @@ namespace PRUNner.App.Controls
                     _frame.Background = MaterialColors[materialIO.Material.Category].Background;
                     _itemName.Foreground = MaterialColors[materialIO.Material.Category].Foreground;
                     _itemName.Text = materialIO.Material.Ticker;
+                    _toolTip.Text = materialIO.Material.Name;
                     _numberFrame.IsVisible = true;
                     _number.IsVisible = true;
                     _number.Text = materialIO.Amount.ToString();
@@ -115,6 +120,7 @@ namespace PRUNner.App.Controls
                     _frame.Background = BuildingColorPair.Background;
                     _itemName.Foreground = BuildingColorPair.Foreground;
                     _itemName.Text = buildingData.Ticker;
+                    _toolTip.Text = buildingData.Name;
                     _numberFrame.IsVisible = false;
                     _number.IsVisible = false;
                     break;
@@ -122,6 +128,7 @@ namespace PRUNner.App.Controls
                     _frame.Background = MaterialColors[planetProductionRow.Material.Category].Background;
                     _itemName.Foreground = MaterialColors[planetProductionRow.Material.Category].Foreground;
                     _itemName.Text = planetProductionRow.Material.Ticker;
+                    _toolTip.Text = planetProductionRow.Material.Name;
                     _numberFrame.IsVisible = true;
                     _number.IsVisible = true;
 

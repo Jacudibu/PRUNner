@@ -5,6 +5,9 @@
              mc:Ignorable="d" d:DesignWidth="33" d:DesignHeight="33"
              x:Class="PRUNner.App.Controls.ItemBoxControl">
     
+    <ToolTip.Tip>
+        <TextBlock Name="ToolTip" Text="ToolTip"/>
+    </ToolTip.Tip>
     <Border Name="Frame" BorderThickness="0" CornerRadius="1" Background="#3355BB" Width="34" Height="34" HorizontalAlignment="Left">
         <Panel>
             <TextBlock Name="ItemName" Text="ASDF" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#99BBFF" FontWeight="Bold" FontSize="10"/>

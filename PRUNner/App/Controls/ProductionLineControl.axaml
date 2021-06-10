@@ -46,7 +46,7 @@
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
                                             
-                                            <StackPanel VerticalAlignment="Center">
+                                            <StackPanel VerticalAlignment="Center" Width="75">
                                                 <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="⬅"
                                                            Margin="5,0"/>
                                                 <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding DurationString}"

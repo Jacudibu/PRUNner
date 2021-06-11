@@ -18,7 +18,7 @@
         <StackPanel DockPanel.Dock="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Classes="h2" Text="Headquarters" />
             <ComboBox Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:Faction}}}"
-                      SelectedItem="{Binding Empire.Headquarters.Faction}" />
+                      SelectedItem="{Binding Empire.Headquarters.Faction}" Width="150"/>
         </StackPanel>
 
         <Grid DockPanel.Dock="Bottom" RowDefinitions="Auto, *" Margin="0,20,0,0" HorizontalAlignment="Center">

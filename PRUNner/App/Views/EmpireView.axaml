@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:PRUNner.App.Controls"
              xmlns:markupExtensions="clr-namespace:PRUNner.App.MarkupExtensions"
              xmlns:enums="clr-namespace:PRUNner.Backend.Enums"
-             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="800"
              x:Class="PRUNner.App.Views.EmpireView">
 
     <Design.DataContext>

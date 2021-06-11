@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:PRUNner.App.Controls"
              xmlns:components="clr-namespace:PRUNner.Backend.Data.Components"
              xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
-             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="800"
              x:Class="PRUNner.App.Views.BasePlannerView">
     
     <Design.DataContext>

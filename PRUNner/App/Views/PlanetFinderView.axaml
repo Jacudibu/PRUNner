@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PRUNner.App.ViewModels"
              xmlns:planetFinder="clr-namespace:PRUNner.Backend.PlanetFinder"
-             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="800"
              x:Class="PRUNner.App.Views.PlanetFinderView">
     
     <Design.DataContext>

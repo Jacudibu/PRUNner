@@ -1,6 +1,7 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System;
+using System.IO;
 using System.Net.Http;
+using System.Threading;
 using FIOImport.Pocos;
 using FIOImport.POCOs;
 using FIOImport.POCOs.Buildings;
@@ -24,14 +25,6 @@ namespace FIOImport
         private const string AllPlanetIdentifiersPath = CacheFolder + "allPlanetIdentifiers.json";
         private const string RainPricesPath = CacheFolder + "rainPrices.json";
         
-        public static RawData ImportAll()
-        {
-            Directory.CreateDirectory(CacheFolder);
-            Directory.CreateDirectory(PlanetFolder);
-            
-            return new RawData(DownloadBuildings(), DownloadMaterials(), DownloadAllPlanetData(), DownloadSystems(), DownloadPrices());
-        }
-
         public static RawData LoadAllFromCache()
         {
             if (Directory.Exists(CacheFolder))
@@ -42,8 +35,16 @@ namespace FIOImport
             Logger.Info("Unable to find Cache folder, downloading all data from fio instead. This might take a little while.");
             return ImportAll();
         }
+        
+        private static RawData ImportAll()
+        {
+            Directory.CreateDirectory(CacheFolder);
+            Directory.CreateDirectory(PlanetFolder);
+            
+            return new RawData(DownloadBuildings(), DownloadMaterials(), LoadAllPlanetData(), DownloadSystems(), DownloadPrices());
+        }
 
-        public static FioBuilding[] LoadBuildings()
+        private static FioBuilding[] LoadBuildings()
         {
             if (!File.Exists(AllBuildingsPath))
             {
@@ -55,19 +56,14 @@ namespace FIOImport
             var json = File.ReadAllText(AllBuildingsPath);
             return JsonConvert.DeserializeObject<FioBuilding[]>(json)!;
         }
-        
-        public static FioBuilding[] DownloadBuildings()
+
+        private static FioBuilding[] DownloadBuildings()
         {
             Logger.Info("Downloading Building data from FIO...");
-            var json = Client.GetStringAsync("https://rest.fnar.net/building/allbuildings").GetAwaiter().GetResult();
-            var result = JsonConvert.DeserializeObject<FioBuilding[]>(json);
-            
-            File.WriteAllText(AllBuildingsPath, json);
+            return DownloadAndCache<FioBuilding[]>("https://rest.fnar.net/building/allbuildings", AllBuildingsPath)!;
+        }
 
-            return result!;
-        }        
-        
-        public static FioMaterial[] LoadMaterials()
+        private static FioMaterial[] LoadMaterials()
         {
             var json = File.ReadAllText(AllMaterialsPath);
             var result = JsonConvert.DeserializeObject<FioMaterial[]>(json);
@@ -75,18 +71,13 @@ namespace FIOImport
             return result!;
         }
 
-        public static FioMaterial[] DownloadMaterials()
+        private static FioMaterial[] DownloadMaterials()
         {
             Logger.Info("Donwloading Material data from FIO...");
-            var json = Client.GetStringAsync("https://rest.fnar.net/material/allmaterials").GetAwaiter().GetResult();
-            var result = JsonConvert.DeserializeObject<FioMaterial[]>(json);
-            
-            File.WriteAllText(AllMaterialsPath, json);
-
-            return result!;
+            return DownloadAndCache<FioMaterial[]>("https://rest.fnar.net/material/allmaterials", AllMaterialsPath)!;
         }
-        
-        public static FioRainPrices[] LoadPrices()
+
+        private static FioRainPrices[] LoadPrices()
         {
             if (!File.Exists(RainPricesPath))
             {
@@ -102,47 +93,36 @@ namespace FIOImport
         public static FioRainPrices[] DownloadPrices()
         {
             Logger.Info("Importing Price data from Fio...");
-            var json = Client.GetStringAsync("https://rest.fnar.net/rain/prices").GetAwaiter().GetResult();
-            var result = JsonConvert.DeserializeObject<FioRainPrices[]>(json);
-            
-            File.WriteAllText(RainPricesPath, json);
+            return DownloadAndCache<FioRainPrices[]>("https://rest.fnar.net/rain/prices", RainPricesPath)!;
+        }
 
-            return result!;
-        }        
-        
-        public static FioPlanetIdentifier[] LoadPlanetIdentifiers()
+        private static FioPlanetIdentifier[] LoadPlanetIdentifiers()
         {
+            if (!File.Exists(AllPlanetIdentifiersPath))
+            {
+                Logger.Info("Unable to locate planet identifier list, going to download it instead instead.");
+                return DownloadPlanetIdentifiers();
+            }
+            
             var json = File.ReadAllText(AllPlanetIdentifiersPath);
             var result = JsonConvert.DeserializeObject<FioPlanetIdentifier[]>(json);
 
             return result!;
         }
-        
-        public static FioPlanetIdentifier[] ImportPlanetIdentifiers()
+
+        private static FioPlanetIdentifier[] DownloadPlanetIdentifiers()
         {
             Logger.Info("Downloading Planet list from FIO...");
-            var json = Client.GetStringAsync("https://rest.fnar.net/planet/allplanets").GetAwaiter().GetResult();
-            var result = JsonConvert.DeserializeObject<FioPlanetIdentifier[]>(json);
-
-            File.WriteAllText(AllPlanetIdentifiersPath, json);
-            
-            return result!;
+            return DownloadAndCache<FioPlanetIdentifier[]>("https://rest.fnar.net/planet/allplanets", AllPlanetIdentifiersPath)!;
         }
 
-        public static FioPlanet[] LoadAllPlanetData()
+        private static FioPlanet[] LoadAllPlanetData()
         {
-            if (!Directory.Exists(PlanetFolder))
-            {
-                Logger.Info("Unable to locate any planet data, going to download it instead instead.");
-                return DownloadAllPlanetData();
-            }
-            
-            Logger.Info("Loading Planet Data from Cache...");
-            var files = Directory.GetFiles(PlanetFolder);
-            return files.Select(LoadPlanetData).ToArray();
+            var identifiers = LoadPlanetIdentifiers();
+            return GetAllPlanetData(identifiers);
         }
-        
-        public static FioPlanet LoadPlanetData(string fileName)
+
+        private static FioPlanet LoadPlanetData(string fileName)
         {
             var json = File.ReadAllText(fileName);
             var result = JsonConvert.DeserializeObject<FioPlanet>(json);
@@ -150,36 +130,31 @@ namespace FIOImport
             return result!;
         }
 
-        public static FioPlanet[] DownloadAllPlanetData()
+        private static FioPlanet[] GetAllPlanetData(FioPlanetIdentifier[] identifiers)
         {
-            var identifiers = ImportPlanetIdentifiers();
             var allPlanets = new FioPlanet[identifiers.Length];
             for (var i = 0; i < allPlanets.Length; i++)
             {
-                Logger.Info("Downloading Planets [{0}/{1}]", i + 1, identifiers.Length);
-                allPlanets[i] = LoadFromCacheOrDownloadPlanetData(identifiers[i].PlanetNaturalId);
+                allPlanets[i] = LoadFromCacheOrDownloadPlanetData(identifiers[i].PlanetNaturalId, i + 1, identifiers.Length);
             }
 
             return allPlanets;
         }
-        
-        public static FioPlanet LoadFromCacheOrDownloadPlanetData(string planetId)
+
+        private static FioPlanet LoadFromCacheOrDownloadPlanetData(string planetId, int currentPlanetCount, int totalPlanets)
         {
             if (File.Exists($"{PlanetFolder}{planetId}.json"))
             {
-                Logger.Info("Cache for {0} detected, using that instead.", planetId);
+                Logger.Info("Loading Planets [{CurrentPlanetCount}/{TotalPlanets}] – using local cache", currentPlanetCount, totalPlanets);
                 return LoadPlanetData($"{PlanetFolder}{planetId}.json");
             }
-            
-            var json = Client.GetStringAsync("https://rest.fnar.net/planet/" + planetId).GetAwaiter().GetResult();
-            var result = JsonConvert.DeserializeObject<FioPlanet>(json);
 
-            File.WriteAllText($"{PlanetFolder}{planetId}.json", json);
-
-            return result!;
+            Logger.Info("Loading Planets [{CurrentPlanetCount}/{TotalPlanets}] – downloading from FIO", currentPlanetCount, totalPlanets);
+            Thread.Sleep(100); // that's to make sure we don't ddos FIO too hard... :D
+            return DownloadAndCache<FioPlanet>("https://rest.fnar.net/planet/" + planetId, PlanetFolder + planetId + ".json")!;
         }
-        
-        public static FioSystem[] LoadSystems()
+
+        private static FioSystem[] LoadSystems()
         {
             if (!File.Exists(AllSystemsPath))
             {
@@ -194,15 +169,33 @@ namespace FIOImport
             return result!;
         }
 
-        public static FioSystem[] DownloadSystems()
+        private static FioSystem[] DownloadSystems()
         {
             Logger.Info("Downloading Systems from FIO...");
-            var json = Client.GetStringAsync("https://rest.fnar.net/systemstars").GetAwaiter().GetResult();
-            var result = JsonConvert.DeserializeObject<FioSystem[]>(json);
-            
-            File.WriteAllText(AllSystemsPath, json);
+            return DownloadAndCache<FioSystem[]>("https://rest.fnar.net/systemstars", AllSystemsPath)!;
+        }
 
-            return result!;
+        private const int MaximumRetries = 5;
+        private static T? DownloadAndCache<T>(string requestUri, string cacheFilePath)
+        {
+            var tries = 0;
+            while (tries < MaximumRetries + 1)
+            {
+                try
+                {
+                    var json = Client.GetStringAsync(requestUri).GetAwaiter().GetResult();
+                    File.WriteAllText(cacheFilePath, json);
+                    return JsonConvert.DeserializeObject<T>(json);
+                }
+                catch (HttpRequestException e)
+                {
+                    tries++;
+                    Logger.Error(e, "Errror whilst downlading data – waiting a bit, then retrying [{Tries}/[{MaximumRetries}]]", tries, MaximumRetries);
+                    Thread.Sleep(2000);
+                }
+            }
+
+            throw new Exception("Unable to query " + requestUri);
         }
     }
 }

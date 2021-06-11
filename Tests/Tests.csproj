@@ -26,4 +26,8 @@
       <ProjectReference Include="..\PRUNner\PRUNner.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="FIOImport" />
+    </ItemGroup>
+
 </Project>

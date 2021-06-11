@@ -13,6 +13,9 @@
 
     <Border BorderThickness="1" BorderBrush="LightGray" Margin="0,0,0,2">
     <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
+        <Button Content="x" VerticalAlignment="Center" Margin="0,0,0,30"
+                Command="{Binding PlanetaryBase.RemoveProductionBuilding}"
+                CommandParameter="{Binding .}" />
         <StackPanel VerticalAlignment="Center">
             <controls:BuildingCounterControl />
             <Button HorizontalAlignment="Center" Content="Add Recipe" Command="{Binding AddProduction}" />
@@ -48,7 +51,7 @@
                                             
                                             <StackPanel VerticalAlignment="Center" Width="75">
                                                 <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="⬅"
-                                                           Margin="5,0"/>
+                                                           Margin="5,0" IsVisible="{Binding Inputs.Count}"/>
                                                 <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding DurationString}"
                                                            Margin="5,0" />
                                             </StackPanel>

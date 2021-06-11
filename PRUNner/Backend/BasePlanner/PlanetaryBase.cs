@@ -13,7 +13,7 @@ namespace PRUNner.Backend.BasePlanner
         private readonly Empire _empire;
         public PlanetData Planet { get; }
 
-        public PlanetaryBaseInfrastructure InfrastructureBuildings { get; } = new();
+        public PlanetaryBaseInfrastructure InfrastructureBuildings { get; }
         public ObservableCollection<PlanetBuilding> ProductionBuildings { get; } = new();
 
         public ExpertAllocation ExpertAllocation { get; } = new();
@@ -33,6 +33,8 @@ namespace PRUNner.Backend.BasePlanner
         public PlanetaryBase(Empire empire, PlanetData planet)
         {
             BeginLoading();
+
+            InfrastructureBuildings = new PlanetaryBaseInfrastructure(this);
             
             _empire = empire;
             Planet = planet;
@@ -85,7 +87,7 @@ namespace PRUNner.Backend.BasePlanner
             var addedBuilding = ProductionBuildings.SingleOrDefault(x => x.Building == building);
             if (addedBuilding == null)
             {
-                addedBuilding = PlanetBuilding.FromProductionBuilding(Planet, building);
+                addedBuilding = PlanetBuilding.FromProductionBuilding(this, Planet, building);
                 addedBuilding.Changed.Subscribe(_ => OnBuildingChange());
                 addedBuilding.OnProductionUpdate += OnProductionChange;
                 ProductionBuildings.Add(addedBuilding);
@@ -152,6 +154,11 @@ namespace PRUNner.Backend.BasePlanner
             RecalculateBuildingEfficiencies();
             RecalculateSpace();
             OnProductionChange();     
+        }
+
+        public void RemoveProductionBuilding(PlanetBuilding building)
+        {
+            ProductionBuildings.Remove(building);
         }
     }
 }

@@ -9,22 +9,34 @@ namespace PRUNner.Backend.BasePlanner
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class PlanetaryBaseInfrastructure : ReactiveObject
     {
-        public PlanetBuilding CM { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.CM));
+        public PlanetBuilding CM { get; } 
 
-        public PlanetBuilding HB1 { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.HB1));
-        public PlanetBuilding HB2 { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.HB2));
-        public PlanetBuilding HB3 { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.HB3));
-        public PlanetBuilding HB4 { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.HB4));
-        public PlanetBuilding HB5 { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.HB5));
+        public PlanetBuilding HB1 { get; } 
+        public PlanetBuilding HB2 { get; } 
+        public PlanetBuilding HB3 { get; } 
+        public PlanetBuilding HB4 { get; } 
+        public PlanetBuilding HB5 { get; } 
 
-        public PlanetBuilding HBB { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.HBB));
-        public PlanetBuilding HBC { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.HBC));
-        public PlanetBuilding HBM { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.HBM));
-        public PlanetBuilding HBL { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.HBL)); 
-        public PlanetBuilding STO { get; } = PlanetBuilding.FromInfrastructureBuilding(BuildingData.GetOrThrow(Names.Buildings.STO));
+        public PlanetBuilding HBB { get; } 
+        public PlanetBuilding HBC { get; } 
+        public PlanetBuilding HBM { get; } 
+        public PlanetBuilding HBL { get; } 
+        public PlanetBuilding STO { get; } 
 
-        public PlanetaryBaseInfrastructure()
+        public PlanetaryBaseInfrastructure(PlanetaryBase planetaryBase)
         {
+            CM = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.CM));
+            HB1 = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.HB1));
+            HB2 = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.HB2));
+            HB3 = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.HB3));
+            HB4 = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.HB4));
+            HB5 = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.HB5));
+            HBB = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.HBB));
+            HBC = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.HBC));
+            HBM = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.HBM));
+            HBL = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.HBL)); 
+            STO = PlanetBuilding.FromInfrastructureBuilding(planetaryBase, BuildingData.GetOrThrow(Names.Buildings.STO));
+            
             All = new[]
             {
                 CM,

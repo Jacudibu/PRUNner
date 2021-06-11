@@ -13,6 +13,7 @@ namespace PRUNner.Backend.BasePlanner
     public class PlanetBuilding : ReactiveObject
     {
         public BuildingData Building { get; }
+        public PlanetaryBase PlanetaryBase { get; }
         
         [Reactive] public int Amount { get; set; }
         private readonly double _fertilityBonus;
@@ -24,28 +25,30 @@ namespace PRUNner.Backend.BasePlanner
         public PlanetBuilding() // This feels like a hack, but otherwise we can't set the Design.DataContext in BuildingRow...
         {
             Building = null!;
+            PlanetaryBase = null!;
+            AvailableRecipes = null!;
             _fertilityBonus = 0;
         }
 
-        public static PlanetBuilding FromInfrastructureBuilding(BuildingData building)
+        public static PlanetBuilding FromInfrastructureBuilding(PlanetaryBase planetaryBase, BuildingData building)
         {
-            return new(building);
+            return new(planetaryBase, building);
         }
         
-        public static PlanetBuilding FromProductionBuilding(PlanetData planet, BuildingData building)
+        public static PlanetBuilding FromProductionBuilding(PlanetaryBase planetaryBase, PlanetData planet, BuildingData building)
         {
-            return new(planet, building);
+            return new(planetaryBase, planet, building);
         }
         
-        private PlanetBuilding(BuildingData building)
+        private PlanetBuilding(PlanetaryBase planetaryBase, BuildingData building)
         {
+            PlanetaryBase = planetaryBase;
             Building = building;
             AvailableRecipes = null!;
         }
         
-        private PlanetBuilding(PlanetData planet, BuildingData building)
+        private PlanetBuilding(PlanetaryBase planetaryBase, PlanetData planet, BuildingData building) : this(planetaryBase, building)
         {
-            Building = building;
             _fertilityBonus = building.AffectedByFertility ? planet.Fertility * 0.3 : 0;
             
             if (Building.Category == BuildingCategory.Resources)

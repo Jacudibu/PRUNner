@@ -174,7 +174,7 @@
                 <Button Content="AddBuilding" Command="{Binding AddBuilding}"/>
             </StackPanel>    
         </StackPanel>
-        <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="LightGray" Width="700" HorizontalAlignment="Left"> <!-- Enough to fit AIR (produced by APF) -->
+        <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="LightGray" Width="730" HorizontalAlignment="Left"> <!-- Enough to fit AIR (produced by APF) -->
             <ScrollViewer>
                 <ItemsControl Items="{Binding ActiveBase.ProductionBuildings}" Margin="5,0,0,0">
                     <ItemsControl.ItemTemplate>

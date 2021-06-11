@@ -23,6 +23,7 @@
 
         <StackPanel Margin="0,20,0,0" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
+                <TextBlock Width="25"/> <!-- Placeholder for remove button -->
                 <TextBlock Width="100" TextAlignment="Center" Text="Planet" />
                 <TextBlock Width="100" TextAlignment="Center" Text="$/day" />
             </StackPanel>
@@ -35,6 +36,9 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="basePlanner:PlanetaryBase">
                         <StackPanel Orientation="Horizontal">
+                            <Button Content="x" VerticalAlignment="Center"
+                                    Command="{Binding ElementName=PlanetList, Path=DataContext.Empire.RemovePlanetaryBase, FallbackValue=null}"
+                                    CommandParameter="{Binding .}" />
                             <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"
                                        Text="{Binding Planet.Name}" />
                             <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"

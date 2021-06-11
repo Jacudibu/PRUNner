@@ -160,5 +160,10 @@ namespace PRUNner.Backend.BasePlanner
         {
             ProductionBuildings.Remove(building);
         }
+
+        public void OnPriceDataUpdate()
+        {
+            OnProductionChange();
+        }
     }
 }

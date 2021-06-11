@@ -19,5 +19,13 @@ namespace PRUNner.Backend.BasePlanner
         {
             PlanetaryBases.Remove(planetaryBase);
         }
+
+        public void OnPriceDataUpdate()
+        {
+            foreach (var planetaryBase in PlanetaryBases)
+            {
+                planetaryBase.OnPriceDataUpdate();
+            }
+        }
     }
 }

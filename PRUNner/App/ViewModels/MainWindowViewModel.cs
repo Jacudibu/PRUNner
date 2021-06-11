@@ -68,7 +68,7 @@ namespace PRUNner.App.ViewModels
 
         public void BlameFio()
         {
-            Logger.Debug("Not yet implemented. If you want to invalidate your cache, delete your Cache folder and restart. " +
+            Logger.Debug("Not yet implemented. If you want to invalidate your cache, delete your FIOCache folder and restart. " +
                          "Not recommended since downloading planet data takes a while.");
         }
         

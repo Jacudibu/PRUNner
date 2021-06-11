@@ -53,8 +53,7 @@ namespace FIOImport
             }
 
             Logger.Info("Loading Buildings...");
-            var json = File.ReadAllText(AllBuildingsPath);
-            return JsonConvert.DeserializeObject<FioBuilding[]>(json)!;
+            return LoadFromCache<FioBuilding[]>(AllBuildingsPath)!;
         }
 
         private static FioBuilding[] DownloadBuildings()
@@ -65,10 +64,14 @@ namespace FIOImport
 
         private static FioMaterial[] LoadMaterials()
         {
-            var json = File.ReadAllText(AllMaterialsPath);
-            var result = JsonConvert.DeserializeObject<FioMaterial[]>(json);
+            if (!File.Exists(AllMaterialsPath))
+            {
+                Logger.Info("Unable to locate cache file for materials, downloading instead.");
+                return DownloadMaterials();
+            }
 
-            return result!;
+            Logger.Info("Loading Materials...");
+            return LoadFromCache<FioMaterial[]>(AllMaterialsPath)!;
         }
 
         private static FioMaterial[] DownloadMaterials()
@@ -86,8 +89,7 @@ namespace FIOImport
             }
             
             Logger.Info("Loading Price data from Cache...");
-            var json = File.ReadAllText(RainPricesPath);
-            return JsonConvert.DeserializeObject<FioRainPrices[]>(json)!;
+            return LoadFromCache<FioRainPrices[]>(RainPricesPath)!;
         }
         
         public static FioRainPrices[] DownloadPrices()
@@ -104,10 +106,7 @@ namespace FIOImport
                 return DownloadPlanetIdentifiers();
             }
             
-            var json = File.ReadAllText(AllPlanetIdentifiersPath);
-            var result = JsonConvert.DeserializeObject<FioPlanetIdentifier[]>(json);
-
-            return result!;
+            return LoadFromCache<FioPlanetIdentifier[]>(AllPlanetIdentifiersPath)!;
         }
 
         private static FioPlanetIdentifier[] DownloadPlanetIdentifiers()
@@ -163,10 +162,7 @@ namespace FIOImport
             }
             
             Logger.Info("Loading System Data from Cache...");
-            var json = File.ReadAllText(AllSystemsPath);
-            var result = JsonConvert.DeserializeObject<FioSystem[]>(json);
-
-            return result!;
+            return LoadFromCache<FioSystem[]>(AllSystemsPath)!;
         }
 
         private static FioSystem[] DownloadSystems()
@@ -190,12 +186,18 @@ namespace FIOImport
                 catch (HttpRequestException e)
                 {
                     tries++;
-                    Logger.Error(e, "Errror whilst downlading data – waiting a bit, then retrying [{Tries}/[{MaximumRetries}]]", tries, MaximumRetries);
+                    Logger.Error(e, "Errror whilst downlading data – waiting a bit, then retrying [{Tries}/{MaximumRetries}]", tries, MaximumRetries);
                     Thread.Sleep(2000);
                 }
             }
 
             throw new Exception("Unable to query " + requestUri);
+        }
+
+        private static T? LoadFromCache<T>(string path)
+        {
+            var json = File.ReadAllText(path);
+            return JsonConvert.DeserializeObject<T>(json);
         }
     }
 }

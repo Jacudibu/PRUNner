@@ -13,15 +13,15 @@
     </Design.DataContext>
 
     <DockPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="30" HorizontalAlignment="Center">
-            <Button Content="Empire Overview" Command="{Binding ViewEmpire}" HorizontalAlignment="Center" />
-            <Button Content="Base Planner" Command="{Binding ViewBasePlanner}" HorizontalAlignment="Center" />
-            <Button Content="Planet Finder" Command="{Binding ViewPlanetFinder}" HorizontalAlignment="Center" />
-            <Button Content="Update Price Data" Command="{Binding UpdatePriceData}" HorizontalAlignment="Center" />
-            <Button Content="Blame FIO" Command="{Binding BlameFio}" HorizontalAlignment="Center" />
-            <Button Content="Save" Command="{Binding SaveToDisk}" HorizontalAlignment="Center" />
-            <Button Content="Load" Command="{Binding LoadFromDisk}" HorizontalAlignment="Center" />
-        </StackPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Empire Overview" Command="{Binding ViewEmpire}" />
+            <MenuItem Header="Base Planner" Command="{Binding ViewBasePlanner}" />
+            <MenuItem Header="Planet Finder" Command="{Binding ViewPlanetFinder}" />
+            <MenuItem Header="Update Price Data" Command="{Binding UpdatePriceData}" />
+            <!-- <MenuItem Header="Blame FIO" Command="{Binding BlameFio}" /> -->
+            <MenuItem Header="Save" Command="{Binding SaveToDisk}" HorizontalAlignment="Center" />
+            <MenuItem Header="Load" Command="{Binding LoadFromDisk}" HorizontalAlignment="Center" />
+        </Menu>
 
         <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}" />
 

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using DynamicData.Binding;
 using PRUNner.Backend.Data;
+using PRUNner.Backend.Enums;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -24,6 +26,7 @@ namespace PRUNner.Backend.BasePlanner
         public PlanetProductionTable ProductionTable { get; }
         
         public ProvidedConsumables ProvidedConsumables { get; } = new();
+        [Reactive] public CoGCBonusType CoGCBonus { get; set; } = CoGCBonusType.None;
         
         public int AreaTotal { get; } = Constants.BaseArea;
         [Reactive] public int AreaDeveloped { get; private set; }
@@ -63,6 +66,8 @@ namespace PRUNner.Backend.BasePlanner
             ExpertAllocation.Manufacturing.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
             ExpertAllocation.Metallurgy.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
             ExpertAllocation.ResourceExtraction.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
+
+            this.WhenPropertyChanged(x => x.CoGCBonus).Subscribe(_ => RecalculateBuildingEfficiencies());
          
             FinishLoading();
         }
@@ -76,7 +81,7 @@ namespace PRUNner.Backend.BasePlanner
             
             foreach (var building in ProductionBuildings)
             {
-                building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, _empire.Headquarters);
+                building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, CoGCBonus, _empire.Headquarters);
             }
             
             ProductionTable.Update(ProductionBuildings);

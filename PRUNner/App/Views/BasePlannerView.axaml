@@ -6,6 +6,8 @@
              xmlns:controls="clr-namespace:PRUNner.App.Controls"
              xmlns:components="clr-namespace:PRUNner.Backend.Data.Components"
              xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
+             xmlns:markupExtensions="clr-namespace:PRUNner.App.MarkupExtensions"
+             xmlns:enums="clr-namespace:PRUNner.Backend.Enums"
              mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="800"
              x:Class="PRUNner.App.Views.BasePlannerView">
     
@@ -49,6 +51,12 @@
                         <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding ActiveBase.AreaAvailable}"/>
                     </Grid>
                 </StackPanel>
+            </StackPanel>
+            
+            <StackPanel Margin="0,20,0,0">
+                <TextBlock Text="CoGC Bonus:"/>
+                <ComboBox Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:CoGCBonusType}}}"
+                          SelectedItem="{Binding ActiveBase.CoGCBonus}" Width="175"/>
             </StackPanel>
         </StackPanel>
         

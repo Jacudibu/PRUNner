@@ -5,6 +5,7 @@ using System.Linq;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.Data.Components;
 using PRUNner.Backend.Data.Enums;
+using PRUNner.Backend.Enums;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -106,21 +107,46 @@ namespace PRUNner.Backend.BasePlanner
             OnProductionUpdate?.Invoke();
         }
 
-        public void UpdateProductionEfficiency(WorkforceSatisfaction workforceSatisfaction, ExpertAllocation expertAllocation, Headquarters hq)
+        public void UpdateProductionEfficiency(WorkforceSatisfaction workforceSatisfaction,
+            ExpertAllocation expertAllocation, CoGCBonusType cogcBonusType, Headquarters hq)
         {
             var expertBonus = expertAllocation.GetEfficiencyBonus(Building.Expertise);
             var hqBonus = hq.GetFactionEfficiencyFactorForIndustry(Building.Expertise);
+            var cogcBonus = GetCoGCBonus(cogcBonusType);
             var satisfaction = 0d;
             satisfaction += workforceSatisfaction.Pioneers * Building.WorkforceRatio.Pioneers;
             satisfaction += workforceSatisfaction.Settlers * Building.WorkforceRatio.Settlers;
             satisfaction += workforceSatisfaction.Technicians * Building.WorkforceRatio.Technicians;
             satisfaction += workforceSatisfaction.Engineers * Building.WorkforceRatio.Engineers;
             satisfaction += workforceSatisfaction.Scientists * Building.WorkforceRatio.Scientists;
-            
+
             foreach (var recipe in AvailableRecipes)
             {
-                recipe.UpdateProductionEfficiency(satisfaction + expertBonus + hqBonus + _fertilityBonus);
+                recipe.UpdateProductionEfficiency(satisfaction + expertBonus + hqBonus + cogcBonus + _fertilityBonus);
             }
+        }
+
+        private double GetCoGCBonus(CoGCBonusType cogcBonusType)
+        {
+            return cogcBonusType switch
+            {
+                CoGCBonusType.None => 0,
+                CoGCBonusType.Agriculture => Building.Expertise == IndustryType.Agriculture ? 0.25 : 0,
+                CoGCBonusType.Chemistry => Building.Expertise == IndustryType.Chemistry ? 0.25 : 0,
+                CoGCBonusType.Construction => Building.Expertise == IndustryType.Construction ? 0.25 : 0,
+                CoGCBonusType.Electronics => Building.Expertise == IndustryType.Electronics ? 0.25 : 0,
+                CoGCBonusType.FoodIndustries => Building.Expertise == IndustryType.FoodIndustries ? 0.25 : 0,
+                CoGCBonusType.FuelRefining => Building.Expertise == IndustryType.FuelRefining ? 0.25 : 0,
+                CoGCBonusType.Manufacturing => Building.Expertise == IndustryType.Manufacturing ? 0.25 : 0,
+                CoGCBonusType.Metallurgy => Building.Expertise == IndustryType.Metallurgy ? 0.25 : 0,
+                CoGCBonusType.ResourceExtraction => Building.Expertise == IndustryType.ResourceExtraction ? 0.25 : 0,
+                CoGCBonusType.Pioneers => Building.WorkforceRatio.Pioneers * 0.1,
+                CoGCBonusType.Settlers => Building.WorkforceRatio.Settlers * 0.1,
+                CoGCBonusType.Technicians => Building.WorkforceRatio.Technicians * 0.1,
+                CoGCBonusType.Engineers => Building.WorkforceRatio.Engineers * 0.1,
+                CoGCBonusType.Scientists => Building.WorkforceRatio.Scientists * 0.1,
+                _ => throw new ArgumentOutOfRangeException(nameof(cogcBonusType), cogcBonusType, null)
+            };
         }
     }   
 }

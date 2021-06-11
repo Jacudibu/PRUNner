@@ -64,6 +64,9 @@ namespace PRUNner.Backend.UserDataParser
         {
             var result = empire.AddPlanetaryBase(PlanetData.Get(obj.GetValue(nameof(PlanetaryBase.Planet))!.ToObject<string>()!)!);
             result.BeginLoading();
+
+            var cogcString = obj.GetValue(nameof(PlanetaryBase.CoGCBonus))?.ToObject<string>() ?? CoGCBonusType.None.ToString();
+            result.CoGCBonus = Enum.Parse<CoGCBonusType>(cogcString, true);
             
             ReadInfrastructureBuildings((JObject) obj[nameof(PlanetaryBase.InfrastructureBuildings)]!, result.InfrastructureBuildings);
             ReadProductionBuildings((JArray) obj[nameof(PlanetaryBase.ProductionBuildings)]!, result);

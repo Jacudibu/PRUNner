@@ -15,7 +15,7 @@ namespace FIOImport
         private static readonly HttpClient Client = new();
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         
-        private const string CacheFolder = "Cache/";
+        private const string CacheFolder = "FIOCache/";
         private const string PlanetFolder = CacheFolder + "Planets/";
 
         private const string AllBuildingsPath = CacheFolder + "allBuildings.json";

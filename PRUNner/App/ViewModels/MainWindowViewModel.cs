@@ -64,6 +64,7 @@ namespace PRUNner.App.ViewModels
         public void UpdatePriceData()
         {
             DataParser.UpdatePriceData();
+            EmpireViewModel.Empire.OnPriceDataUpdate();
         }
 
         public void BlameFio()

@@ -104,9 +104,7 @@ namespace PRUNner.Backend.BasePlanner
                 return;
             }
             
-            RecalculateWorkforce();
-            RecalculateSpace();
-            OnProductionChange();
+            UpdateEverything();
         }
 
         private void OnProductionChange()
@@ -150,15 +148,21 @@ namespace PRUNner.Backend.BasePlanner
         public void FinishLoading()
         {
             _loading = false;
-            RecalculateWorkforce();
-            RecalculateBuildingEfficiencies();
-            RecalculateSpace();
-            OnProductionChange();     
+            UpdateEverything();
         }
 
         public void RemoveProductionBuilding(PlanetBuilding building)
         {
             ProductionBuildings.Remove(building);
+            UpdateEverything();
+        }
+
+        private void UpdateEverything()
+        {
+            RecalculateWorkforce();
+            RecalculateBuildingEfficiencies();
+            RecalculateSpace();
+            OnProductionChange();     
         }
 
         public void OnPriceDataUpdate()

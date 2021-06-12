@@ -50,7 +50,7 @@ namespace PRUNner.Backend.BasePlanner
         
         private PlanetBuilding(PlanetaryBase planetaryBase, PlanetData planet, BuildingData building) : this(planetaryBase, building)
         {
-            _fertilityBonus = building.AffectedByFertility ? planet.Fertility * 0.3 : 0;
+            _fertilityBonus = building.AffectedByFertility ? 1 + planet.Fertility * 0.3 : 1;
             
             if (Building.Category == BuildingCategory.Resources)
             {
@@ -119,10 +119,10 @@ namespace PRUNner.Backend.BasePlanner
             satisfaction += workforceSatisfaction.Technicians * Building.WorkforceRatio.Technicians;
             satisfaction += workforceSatisfaction.Engineers * Building.WorkforceRatio.Engineers;
             satisfaction += workforceSatisfaction.Scientists * Building.WorkforceRatio.Scientists;
-
+            
             foreach (var recipe in AvailableRecipes)
             {
-                recipe.UpdateProductionEfficiency(satisfaction + expertBonus + hqBonus + cogcBonus + _fertilityBonus);
+                recipe.UpdateProductionEfficiency(satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * _fertilityBonus);
             }
         }
 
@@ -147,6 +147,11 @@ namespace PRUNner.Backend.BasePlanner
                 CoGCBonusType.Scientists => Building.WorkforceRatio.Scientists * 0.1,
                 _ => throw new ArgumentOutOfRangeException(nameof(cogcBonusType), cogcBonusType, null)
             };
+        }
+
+        public override string ToString()
+        {
+            return Amount + "x" + Building.Ticker;
         }
     }   
 }

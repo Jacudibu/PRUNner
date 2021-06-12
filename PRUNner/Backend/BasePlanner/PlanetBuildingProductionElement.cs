@@ -88,8 +88,16 @@ namespace PRUNner.Backend.BasePlanner
 
         public void UpdateProductionEfficiency(double efficiencyFactor)
         {
-            DurationInMilliseconds = _baseDurationMs * (2 - efficiencyFactor);
-            ParseDurationString();
+            if (efficiencyFactor == 0)
+            {
+                DurationInMilliseconds = double.MaxValue;
+                DurationString = "∞";
+            }
+            else
+            {
+                DurationInMilliseconds = _baseDurationMs * (2 - efficiencyFactor);
+                ParseDurationString();
+            }
         }
     }
 }

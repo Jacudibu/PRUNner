@@ -13,7 +13,7 @@ namespace PRUNner.Backend.BasePlanner
         }
 
         public PlanetBuilding Building { get; }
-        [Reactive] public PlanetBuildingProductionElement? ActiveRecipe { get; set; }
+        [Reactive] public PlanetBuildingProductionRecipe? ActiveRecipe { get; set; }
         [Reactive] public double Percentage { get; set; } = 100;
 
         public void Remove()

@@ -16,8 +16,8 @@ namespace PRUNner.Backend.Data.Components
         {
             Building = building;
             RecipeName = poco.RecipeName;
-            Inputs = poco.Inputs.Select(x => new MaterialIO(x)).ToImmutableArray();
-            Outputs = poco.Outputs.Select(x => new MaterialIO(x)).ToImmutableArray();
+            Inputs = poco.Inputs.Select(x => new MaterialIO(x, poco.DurationMs)).ToImmutableArray();
+            Outputs = poco.Outputs.Select(x => new MaterialIO(x, poco.DurationMs)).ToImmutableArray();
             DurationInMilliseconds = poco.DurationMs;
             
             foreach (var input in Inputs)

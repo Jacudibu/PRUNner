@@ -9,18 +9,16 @@ using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.Backend.BasePlanner
 {
-    public class PlanetBuildingProductionElement : ReactiveObject
+    public class PlanetBuildingProductionRecipe : ReactiveObject
     {
         public readonly string RecipeName;
         public List<MaterialIO> Inputs { get; }
         public List<MaterialIO> Outputs { get; }
         [Reactive] public string DurationString { get; private set; } = null!;
-        [Reactive] public double DurationInMilliseconds { get; private set; }
 
-        private readonly long _baseDurationMs;
-        
+        private readonly double _baseDurationMs;
 
-        public PlanetBuildingProductionElement(ProductionData productionData)
+        public PlanetBuildingProductionRecipe(ProductionData productionData)
         {
             RecipeName = productionData.RecipeName;
             Inputs = productionData.Inputs.ToList();
@@ -33,12 +31,11 @@ namespace PRUNner.Backend.BasePlanner
         private const long ExtTime = 12 * 60 * 60 * 1000;
         private const long RigTime = 4 * 60 * 60 * 1000 + 48 * 60 * 1000;
         
-        private const double MsPerDay = 24 * 60 * 60 * 1000;
-        private const double ColFactor = ColTime / MsPerDay;
-        private const double ExtFactor = ExtTime / MsPerDay;
-        private const double RigFactor = RigTime / MsPerDay;
+        private const double ColFactor = ColTime / Constants.MsPerDay;
+        private const double ExtFactor = ExtTime / Constants.MsPerDay;
+        private const double RigFactor = RigTime / Constants.MsPerDay;
         
-        public PlanetBuildingProductionElement(ResourceData resourceData)
+        public PlanetBuildingProductionRecipe(ResourceData resourceData)
         {
             RecipeName = resourceData.Material.Ticker;
             var factor = resourceData.ResourceType switch
@@ -51,18 +48,25 @@ namespace PRUNner.Backend.BasePlanner
 
             var dailyProduction = resourceData.CalculateDailyProduction(1);
             var realAmount = (int) Math.Ceiling(dailyProduction * factor);
-            var timeForOne = MsPerDay / dailyProduction;
+            var timeForOne = Constants.MsPerDay / dailyProduction;
             var timeForAll = realAmount * timeForOne;
-            _baseDurationMs = (long) Math.Round(timeForAll);
+            _baseDurationMs = timeForAll;
             
             Inputs = new List<MaterialIO>();
-            Outputs = new List<MaterialIO>() {new(resourceData.Material, realAmount) };
+            Outputs = new List<MaterialIO>() {new(resourceData.Material, realAmount, timeForAll) };
             UpdateProductionEfficiency(1);
         }
 
-        private void ParseDurationString()
+        public void UpdateProductionEfficiency(double efficiencyFactor)
         {
-            var timespan = TimeSpan.FromMilliseconds(DurationInMilliseconds);
+            if (efficiencyFactor <= 0)
+            {
+                DurationString = "∞";
+                return;
+            }
+                
+            var durationInMilliseconds = _baseDurationMs * (2 - efficiencyFactor);
+            var timespan = TimeSpan.FromMilliseconds(durationInMilliseconds);
 
             var builder = new StringBuilder();
             if (timespan.Days > 0)
@@ -70,13 +74,13 @@ namespace PRUNner.Backend.BasePlanner
                 builder.Append(timespan.Days);
                 builder.Append("d ");
             }
-            
+        
             if (timespan.Hours > 0)
             {
                 builder.Append(timespan.Hours);
                 builder.Append("h ");
             }
-            
+        
             if (timespan.Minutes > 0)
             {
                 builder.Append(timespan.Minutes);
@@ -84,20 +88,6 @@ namespace PRUNner.Backend.BasePlanner
             }
 
             DurationString = builder.ToString();
-        }
-
-        public void UpdateProductionEfficiency(double efficiencyFactor)
-        {
-            if (efficiencyFactor == 0)
-            {
-                DurationInMilliseconds = double.MaxValue;
-                DurationString = "∞";
-            }
-            else
-            {
-                DurationInMilliseconds = _baseDurationMs * (2 - efficiencyFactor);
-                ParseDurationString();
-            }
         }
     }
 }

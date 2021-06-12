@@ -78,11 +78,9 @@ namespace PRUNner.Backend.BasePlanner
             this.RaisePropertyChanged(nameof(Inputs));
         }
 
-        private const long MsPerDay = 24 * 60 * 60 * 1000;
         private double CalculateAmount(PlanetBuilding building, PlanetBuildingProductionQueueElement recipe, MaterialIO input)
         {
-            var dailyBaseValue = MsPerDay / recipe.ActiveRecipe!.DurationInMilliseconds;
-            return building.Amount * input.Amount * dailyBaseValue * recipe.Percentage * 0.01;
+            return building.Amount * building.Efficiency * input.DailyAmount * recipe.Percentage * 0.01;
         }
 
         private void AddInput(MaterialData material, double amount)

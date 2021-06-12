@@ -6,29 +6,26 @@ namespace PRUNner.Backend.Data.Components
     {
         public MaterialData Material { get; }
         public int Amount { get; }
-
-        public MaterialIO(FioOutput poco)
-        {
-            Material = MaterialData.GetOrThrow(poco.CommodityTicker);
-            Amount = poco.Amount;
-        }
+        public double DailyAmount { get; }
         
-        public MaterialIO(FioInput poco)
-        {
-            Material = MaterialData.GetOrThrow(poco.CommodityTicker);
-            Amount = poco.Amount;
-        }
+        public MaterialIO(FioOutput poco, long durationInMs) : this(poco.CommodityTicker, poco.Amount, durationInMs)
+        { }
+        
+        public MaterialIO(FioInput poco, long durationInMs) : this(poco.CommodityTicker, poco.Amount, durationInMs)
+        { }
      
-        public MaterialIO(FioBuildingCost poco)
-        {
-            Material = MaterialData.GetOrThrow(poco.CommodityTicker);
-            Amount = poco.Amount;
-        }
+        public MaterialIO(FioBuildingCost poco) : this(poco.CommodityTicker, poco.Amount, Constants.MsPerDay * 182) 
+        { }
 
-        public MaterialIO(MaterialData material, int amount)
+        private MaterialIO(string commodityTicker, int amount, double durationInMs)
+            : this(MaterialData.GetOrThrow(commodityTicker), amount, durationInMs)
+        { }
+
+        public MaterialIO(MaterialData material, int amount, double durationInMs)
         {
             Material = material;
             Amount = amount;
+            DailyAmount = amount / durationInMs * Constants.MsPerDay;
         }
     }
 }

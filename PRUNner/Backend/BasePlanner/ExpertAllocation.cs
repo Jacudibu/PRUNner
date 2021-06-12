@@ -43,7 +43,7 @@ namespace PRUNner.Backend.BasePlanner
             EfficiencyGain = Count switch
             {
                 0 => 0,
-                1 => 0.036,
+                1 => 0.0306,
                 2 => 0.0696,
                 3 => 0.1248,
                 4 => 0.1974,

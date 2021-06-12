@@ -20,10 +20,11 @@ namespace PRUNner.Backend.BasePlanner
         [Reactive] public int Amount { get; set; }
         private readonly double _fertilityBonus;
 
-        public ObservableCollection<PlanetBuildingProductionElement> AvailableRecipes { get; }
+        public ObservableCollection<PlanetBuildingProductionRecipe> AvailableRecipes { get; }
         
         public ObservableCollection<PlanetBuildingProductionQueueElement> Production { get; } = new();
-        
+        public double Efficiency { get; private set; }
+
         public PlanetBuilding() // This feels like a hack, but otherwise we can't set the Design.DataContext in BuildingRow...
         {
             Building = null!;
@@ -59,13 +60,13 @@ namespace PRUNner.Backend.BasePlanner
             }
             else
             {
-                AvailableRecipes = new ObservableCollection<PlanetBuildingProductionElement>(Building.Production.Select(x =>  new PlanetBuildingProductionElement(x)));
+                AvailableRecipes = new ObservableCollection<PlanetBuildingProductionRecipe>(Building.Production.Select(x =>  new PlanetBuildingProductionRecipe(x)));
             }
             
             AddProduction();
         }
 
-        private ObservableCollection<PlanetBuildingProductionElement> GetResourceRecipeList(PlanetData planet, BuildingData building)
+        private ObservableCollection<PlanetBuildingProductionRecipe> GetResourceRecipeList(PlanetData planet, BuildingData building)
         {
             IEnumerable<ResourceData> resources;
             switch (building.Ticker)
@@ -83,7 +84,7 @@ namespace PRUNner.Backend.BasePlanner
                     throw new ArgumentOutOfRangeException(nameof(building.Ticker), building.Ticker, null);
             }
 
-             return new ObservableCollection<PlanetBuildingProductionElement>(resources.Select(x => new PlanetBuildingProductionElement(x)));
+             return new ObservableCollection<PlanetBuildingProductionRecipe>(resources.Select(x => new PlanetBuildingProductionRecipe(x)));
         }
 
         public int CalculateNeededArea()
@@ -120,10 +121,11 @@ namespace PRUNner.Backend.BasePlanner
             satisfaction += workforceSatisfaction.Technicians * Building.WorkforceRatio.Technicians;
             satisfaction += workforceSatisfaction.Engineers * Building.WorkforceRatio.Engineers;
             satisfaction += workforceSatisfaction.Scientists * Building.WorkforceRatio.Scientists;
-            
+
+            Efficiency = satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * _fertilityBonus;
             foreach (var recipe in AvailableRecipes)
             {
-                recipe.UpdateProductionEfficiency(satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * _fertilityBonus);
+                recipe.UpdateProductionEfficiency(Efficiency);
             }
         }
 

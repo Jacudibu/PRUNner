@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.Data.Components;
@@ -126,25 +127,28 @@ namespace PRUNner.Backend.BasePlanner
             }
         }
 
+        private const double CoGCExpertiseBonus = 0.25;
+        private const double CoGCWorkforceBonus = 0.1;
+        [SuppressMessage("ReSharper", "CyclomaticComplexity")]
         private double GetCoGCBonus(CoGCBonusType cogcBonusType)
         {
             return cogcBonusType switch
             {
                 CoGCBonusType.None => 0,
-                CoGCBonusType.Agriculture => Building.Expertise == IndustryType.Agriculture ? 0.25 : 0,
-                CoGCBonusType.Chemistry => Building.Expertise == IndustryType.Chemistry ? 0.25 : 0,
-                CoGCBonusType.Construction => Building.Expertise == IndustryType.Construction ? 0.25 : 0,
-                CoGCBonusType.Electronics => Building.Expertise == IndustryType.Electronics ? 0.25 : 0,
-                CoGCBonusType.FoodIndustries => Building.Expertise == IndustryType.FoodIndustries ? 0.25 : 0,
-                CoGCBonusType.FuelRefining => Building.Expertise == IndustryType.FuelRefining ? 0.25 : 0,
-                CoGCBonusType.Manufacturing => Building.Expertise == IndustryType.Manufacturing ? 0.25 : 0,
-                CoGCBonusType.Metallurgy => Building.Expertise == IndustryType.Metallurgy ? 0.25 : 0,
-                CoGCBonusType.ResourceExtraction => Building.Expertise == IndustryType.ResourceExtraction ? 0.25 : 0,
-                CoGCBonusType.Pioneers => Building.WorkforceRatio.Pioneers * 0.1,
-                CoGCBonusType.Settlers => Building.WorkforceRatio.Settlers * 0.1,
-                CoGCBonusType.Technicians => Building.WorkforceRatio.Technicians * 0.1,
-                CoGCBonusType.Engineers => Building.WorkforceRatio.Engineers * 0.1,
-                CoGCBonusType.Scientists => Building.WorkforceRatio.Scientists * 0.1,
+                CoGCBonusType.Agriculture => Building.Expertise == IndustryType.Agriculture ? CoGCExpertiseBonus : 0,
+                CoGCBonusType.Chemistry => Building.Expertise == IndustryType.Chemistry ? CoGCExpertiseBonus : 0,
+                CoGCBonusType.Construction => Building.Expertise == IndustryType.Construction ? CoGCExpertiseBonus : 0,
+                CoGCBonusType.Electronics => Building.Expertise == IndustryType.Electronics ? CoGCExpertiseBonus : 0,
+                CoGCBonusType.FoodIndustries => Building.Expertise == IndustryType.FoodIndustries ? CoGCExpertiseBonus : 0,
+                CoGCBonusType.FuelRefining => Building.Expertise == IndustryType.FuelRefining ? CoGCExpertiseBonus : 0,
+                CoGCBonusType.Manufacturing => Building.Expertise == IndustryType.Manufacturing ? CoGCExpertiseBonus : 0,
+                CoGCBonusType.Metallurgy => Building.Expertise == IndustryType.Metallurgy ? CoGCExpertiseBonus : 0,
+                CoGCBonusType.ResourceExtraction => Building.Expertise == IndustryType.ResourceExtraction ? CoGCExpertiseBonus : 0,
+                CoGCBonusType.Pioneers => Building.WorkforceRatio.Pioneers * CoGCWorkforceBonus,
+                CoGCBonusType.Settlers => Building.WorkforceRatio.Settlers * CoGCWorkforceBonus,
+                CoGCBonusType.Technicians => Building.WorkforceRatio.Technicians * CoGCWorkforceBonus,
+                CoGCBonusType.Engineers => Building.WorkforceRatio.Engineers * CoGCWorkforceBonus,
+                CoGCBonusType.Scientists => Building.WorkforceRatio.Scientists * CoGCWorkforceBonus,
                 _ => throw new ArgumentOutOfRangeException(nameof(cogcBonusType), cogcBonusType, null)
             };
         }

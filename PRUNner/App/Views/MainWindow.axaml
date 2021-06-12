@@ -3,10 +3,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:PRUNner.App.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="1000"
+        mc:Ignorable="d" d:DesignWidth="1800" d:DesignHeight="1000"
         x:Class="PRUNner.App.Views.MainWindow"
         Icon="/App/Assets/avalonia-logo.ico"
-        Title="PRUNner" Width="1600" Height="800">
+        CanResize="True"
+        Title="PRUNner" Width="1800" Height="1000"
+        MaxHeight="99999" MaxWidth="99999">
 
     <Design.DataContext>
         <viewModels:MainWindowViewModel />

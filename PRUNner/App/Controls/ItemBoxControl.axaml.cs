@@ -24,7 +24,8 @@ namespace PRUNner.App.Controls
                 Background.GradientStops.Add(new GradientStop(backgroundFrom, 0));
                 Background.GradientStops.Add(new GradientStop(backgroundTo, 1));
                 Background.StartPoint = RelativePoint.TopLeft;
-                Background.StartPoint = RelativePoint.BottomRight;
+                Background.EndPoint = RelativePoint.BottomRight;
+                Background.SpreadMethod = GradientSpreadMethod.Pad;
                 
                 Foreground = new SolidColorBrush(foreground);
             }

@@ -264,10 +264,17 @@
               ColumnDefinitions="Auto, Auto" HorizontalAlignment="Center">
             <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,5">
                 <TextBlock Text="Production Buildings" Classes="h2" />
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <TextBox Text="{Binding AddBuildingTextBox.BuildingName}" Width="100" />
-                    <Button Content="AddBuilding" Command="{Binding AddBuilding}" />
-                </StackPanel>
+                <Panel Width="740">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBox Text="{Binding AddBuildingTextBox.BuildingName}" Width="100" />
+                        <Button Content="AddBuilding" Command="{Binding AddBuilding}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <TextBlock Text="Net Profit: " Classes="h2"/>
+                        <TextBlock Text="{Binding ActiveBase.NetProfit, StringFormat={}{0:F0} $}" Classes="h2" Width="100"
+                                   HorizontalAlignment="Left"/>
+                    </StackPanel>    
+                </Panel>
             </StackPanel>
             <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="LightGray" Width="740"
                     HorizontalAlignment="Left"> <!-- Enough to fit APF.AIR -->

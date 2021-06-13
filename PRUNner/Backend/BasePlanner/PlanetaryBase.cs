@@ -84,7 +84,7 @@ namespace PRUNner.Backend.BasePlanner
                 building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, CoGCBonus, _empire.Headquarters);
             }
             
-            ProductionTable.Update(ProductionBuildings);
+            OnProductionChange();
         }
 
         public PlanetBuilding AddBuilding(BuildingData building)

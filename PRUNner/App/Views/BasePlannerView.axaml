@@ -221,11 +221,11 @@
             <StackPanel Grid.Row="0" VerticalAlignment="Bottom" Margin="40,0,0,0">
                 <TextBlock Text="Total Production Overview" Classes="h2" HorizontalAlignment="Center" />
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Width="45" TextAlignment="Center" Text="" />
-                    <TextBlock Width="80" TextAlignment="Right" Text="Inputs" />
-                    <TextBlock Width="80" TextAlignment="Right" Text="Outputs" />
-                    <TextBlock Width="80" TextAlignment="Right" Text="Balance" />
-                    <TextBlock Width="80" TextAlignment="Right" Text="$/day" />
+                    <Button Width="55" Height="30" Command="{Binding ActiveBase.ProductionTable.SortByTicker}" HorizontalContentAlignment="Center" Content="" />
+                    <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByInputs}" HorizontalContentAlignment="Center" Content="Inputs" />
+                    <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByOutputs}" HorizontalContentAlignment="Center" Content="Outputs" />
+                    <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByBalance}" HorizontalContentAlignment="Center" Content="Balance" />
+                    <Button Width="95" Command="{Binding ActiveBase.ProductionTable.SortByValue}" HorizontalContentAlignment="Center" Content="$/day" />
                 </StackPanel>
             </StackPanel>
             <Border Grid.Row="1" BorderThickness="1" Margin="40,0,0,0" BorderBrush="LightGray">

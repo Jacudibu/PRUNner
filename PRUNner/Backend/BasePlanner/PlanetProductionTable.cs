@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using DynamicData;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.Data.Components;
+using PRUNner.Backend.Enums;
 using ReactiveUI;
 
 namespace PRUNner.Backend.BasePlanner
@@ -107,5 +109,34 @@ namespace PRUNner.Backend.BasePlanner
             Rows.Add(row);
             return row;
         }
+        
+        private string _currentSortMode = "";
+        private void Sort(string sortModeName, SortOrder defaultSortOrder, Func<PlanetProductionRow, object> comparer)
+        {
+            List<PlanetProductionRow> result;
+            if (_currentSortMode.Equals(sortModeName))
+            {
+                result = defaultSortOrder == SortOrder.Ascending 
+                    ? Rows.OrderByDescending(comparer).ToList()
+                    : Rows.OrderBy(comparer).ToList();
+                _currentSortMode = sortModeName + "Inverse";
+            }
+            else
+            {
+                result = defaultSortOrder == SortOrder.Ascending 
+                    ? Rows.OrderBy(comparer).ToList()
+                    : Rows.OrderByDescending(comparer).ToList();
+                _currentSortMode = sortModeName;
+            }
+            
+            Rows.Clear();
+            Rows.AddRange(result);
+        }
+        
+        public void SortByTicker() => Sort(nameof(SortByTicker), SortOrder.Ascending, x => x.Material.Ticker);
+        public void SortByInputs() => Sort(nameof(SortByInputs), SortOrder.Descending, x => x.Inputs);
+        public void SortByOutputs() => Sort(nameof(SortByOutputs), SortOrder.Descending, x => x.Outputs);
+        public void SortByBalance() => Sort(nameof(SortByBalance), SortOrder.Descending, x => x.Balance);
+        public void SortByValue() => Sort(nameof(SortByValue), SortOrder.Descending, x => x.Value);
     }
 }

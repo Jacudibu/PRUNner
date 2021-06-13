@@ -19,10 +19,11 @@
             <MenuItem Header="Empire Overview" Command="{Binding ViewEmpire}" />
             <MenuItem Header="Base Planner" Command="{Binding ViewBasePlanner}" />
             <MenuItem Header="Planet Finder" Command="{Binding ViewPlanetFinder}" />
+            <MenuItem Width="500" />
             <MenuItem Header="Update Price Data" Command="{Binding UpdatePriceData}" />
-            <!-- <MenuItem Header="Blame FIO" Command="{Binding BlameFio}" /> -->
-            <MenuItem Header="Save" Command="{Binding SaveToDisk}" HorizontalAlignment="Center" />
-            <MenuItem Header="Load" Command="{Binding LoadFromDisk}" HorizontalAlignment="Center" />
+            <MenuItem Width="500" />
+            <MenuItem Header="Save" Command="{Binding SaveToDisk}" HorizontalAlignment="Right" />
+            <MenuItem Header="Load" Command="{Binding LoadFromDisk}" HorizontalAlignment="Right"  />
         </Menu>
 
         <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}" />

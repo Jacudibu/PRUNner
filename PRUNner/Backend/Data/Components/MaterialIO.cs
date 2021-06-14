@@ -14,7 +14,7 @@ namespace PRUNner.Backend.Data.Components
         public MaterialIO(FioInput poco, long durationInMs) : this(poco.CommodityTicker, poco.Amount, durationInMs)
         { }
      
-        public MaterialIO(FioBuildingCost poco) : this(poco.CommodityTicker, poco.Amount, Constants.MsPerDay * 182) 
+        public MaterialIO(FioBuildingCost poco) : this(poco.CommodityTicker, poco.Amount, Constants.MsPerDay * Constants.DaysUntilAllBuildingMaterialsAreLost) 
         { }
 
         private MaterialIO(string commodityTicker, int amount, double durationInMs)

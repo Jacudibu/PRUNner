@@ -45,9 +45,14 @@ namespace PRUNner.Backend.BasePlanner
         private void UpdateComputedValues()
         {
             Balance = Outputs - Inputs;
-            Value = Balance * Material.PriceData.GetPrice();
             Volume = Balance * Material.Volume;
             Weigth = Balance * Material.Weight;
+            UpdatePriceData();
+        }
+
+        public void UpdatePriceData()
+        {
+            Value = Balance * Material.PriceData.GetPrice();
         }
     }
 }

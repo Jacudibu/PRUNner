@@ -138,5 +138,13 @@ namespace PRUNner.Backend.BasePlanner
         public void SortByOutputs() => Sort(nameof(SortByOutputs), SortOrder.Descending, x => x.Outputs);
         public void SortByBalance() => Sort(nameof(SortByBalance), SortOrder.Descending, x => x.Balance);
         public void SortByValue() => Sort(nameof(SortByValue), SortOrder.Descending, x => x.Value);
+
+        public void UpdatePriceData()
+        {
+            foreach (var row in Rows)
+            {
+                row.UpdatePriceData();
+            }
+        }
     }
 }

@@ -183,7 +183,8 @@ namespace PRUNner.Backend.BasePlanner
 
         public void OnPriceDataUpdate()
         {
-            OnProductionChange();
+            ProductionTable.UpdatePriceData();
+            NetProfit = ProductionTable.Rows.Sum(x => x.Value);
         }
     }
 }

@@ -6,13 +6,13 @@ There's a .zip file for every major platform, just unpack and run the PRUNner fi
 
 ### Screenshots
 First, let's find a planet to settle!
-![Planet Finder](https://github.com/Jacudibu/PRUNner/blob/main/Screenshots/PlanetFinder.png?raw=true)
+![PlanetFinder](https://user-images.githubusercontent.com/9059719/121958201-b65df780-cd63-11eb-9a33-39196aa4a9cf.png)
 
 Then, plan out your base!
-![Base Planner](https://github.com/Jacudibu/PRUNner/blob/main/Screenshots/BasePlanner.png?raw=true)
+![BasePlanner](https://user-images.githubusercontent.com/9059719/121958212-b78f2480-cd63-11eb-9433-3ea44fbf6738.png)
 
 And finally, have an overview over your entire empire.
-![Empire Overview](https://github.com/Jacudibu/PRUNner/blob/main/Screenshots/EmpireOverview.png?raw=true)
+![EmpireOverview](https://user-images.githubusercontent.com/9059719/121958208-b78f2480-cd63-11eb-953c-c6537b079cd3.png)
 
 ### Contributing
 I'm open to any kind of feedback or suggestions. This is my second Application using WPF / Avalonia, so there's probably a lot of stuff that could be done better.

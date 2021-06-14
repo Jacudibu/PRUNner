@@ -67,7 +67,8 @@ namespace PRUNner.Backend.UserDataParser
 
             var cogcString = obj.GetValue(nameof(PlanetaryBase.CoGCBonus))?.ToObject<string>() ?? CoGCBonusType.None.ToString();
             result.CoGCBonus = Enum.Parse<CoGCBonusType>(cogcString, true);
-            
+            result.IncludeCoreModuleInColonyCosts = obj.GetValue(nameof(PlanetaryBase.IncludeCoreModuleInColonyCosts))?.ToObject<bool>() ?? false;
+
             ReadInfrastructureBuildings((JObject) obj[nameof(PlanetaryBase.InfrastructureBuildings)]!, result.InfrastructureBuildings);
             ReadProductionBuildings((JArray) obj[nameof(PlanetaryBase.ProductionBuildings)]!, result);
             ReadExpertAllocation((JObject) obj[nameof(PlanetaryBase.ExpertAllocation)]!, result.ExpertAllocation);

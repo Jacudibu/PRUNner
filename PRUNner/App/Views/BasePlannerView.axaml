@@ -15,7 +15,7 @@
         <viewModels:BasePlannerViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto">
+    <Grid RowDefinitions="Auto, Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto">
         <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
             <TextBlock Text="{Binding ActiveBase.Planet.Name}" Classes="h1" HorizontalAlignment="Center" />
             <StackPanel Orientation="Horizontal">
@@ -61,13 +61,41 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0">
+            <StackPanel.Resources>
+                <Thickness x:Key="CellMargin">0,0,0,10</Thickness>
+            </StackPanel.Resources>
+            
+            <TextBlock Text="Colony Data" Classes="h2" HorizontalAlignment="Center" />
+            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, 100">
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="Include CM in costs"/>
+                <CheckBox Grid.Row="0" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.IncludeCoreModuleInColonyCosts}"/>                
+                
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="Colony Costs"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="{Binding ActiveBase.ColonyCosts, StringFormat={}{0:N2}}" FontFamily="MonoSpaced"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="Profit/d"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="{Binding ActiveBase.ProfitPerDay, StringFormat={}{0:N2}}" FontFamily="MonoSpaced"/>
+                
+                <TextBlock Grid.Row="3" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="Repair Costs/d"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="{Binding ActiveBase.TotalDailyRepairCosts, StringFormat={}{0:N2}}" FontFamily="MonoSpaced"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="Net Profit"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="{Binding ActiveBase.NetProfit, StringFormat={}{0:N2}}" FontFamily="MonoSpaced"/>
+                
+                <TextBlock Grid.Row="5" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="ROI"/>
+                <TextBlock Grid.Row="5" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center" TextAlignment="Right" Text="{Binding ActiveBase.ReturnOfInvestment, StringFormat={}{0:N2}}" FontFamily="MonoSpaced"/>
+            </Grid>
+        </StackPanel>        
+        
+        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,20,0,0">
             <TextBlock Text="CoGC Bonus" Classes="h2" HorizontalAlignment="Center" />
             <ComboBox HorizontalAlignment="Center"
                       Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:CoGCBonusType}}}"
                       SelectedItem="{Binding ActiveBase.CoGCBonus}" Width="175" />
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,20,0,0">
+        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,20,0,0">
             <TextBlock Text="Experts" Classes="h2" HorizontalAlignment="Center" />
             <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Agriculture}" />
             <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Chemistry}" />
@@ -79,8 +107,8 @@
             <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Metallurgy}" />
             <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.ResourceExtraction}" />
         </StackPanel>
-
-        <StackPanel Grid.Row="0" Grid.Column="1" Margin="30,0,0,0">
+        
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="30, 0,0,0">
             <TextBlock Text="Workforce" Classes="h2" HorizontalAlignment="Center" />
             <Grid ColumnDefinitions="80,75,75,75,50,50,80" RowDefinitions="*,*,*,*,*,*" Width="485">
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="" />
@@ -216,18 +244,18 @@
         <!-- </StackPanel> -->
 
 
-        <Grid Grid.Row="0" RowSpan="3" Grid.Column="3" DockPanel.Dock="Right" VerticalAlignment="Top" Margin="40,0,0,20"
+        <Grid Grid.Row="0" RowSpan="4" Grid.Column="3" DockPanel.Dock="Right" VerticalAlignment="Top" Margin="40,0,0,20"
               RowDefinitions="Auto, Auto, Auto, *">
             <TextBlock Grid.Row="0" VerticalAlignment="Bottom" Text="Total Production Overview" Classes="h2" HorizontalAlignment="Center" />
             <Grid Grid.Row="1" ColumnDefinitions="50, 100, 100" RowDefinitions="Auto, Auto, Auto" HorizontalAlignment="Center" Margin="0,0,0,10">
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="m³" TextAlignment="Right" Margin="15,0"/>
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="t" TextAlignment="Right" Margin="15,0" />
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Import" TextAlignment="Right" />
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ActiveBase.VolumeIn, StringFormat={}{0:F2}}" TextAlignment="Right" />
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActiveBase.WeightIn, StringFormat={}{0:F2}}" TextAlignment="Right" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ActiveBase.VolumeIn, StringFormat={}{0:0.00;0.00}}" FontFamily="Monospaced" TextAlignment="Right" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActiveBase.WeightIn, StringFormat={}{0:0.00;0.00}}" FontFamily="Monospaced" TextAlignment="Right" />
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Export" TextAlignment="Right" />
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ActiveBase.VolumeOut, StringFormat={}{0:F2}}" TextAlignment="Right" />
-                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding ActiveBase.WeightOut, StringFormat={}{0:F2}}" TextAlignment="Right" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ActiveBase.VolumeOut, StringFormat={}{0:0.00;0.00}}" FontFamily="Monospaced" TextAlignment="Right" />
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding ActiveBase.WeightOut, StringFormat={}{0:0.00;0.00}}" FontFamily="Monospaced" TextAlignment="Right" />
             </Grid>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <Button Width="55" Height="30" Command="{Binding ActiveBase.ProductionTable.SortByTicker}" HorizontalContentAlignment="Center" Content="" />
@@ -249,16 +277,16 @@
                                 <StackPanel Orientation="Horizontal">
                                     <controls:ItemBoxControl Width="35" DataContext="{Binding .}" />
                                     <TextBlock Width="80" VerticalAlignment="Center"
-                                               TextAlignment="Right"
+                                               TextAlignment="Right" FontFamily="Monospaced"
                                                Text="{Binding Inputs, StringFormat={}{0:F2}}" />
                                     <TextBlock Width="80" VerticalAlignment="Center"
-                                               TextAlignment="Right"
+                                               TextAlignment="Right" FontFamily="Monospaced"
                                                Text="{Binding Outputs, StringFormat={}{0:F2}}" />
                                     <TextBlock Width="80" VerticalAlignment="Center"
-                                               TextAlignment="Right"
+                                               TextAlignment="Right" FontFamily="Monospaced"
                                                Text="{Binding Balance, StringFormat={}{0:F2}}" />
                                     <TextBlock Width="80" VerticalAlignment="Center"
-                                               TextAlignment="Right"
+                                               TextAlignment="Right" FontFamily="Monospaced"
                                                Text="{Binding Value, StringFormat={}{0:F0}}" />
                                 </StackPanel>
                             </DataTemplate>
@@ -268,7 +296,7 @@
             </Border>
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="1" RowSpan="2" ColumnSpan="2" DockPanel.Dock="Bottom" RowDefinitions="Auto, *"
+        <Grid Grid.Row="1" Grid.Column="1" RowSpan="3" ColumnSpan="2" DockPanel.Dock="Bottom" RowDefinitions="Auto, *"
               ColumnDefinitions="Auto, Auto" HorizontalAlignment="Center">
             <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,5">
                 <TextBlock Text="Production Buildings" Classes="h2" />

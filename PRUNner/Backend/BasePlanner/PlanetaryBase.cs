@@ -31,7 +31,14 @@ namespace PRUNner.Backend.BasePlanner
         public int AreaTotal { get; } = Constants.BaseArea;
         [Reactive] public int AreaDeveloped { get; private set; }
         [Reactive] public int AreaAvailable { get; private set; } = Constants.BaseArea;
+        [Reactive] public double ProfitPerDay { get; private set; }
+        
+        [Reactive] public bool IncludeCoreModuleInColonyCosts { get; set; }
+        [Reactive] public double ColonyCosts { get; private set; }
+        [Reactive] public double TotalDailyRepairCosts { get; private set; }
         [Reactive] public double NetProfit { get; private set; }
+        [Reactive] public double ReturnOfInvestment { get; private set; }
+        
         [Reactive] public double VolumeIn { get; private set; }
         [Reactive] public double VolumeOut { get; private set; }
         [Reactive] public double WeightIn { get; private set; }
@@ -40,11 +47,11 @@ namespace PRUNner.Backend.BasePlanner
         public PlanetaryBase(Empire empire, PlanetData planet)
         {
             BeginLoading();
-
-            InfrastructureBuildings = new PlanetaryBaseInfrastructure(this);
             
             _empire = empire;
             Planet = planet;
+
+            InfrastructureBuildings = new PlanetaryBaseInfrastructure(this);
             ProductionTable = new PlanetProductionTable(this);
             foreach (var infrastructureBuilding in InfrastructureBuildings.All)
             {
@@ -72,6 +79,7 @@ namespace PRUNner.Backend.BasePlanner
             ExpertAllocation.ResourceExtraction.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
 
             this.WhenPropertyChanged(x => x.CoGCBonus).Subscribe(_ => RecalculateBuildingEfficiencies());
+            this.WhenPropertyChanged(x => x.IncludeCoreModuleInColonyCosts).Subscribe(_ => RecalculateProfits());
          
             FinishLoading();
         }
@@ -120,7 +128,7 @@ namespace PRUNner.Backend.BasePlanner
         {
             ProductionTable.Update(ProductionBuildings);
 
-            NetProfit = ProductionTable.Rows.Sum(x => x.Value);
+            RecalculateProfits();
             
             VolumeIn = ProductionTable.Inputs.Sum(x => x.Volume);
             WeightIn = ProductionTable.Inputs.Sum(x => x.Weigth);
@@ -178,13 +186,39 @@ namespace PRUNner.Backend.BasePlanner
             RecalculateWorkforce();
             RecalculateBuildingEfficiencies();
             RecalculateSpace();
-            OnProductionChange();     
+            OnProductionChange();   
+            OnPriceDataUpdate();
         }
 
         public void OnPriceDataUpdate()
         {
+            foreach (var building in ProductionBuildings)
+            {
+                building.OnPriceDataUpdate();
+            }
+
+            foreach (var building in InfrastructureBuildings.All)
+            {
+                building.OnPriceDataUpdate();
+            }
+
             ProductionTable.UpdatePriceData();
-            NetProfit = ProductionTable.Rows.Sum(x => x.Value);
+            RecalculateProfits();
+        }
+
+        public void RecalculateProfits()
+        {
+            ProfitPerDay = ProductionTable.Rows.Sum(x => x.Value);
+            ColonyCosts = ProductionBuildings.Sum(x => x.BuildingCost) + InfrastructureBuildings.All.Sum(x => x.BuildingCost);
+            if (!IncludeCoreModuleInColonyCosts)
+            {
+                ColonyCosts -= InfrastructureBuildings.CM.BuildingCost;
+            }
+            
+            TotalDailyRepairCosts = ProductionBuildings.Sum(x => x.DailyCostForRepairs);
+            NetProfit = ProfitPerDay - TotalDailyRepairCosts;
+
+            ReturnOfInvestment = ColonyCosts / NetProfit;
         }
     }
 }

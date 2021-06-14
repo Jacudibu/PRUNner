@@ -76,6 +76,7 @@ namespace PRUNner.Backend.UserDataParser
             result.Add(nameof(PlanetaryBase.ProductionBuildings), WriteProductionBuildings(planetaryBase.ProductionBuildings));
             result.Add(nameof(PlanetaryBase.ExpertAllocation), WriteExpertAllocation(planetaryBase.ExpertAllocation));
             result.Add(nameof(PlanetaryBase.ProvidedConsumables), WriteProvidedConsumables(planetaryBase.ProvidedConsumables));
+            result.Add(nameof(planetaryBase.IncludeCoreModuleInColonyCosts), planetaryBase.IncludeCoreModuleInColonyCosts);
 
             return result;
         }

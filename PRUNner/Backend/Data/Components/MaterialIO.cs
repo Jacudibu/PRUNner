@@ -27,5 +27,10 @@ namespace PRUNner.Backend.Data.Components
             Amount = amount;
             DailyAmount = amount / durationInMs * Constants.MsPerDay;
         }
+
+        public override string ToString()
+        {
+            return Amount + "x" + Material.Ticker;
+        }
     }
 }

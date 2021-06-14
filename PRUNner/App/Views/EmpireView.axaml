@@ -44,7 +44,7 @@
                                            Text="{Binding Planet.Name}" />
                                 <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"
                                            Text="{Binding NetProfit, StringFormat={}{0:F0}}"
-                                           HorizontalAlignment="Right" />
+                                           HorizontalAlignment="Right" FontFamily="Monospaced" />
                                 <Button Content="View" VerticalAlignment="Center"
                                         Command="{Binding ElementName=PlanetList, Path=DataContext.ViewBase, FallbackValue=null}"
                                         CommandParameter="{Binding .}" />

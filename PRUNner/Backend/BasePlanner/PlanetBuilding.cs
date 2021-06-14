@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using DynamicData.Binding;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.Data.Components;
 using PRUNner.Backend.Data.Enums;
@@ -23,13 +25,18 @@ namespace PRUNner.Backend.BasePlanner
         public ObservableCollection<PlanetBuildingProductionRecipe> AvailableRecipes { get; }
         
         public ObservableCollection<PlanetBuildingProductionQueueElement> Production { get; } = new();
+        private readonly ImmutableArray<MaterialIO> _buildingMaterials; 
+        
         public double Efficiency { get; private set; }
+        public double BuildingCost { get; private set; }
+        public double DailyCostForRepairs { get; private set; }
 
         public PlanetBuilding() // This feels like a hack, but otherwise we can't set the Design.DataContext in BuildingRow...
         {
             Building = null!;
             PlanetaryBase = null!;
             AvailableRecipes = null!;
+            _buildingMaterials = ImmutableArray<MaterialIO>.Empty;
             _fertilityBonus = 0;
         }
 
@@ -48,6 +55,8 @@ namespace PRUNner.Backend.BasePlanner
             PlanetaryBase = planetaryBase;
             Building = building;
             AvailableRecipes = null!;
+
+            _buildingMaterials = building.GetBuildingMaterialsOnPlanet(planetaryBase.Planet);
         }
         
         private PlanetBuilding(PlanetaryBase planetaryBase, PlanetData planet, BuildingData building) : this(planetaryBase, building)
@@ -64,6 +73,21 @@ namespace PRUNner.Backend.BasePlanner
             }
             
             AddProduction();
+
+            this.WhenPropertyChanged(x => x.Amount).Subscribe(value => RecalculateBuildingCosts());
+            RecalculateBuildingCosts();
+        }
+
+        private void RecalculateBuildingCosts()
+        {
+            var totalCost = 0d;
+            foreach (var material in _buildingMaterials)
+            {
+                totalCost += material.Material.PriceData.GetPrice() * material.Amount * Amount;
+            }
+            
+            BuildingCost = totalCost;
+            DailyCostForRepairs = totalCost / Constants.DaysUntilAllBuildingMaterialsAreLost;
         }
 
         private ObservableCollection<PlanetBuildingProductionRecipe> GetResourceRecipeList(PlanetData planet, BuildingData building)
@@ -158,6 +182,11 @@ namespace PRUNner.Backend.BasePlanner
         public override string ToString()
         {
             return Amount + "x" + Building.Ticker;
+        }
+
+        public void OnPriceDataUpdate()
+        {
+            RecalculateBuildingCosts();
         }
     }   
 }

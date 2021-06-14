@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using FIOImport.POCOs.Buildings;
@@ -94,6 +95,36 @@ namespace PRUNner.Backend.Data
             if (poco.Pioneers > 0) return BuildingCategory.Pioneers;
 
             return BuildingCategory.Infrastructure;
+        }
+
+        public ImmutableArray<MaterialIO> GetBuildingMaterialsOnPlanet(PlanetData planet)
+        {
+            var result = new List<MaterialIO>(BuildingCosts);
+            switch (planet.Type)
+            {
+                case PlanetType.Rocky:
+                    result.Add(GetMaterialIO(Names.Materials.MCG, AreaCost * 4));
+                    break;
+                case PlanetType.Gaseous:
+                    result.Add(GetMaterialIO(Names.Materials.AEF, (int) Math.Ceiling(AreaCost / 3d)));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(planet.Type), planet.Type, null);
+            }
+            
+            if (planet.IsLowGravity()) result.Add(GetMaterialIO(Names.Materials.MGC, 1));
+            if (planet.IsHighGravity()) result.Add(GetMaterialIO(Names.Materials.BL, 1));
+            if (planet.IsLowPressure()) result.Add(GetMaterialIO(Names.Materials.SEA, AreaCost * 1));
+            if (planet.IsHighPressure()) result.Add(GetMaterialIO(Names.Materials.HSE, 1));
+            if (planet.IsLowTemperature()) result.Add(GetMaterialIO(Names.Materials.INS, AreaCost * 10));
+            if (planet.IsHighTemperature()) result.Add(GetMaterialIO(Names.Materials.TSH, 1));
+
+            return result.ToImmutableArray();
+        }
+
+        private MaterialIO GetMaterialIO(string ticker, int amount)
+        {
+            return new(MaterialData.GetOrThrow(ticker), amount, Constants.MsPerDay * Constants.DaysUntilAllBuildingMaterialsAreLost);
         }
     }
 }

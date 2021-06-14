@@ -28,6 +28,15 @@ namespace PRUNner.Backend
         {
             public const string FEO = nameof(FEO);
             public const string LST = nameof(LST);
+            
+            public const string MCG = nameof(MCG);
+            public const string AEF = nameof(AEF);
+            public const string SEA = nameof(SEA);
+            public const string HSE = nameof(HSE);
+            public const string MGC = nameof(MGC);
+            public const string BL = nameof(BL);
+            public const string INS = nameof(INS);
+            public const string TSH = nameof(TSH);
         }
 
         public static class Buildings

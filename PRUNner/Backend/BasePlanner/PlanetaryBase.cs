@@ -32,6 +32,10 @@ namespace PRUNner.Backend.BasePlanner
         [Reactive] public int AreaDeveloped { get; private set; }
         [Reactive] public int AreaAvailable { get; private set; } = Constants.BaseArea;
         [Reactive] public double NetProfit { get; private set; }
+        [Reactive] public double VolumeIn { get; private set; }
+        [Reactive] public double VolumeOut { get; private set; }
+        [Reactive] public double WeightIn { get; private set; }
+        [Reactive] public double WeightOut { get; private set; }
 
         public PlanetaryBase(Empire empire, PlanetData planet)
         {
@@ -115,7 +119,14 @@ namespace PRUNner.Backend.BasePlanner
         private void OnProductionChange()
         {
             ProductionTable.Update(ProductionBuildings);
+
             NetProfit = ProductionTable.Rows.Sum(x => x.Value);
+            
+            VolumeIn = ProductionTable.Inputs.Sum(x => x.Volume);
+            WeightIn = ProductionTable.Inputs.Sum(x => x.Weigth);
+            
+            VolumeOut = ProductionTable.Outputs.Sum(x => x.Volume);
+            WeightOut = ProductionTable.Outputs.Sum(x => x.Weigth);
         }
 
         private void RecalculateWorkforce()

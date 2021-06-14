@@ -216,19 +216,27 @@
         <!-- </StackPanel> -->
 
 
-        <Grid Grid.Row="0" RowSpan="3" Grid.Column="3" DockPanel.Dock="Right" VerticalAlignment="Top" Margin="0,0,0,20"
-              RowDefinitions="Auto, *">
-            <StackPanel Grid.Row="0" VerticalAlignment="Bottom" Margin="40,0,0,0">
-                <TextBlock Text="Total Production Overview" Classes="h2" HorizontalAlignment="Center" />
-                <StackPanel Orientation="Horizontal">
-                    <Button Width="55" Height="30" Command="{Binding ActiveBase.ProductionTable.SortByTicker}" HorizontalContentAlignment="Center" Content="" />
-                    <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByInputs}" HorizontalContentAlignment="Center" Content="Inputs" />
-                    <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByOutputs}" HorizontalContentAlignment="Center" Content="Outputs" />
-                    <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByBalance}" HorizontalContentAlignment="Center" Content="Balance" />
-                    <Button Width="95" Command="{Binding ActiveBase.ProductionTable.SortByValue}" HorizontalContentAlignment="Center" Content="$/day" />
-                </StackPanel>
+        <Grid Grid.Row="0" RowSpan="3" Grid.Column="3" DockPanel.Dock="Right" VerticalAlignment="Top" Margin="40,0,0,20"
+              RowDefinitions="Auto, Auto, Auto, *">
+            <TextBlock Grid.Row="0" VerticalAlignment="Bottom" Text="Total Production Overview" Classes="h2" HorizontalAlignment="Center" />
+            <Grid Grid.Row="1" ColumnDefinitions="50, 100, 100" RowDefinitions="Auto, Auto, Auto" HorizontalAlignment="Center" Margin="0,0,0,10">
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="m³" TextAlignment="Right" Margin="15,0"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="t" TextAlignment="Right" Margin="15,0" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Import" TextAlignment="Right" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ActiveBase.VolumeIn, StringFormat={}{0:F2}}" TextAlignment="Right" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActiveBase.WeightIn, StringFormat={}{0:F2}}" TextAlignment="Right" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Export" TextAlignment="Right" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ActiveBase.VolumeOut, StringFormat={}{0:F2}}" TextAlignment="Right" />
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding ActiveBase.WeightOut, StringFormat={}{0:F2}}" TextAlignment="Right" />
+            </Grid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Button Width="55" Height="30" Command="{Binding ActiveBase.ProductionTable.SortByTicker}" HorizontalContentAlignment="Center" Content="" />
+                <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByInputs}" HorizontalContentAlignment="Center" Content="Inputs" />
+                <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByOutputs}" HorizontalContentAlignment="Center" Content="Outputs" />
+                <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByBalance}" HorizontalContentAlignment="Center" Content="Balance" />
+                <Button Width="95" Command="{Binding ActiveBase.ProductionTable.SortByValue}" HorizontalContentAlignment="Center" Content="$/day" />
             </StackPanel>
-            <Border Grid.Row="1" BorderThickness="1" Margin="40,0,0,0" BorderBrush="LightGray">
+            <Border Grid.Row="3" BorderThickness="1" BorderBrush="LightGray">
                 <ScrollViewer>
                     <ItemsControl Items="{Binding ActiveBase.ProductionTable.Rows}">
                         <ItemsControl.ItemsPanel>

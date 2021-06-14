@@ -20,7 +20,7 @@ namespace PRUNner.Backend.BasePlanner
             set
             {
                 this.RaiseAndSetIfChanged(ref _inputs, value);
-                Balance = _outputs - _inputs;
+                UpdateComputedValues();
             }
         }
 
@@ -32,21 +32,22 @@ namespace PRUNner.Backend.BasePlanner
             set
             {
                 this.RaiseAndSetIfChanged(ref _outputs, value);
-                Balance = _outputs - _inputs;
+                UpdateComputedValues();
             }
         }
-
-        private double _balance;
-        public double Balance
-        {
-            get => _balance;
-            private set
-            {
-                this.RaiseAndSetIfChanged(ref _balance, value);
-                Value = _balance * Material.PriceData.GetPrice();
-            }
-        }
+        [Reactive] public double Balance { get; private set; }
 
         [Reactive] public double Value { get; private set; }
+        
+        [Reactive] public double Volume { get; private set; }
+        [Reactive] public double Weigth { get; private set; }
+
+        private void UpdateComputedValues()
+        {
+            Balance = Outputs - Inputs;
+            Value = Balance * Material.PriceData.GetPrice();
+            Volume = Balance * Material.Volume;
+            Weigth = Balance * Material.Weight;
+        }
     }
 }

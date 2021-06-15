@@ -6,7 +6,9 @@
     <Application.Resources>
         <converters:IsNullConverter x:Key="IsNull" />
         <converters:IsNotNullConverter x:Key="IsNotNull" />
+        <converters:TextToProductionLinePercentageConverter x:Key="TextToProductionLinePercentage" />
     </Application.Resources>
+    
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>

@@ -29,46 +29,46 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="basePlanner:PlanetBuildingProductionQueueElement">
                     <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                        <TextBox VerticalAlignment="Center" Text="{Binding Percentage}" Width="20" />
+                        <TextBox VerticalAlignment="Center" Text="{Binding Percentage, Converter={StaticResource TextToProductionLinePercentage}}" Width="20" />
                         <TextBlock VerticalAlignment="Center" Text="%" Margin="0,0,5,0" />
 
                         <ComboBox SelectedItem="{Binding ActiveRecipe}" Items="{Binding Building.AvailableRecipes}" Width="480">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <ItemsControl Items="{Binding Outputs}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" Spacing="2"/>
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate DataType="components:MaterialIO">
-                                                        <controls:ItemBoxControl DataContext="{Binding .}"/>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                            
-                                            <StackPanel VerticalAlignment="Center" Width="75">
-                                                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="⬅"
-                                                           Margin="5,0" IsVisible="{Binding Inputs.Count}"/>
-                                                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding DurationString}"
-                                                           Margin="5,0" />
-                                            </StackPanel>
-                                            
-                                            <ItemsControl Items="{Binding Inputs}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" Spacing="2" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate DataType="components:MaterialIO">
-                                                        <controls:ItemBoxControl DataContext="{Binding .}"/>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ItemsControl Items="{Binding Outputs}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="2"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="components:MaterialIO">
+                                                    <controls:ItemBoxControl DataContext="{Binding .}"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                        
+                                        <StackPanel VerticalAlignment="Center" Width="75">
+                                            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="⬅"
+                                                       Margin="5,0" IsVisible="{Binding Inputs.Count}"/>
+                                            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding DurationString}"
+                                                       Margin="5,0" />
                                         </StackPanel>
+                                        
+                                        <ItemsControl Items="{Binding Inputs}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="2" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="components:MaterialIO">
+                                                    <controls:ItemBoxControl DataContext="{Binding .}"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>

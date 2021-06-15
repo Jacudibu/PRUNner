@@ -303,7 +303,7 @@
                 </Border>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="1" RowSpan="3" ColumnSpan="2" DockPanel.Dock="Bottom" RowDefinitions="Auto, *"
+            <Grid Grid.Row="1" Grid.Column="1" RowSpan="3" ColumnSpan="2" DockPanel.Dock="Bottom" RowDefinitions="Auto, *" Margin="0,0,0,20"
                   ColumnDefinitions="Auto, Auto" HorizontalAlignment="Center">
                 <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,5">
                     <TextBlock Text="Production Buildings" Classes="h2" />

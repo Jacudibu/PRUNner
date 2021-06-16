@@ -41,7 +41,7 @@
                                 <TextBox Text="{Binding Ticker}"/>
                                 <NumericUpDown Value="{Binding Price}" Minimum="0"
                                                Classes="compact" HorizontalContentAlignment="Right" Padding="5" Width="100"/>
-                                <Button Content="x" Margin="5,0,0,0" Classes="xButton"
+                                <Button Classes="xButton" Margin="5,0,0,0"
                                         Command="{Binding ElementName=DockPanel, Path=DataContext.Empire.PriceOverrides.RemoveOverride}"
                                         CommandParameter="{Binding .}"/>
                             </StackPanel>
@@ -67,7 +67,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="basePlanner:PlanetaryBase">
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="x" VerticalAlignment="Center"
+                                <Button Classes="xButton" VerticalAlignment="Center"
                                         Command="{Binding ElementName=PlanetList, Path=DataContext.Empire.RemovePlanetaryBase, FallbackValue=null}"
                                         CommandParameter="{Binding .}" />
                                 <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"

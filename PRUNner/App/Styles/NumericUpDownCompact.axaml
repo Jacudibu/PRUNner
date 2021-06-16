@@ -80,7 +80,6 @@
                                           BorderBrush="{TemplateBinding BorderBrush}"
                                           Background="{TemplateBinding Background}"
                                           Margin="0,-1,-1,0"
-                                          Delay="50"
                                           FontSize="{TemplateBinding FontSize}">
                                 <Path Fill="{TemplateBinding Foreground}"
                                       Width="16"
@@ -98,7 +97,6 @@
                                           Background="{TemplateBinding Background}"
                                           VerticalContentAlignment="Center"
                                           Margin="0,-1,-1,-1"
-                                          Delay="50"
                                           FontSize="{TemplateBinding FontSize}">
                                 <Path Fill="{TemplateBinding Foreground}"
                                       Width="16"

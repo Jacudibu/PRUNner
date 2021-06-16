@@ -6,8 +6,15 @@ namespace PRUNner.Backend.BasePlanner
     public class Empire
     {
         public Headquarters Headquarters { get; } = new();
+        public PriceOverrides PriceOverrides { get; } = new();
+        
         public ObservableCollection<PlanetaryBase> PlanetaryBases { get; } = new();
 
+        public Empire()
+        {
+            PriceOverrides.OnPriceUpdate += OnPriceDataUpdate;
+        }
+        
         public PlanetaryBase AddPlanetaryBase(PlanetData planet)
         {
             var planetaryBase = new PlanetaryBase(this, planet);

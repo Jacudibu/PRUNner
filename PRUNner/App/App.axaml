@@ -28,5 +28,14 @@
             <Setter Property="FontWeight" Value="DemiBold"/>
             <Setter Property="Margin" Value="0,0,0,5"/>
         </Style>
+        
+        <Style Selector="Button.xButton">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Content" Value="x"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5,0"/>
+        </Style>
     </Application.Styles>
 </Application>

@@ -83,7 +83,7 @@ namespace PRUNner.Backend.BasePlanner
             var totalCost = 0d;
             foreach (var material in _buildingMaterials)
             {
-                totalCost += material.Material.PriceData.GetPrice() * material.Amount * Amount;
+                totalCost += material.Material.PriceData.GetPrice(PlanetaryBase.Empire.PriceOverrides) * material.Amount * Amount;
             }
             
             BuildingCost = totalCost;

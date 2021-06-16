@@ -6,10 +6,7 @@ namespace PRUNner.Backend.BasePlanner
 {
     public class PlanetProductionRow : ReactiveObject
     {
-        public PlanetProductionRow(MaterialData material)
-        {
-            Material = material;
-        }
+        private readonly PriceOverrides _empirePriceOverrides;
 
         public MaterialData Material { get; }
 
@@ -42,6 +39,12 @@ namespace PRUNner.Backend.BasePlanner
         [Reactive] public double Volume { get; private set; }
         [Reactive] public double Weigth { get; private set; }
 
+        public PlanetProductionRow(PlanetProductionTable table, MaterialData material)
+        {
+            _empirePriceOverrides = table.PlanetaryBase.Empire.PriceOverrides;
+            Material = material;
+        }
+        
         private void UpdateComputedValues()
         {
             Balance = Outputs - Inputs;
@@ -52,7 +55,7 @@ namespace PRUNner.Backend.BasePlanner
 
         public void UpdatePriceData()
         {
-            Value = Balance * Material.PriceData.GetPrice();
+            Value = Balance * Material.PriceData.GetPrice(_empirePriceOverrides);
         }
     }
 }

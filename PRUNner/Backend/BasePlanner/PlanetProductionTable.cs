@@ -12,10 +12,10 @@ namespace PRUNner.Backend.BasePlanner
 {
     public class PlanetProductionTable : ReactiveObject
     {
-        private readonly PlanetaryBase _planetaryBase;
+        public readonly PlanetaryBase PlanetaryBase;
         public PlanetProductionTable(PlanetaryBase planetaryBase)
         {
-            _planetaryBase = planetaryBase;
+            PlanetaryBase = planetaryBase;
         }
 
         public ObservableCollection<PlanetProductionRow> Rows { get; } = new();
@@ -28,11 +28,11 @@ namespace PRUNner.Backend.BasePlanner
             Inputs.Clear();
             Outputs.Clear();
             
-            WorkforceConsumptionFactors.Pioneers.AddUsedConsumables(_planetaryBase.ProvidedConsumables, _planetaryBase.WorkforceRequired.Pioneers, _planetaryBase.WorkforceCapacity.Pioneers, AddInput);
-            WorkforceConsumptionFactors.Settlers.AddUsedConsumables(_planetaryBase.ProvidedConsumables, _planetaryBase.WorkforceRequired.Settlers, _planetaryBase.WorkforceCapacity.Settlers, AddInput);
-            WorkforceConsumptionFactors.Technicians.AddUsedConsumables(_planetaryBase.ProvidedConsumables, _planetaryBase.WorkforceRequired.Technicians, _planetaryBase.WorkforceCapacity.Technicians, AddInput);
-            WorkforceConsumptionFactors.Engineers.AddUsedConsumables(_planetaryBase.ProvidedConsumables, _planetaryBase.WorkforceRequired.Engineers, _planetaryBase.WorkforceCapacity.Engineers, AddInput);
-            WorkforceConsumptionFactors.Scientists.AddUsedConsumables(_planetaryBase.ProvidedConsumables, _planetaryBase.WorkforceRequired.Scientists, _planetaryBase.WorkforceCapacity.Scientists, AddInput);
+            WorkforceConsumptionFactors.Pioneers.AddUsedConsumables(PlanetaryBase.ProvidedConsumables, PlanetaryBase.WorkforceRequired.Pioneers, PlanetaryBase.WorkforceCapacity.Pioneers, AddInput);
+            WorkforceConsumptionFactors.Settlers.AddUsedConsumables(PlanetaryBase.ProvidedConsumables, PlanetaryBase.WorkforceRequired.Settlers, PlanetaryBase.WorkforceCapacity.Settlers, AddInput);
+            WorkforceConsumptionFactors.Technicians.AddUsedConsumables(PlanetaryBase.ProvidedConsumables, PlanetaryBase.WorkforceRequired.Technicians, PlanetaryBase.WorkforceCapacity.Technicians, AddInput);
+            WorkforceConsumptionFactors.Engineers.AddUsedConsumables(PlanetaryBase.ProvidedConsumables, PlanetaryBase.WorkforceRequired.Engineers, PlanetaryBase.WorkforceCapacity.Engineers, AddInput);
+            WorkforceConsumptionFactors.Scientists.AddUsedConsumables(PlanetaryBase.ProvidedConsumables, PlanetaryBase.WorkforceRequired.Scientists, PlanetaryBase.WorkforceCapacity.Scientists, AddInput);
             
             foreach (var building in buildings)
             {
@@ -105,7 +105,7 @@ namespace PRUNner.Backend.BasePlanner
                 return row;
             }
             
-            row = new PlanetProductionRow(material);
+            row = new PlanetProductionRow(this, material);
             Rows.Add(row);
             return row;
         }

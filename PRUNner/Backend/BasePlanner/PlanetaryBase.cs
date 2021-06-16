@@ -12,7 +12,7 @@ namespace PRUNner.Backend.BasePlanner
     public class PlanetaryBase : ReactiveObject
     {
         private bool _loading;
-        private readonly Empire _empire;
+        public readonly Empire Empire;
         public PlanetData Planet { get; }
 
         public PlanetaryBaseInfrastructure InfrastructureBuildings { get; }
@@ -48,7 +48,7 @@ namespace PRUNner.Backend.BasePlanner
         {
             BeginLoading();
             
-            _empire = empire;
+            Empire = empire;
             Planet = planet;
 
             InfrastructureBuildings = new PlanetaryBaseInfrastructure(this);
@@ -64,7 +64,7 @@ namespace PRUNner.Backend.BasePlanner
             });
 
             WorkforceSatisfaction.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
-            _empire.Headquarters.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
+            Empire.Headquarters.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
             
             // TODO: Figure out why this here does not work, then use Observable.Merge instead of subscribing a dozen times.
             // ExpertAllocation.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
@@ -93,7 +93,7 @@ namespace PRUNner.Backend.BasePlanner
             
             foreach (var building in ProductionBuildings)
             {
-                building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, CoGCBonus, _empire.Headquarters);
+                building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, CoGCBonus, Empire.Headquarters);
             }
             
             OnProductionChange();

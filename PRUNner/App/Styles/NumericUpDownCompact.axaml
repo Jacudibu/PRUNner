@@ -4,7 +4,7 @@
     <Design.PreviewWith>
         <Border Padding="20">
             <StackPanel Spacing="20">
-                <NumericUpDown Value="9" />
+                <NumericUpDown Classes="compact" HorizontalContentAlignment="Right" Padding="5" Width="100" Value="9" />
                 <NumericUpDown Classes="compact" Value="9" />
             </StackPanel>
         </Border>
@@ -38,7 +38,6 @@
                              Background="Transparent"
                              BorderBrush="Transparent"
                              Margin="-1"
-                             Width="31"
                              MinWidth="31"
                              Padding="{TemplateBinding Padding}"
                              Watermark="{TemplateBinding Watermark}"
@@ -81,6 +80,7 @@
                                           BorderBrush="{TemplateBinding BorderBrush}"
                                           Background="{TemplateBinding Background}"
                                           Margin="0,-1,-1,0"
+                                          Delay="50"
                                           FontSize="{TemplateBinding FontSize}">
                                 <Path Fill="{TemplateBinding Foreground}"
                                       Width="16"
@@ -98,6 +98,7 @@
                                           Background="{TemplateBinding Background}"
                                           VerticalContentAlignment="Center"
                                           Margin="0,-1,-1,-1"
+                                          Delay="50"
                                           FontSize="{TemplateBinding FontSize}">
                                 <Path Fill="{TemplateBinding Foreground}"
                                       Width="16"

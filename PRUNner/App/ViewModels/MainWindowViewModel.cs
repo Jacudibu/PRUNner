@@ -130,7 +130,7 @@ namespace PRUNner.App.ViewModels
 
             var window = new Window();
             window.Content = basePlanner;
-            window.Width = 1550;
+            window.Width = 1800;
             window.Height = 850;
             window.Icon = (Application.Current.ApplicationLifetime as ClassicDesktopStyleApplicationLifetime)?.MainWindow.Icon;
             window.Title = "PRUNner – " + planetaryBase.Planet.Name;

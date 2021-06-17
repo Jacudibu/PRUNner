@@ -2,7 +2,8 @@ namespace PRUNner.Backend.Enums
 {
     public enum PriceDataPollType
     {
-        Custom,
+        EmpireOverrides,
+        PlanetOverrides,
         MMBuy,
         MMSell,
         AI1Average,

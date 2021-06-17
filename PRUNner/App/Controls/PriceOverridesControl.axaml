@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:backend="clr-namespace:PRUNner.Backend"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="450"
+             x:Class="PRUNner.App.Controls.PriceOverridesControl">
+
+    <Design.DataContext>
+        <backend:PriceOverrides />
+    </Design.DataContext>
+
+    <Grid Name="PriceOverridesGrid" RowDefinitions="Auto, Auto, *" Width="250" Margin="10,0,0,0">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Price Overrides" VerticalAlignment="Center" Margin="0,0,40,0" Classes="h2" />
+            <Button Content="+ Add" Command="{Binding AddNewOverride}" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Text="On?" Width="25" />
+            <TextBlock Text="Ticker" Width="70" TextAlignment="Center" />
+            <TextBlock Text="Price" Width="80" TextAlignment="Center" />
+        </StackPanel>
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl Items="{Binding OverrideList}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="backend:PriceOverride">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsEnabled}" />
+                            <TextBox Text="{Binding Ticker}" />
+                            <NumericUpDown Value="{Binding Price}" Minimum="0"
+                                           Classes="compact" HorizontalContentAlignment="Right" Padding="5" Width="100" />
+                            <Button Classes="xButton" Margin="5,0,0,0"
+                                    Command="{Binding ElementName=PriceOverridesGrid, Path=DataContext.RemoveOverride, FallbackValue={}}"
+                                    CommandParameter="{Binding .}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+
+</UserControl>

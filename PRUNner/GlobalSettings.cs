@@ -7,7 +7,8 @@ namespace PRUNner
     {
         public static ObservableCollection<PriceDataPollType> PriceDataPreferenceOrder { get; private set; } = new()
         {
-            PriceDataPollType.Custom,
+            PriceDataPollType.PlanetOverrides,
+            PriceDataPollType.EmpireOverrides,
             PriceDataPollType.NC1Bid,
             PriceDataPollType.NC1Average,
             PriceDataPollType.MMBuy,

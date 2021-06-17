@@ -14,6 +14,7 @@ namespace PRUNner.Backend.BasePlanner
         private bool _loading;
         public readonly Empire Empire;
         public PlanetData Planet { get; }
+        public PriceOverrides PriceOverrides { get; } = new();
 
         public PlanetaryBaseInfrastructure InfrastructureBuildings { get; }
         public ObservableCollection<PlanetBuilding> ProductionBuildings { get; } = new();
@@ -47,6 +48,8 @@ namespace PRUNner.Backend.BasePlanner
         public PlanetaryBase(Empire empire, PlanetData planet)
         {
             BeginLoading();
+
+            PriceOverrides.OnPriceUpdate += OnPriceDataUpdate;
             
             Empire = empire;
             Planet = planet;

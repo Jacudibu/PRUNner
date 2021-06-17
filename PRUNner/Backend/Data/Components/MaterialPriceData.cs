@@ -9,7 +9,6 @@ namespace PRUNner.Backend.Data.Components
     public class MaterialPriceData : ReactiveObject
     {
         private readonly MaterialData _materialData;
-        public double? Custom { get; set; }
         public double? MMBuy { get; private set; }
         public double? MMSell { get; private set; }
         public MaterialPriceDataRegional AI1 { get; } = new();
@@ -32,16 +31,16 @@ namespace PRUNner.Backend.Data.Components
             NC1.Update(rainPrices.NC1Average, rainPrices.NC1AskPrice, rainPrices.NC1BidPrice);
         }
 
-        public double GetPrice(PriceOverrides? empirePriceOverrides = null)
+        public double GetPrice(PriceOverrides? empirePriceOverrides = null, PriceOverrides? planetPriceOverrides = null)
         {
-            return GetPrice(GlobalSettings.PriceDataPreferenceOrder, empirePriceOverrides);
+            return GetPrice(GlobalSettings.PriceDataPreferenceOrder, empirePriceOverrides, planetPriceOverrides);
         }
         
-        public double GetPrice(IEnumerable<PriceDataPollType> pollTypes, PriceOverrides? empirePriceOverrides)
+        public double GetPrice(IEnumerable<PriceDataPollType> pollTypes, PriceOverrides? empirePriceOverrides, PriceOverrides? planetPriceOverrides)
         {
             foreach (var pollType in pollTypes)
             {
-                var result = GetPrice(pollType, empirePriceOverrides);
+                var result = GetPrice(pollType, empirePriceOverrides, planetPriceOverrides);
                 if (result != null)
                 {
                     return (double) result;
@@ -51,11 +50,12 @@ namespace PRUNner.Backend.Data.Components
             return 0;
         }
 
-        private double? GetPrice(PriceDataPollType pollType, PriceOverrides? empirePriceOverrides = null)
+        private double? GetPrice(PriceDataPollType pollType, PriceOverrides? empirePriceOverrides = null, PriceOverrides? planetPriceOverrides = null)
         {
             return pollType switch
             {
-                PriceDataPollType.Custom => empirePriceOverrides?.GetOverrideForTicker(_materialData.Ticker) ?? null,
+                PriceDataPollType.EmpireOverrides => empirePriceOverrides?.GetOverrideForTicker(_materialData.Ticker) ?? null,
+                PriceDataPollType.PlanetOverrides => planetPriceOverrides?.GetOverrideForTicker(_materialData.Ticker) ?? null,
                 PriceDataPollType.MMBuy => MMBuy,
                 PriceDataPollType.MMSell => MMSell,
                 PriceDataPollType.AI1Average => AI1.Average,

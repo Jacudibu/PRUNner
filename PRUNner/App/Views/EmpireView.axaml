@@ -8,7 +8,7 @@
              xmlns:markupExtensions="clr-namespace:PRUNner.App.MarkupExtensions"
              xmlns:enums="clr-namespace:PRUNner.Backend.Enums"
              xmlns:backend="clr-namespace:PRUNner.Backend"
-             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="800"
+             mc:Ignorable="d" d:DesignWidth="1800" d:DesignHeight="800"
              x:Class="PRUNner.App.Views.EmpireView">
 
     <Design.DataContext>
@@ -22,34 +22,7 @@
                       SelectedItem="{Binding Empire.Headquarters.Faction}" Width="150"/>
         </StackPanel>
 
-        <Grid RowDefinitions="Auto, Auto, *" Width="250" Margin="10,0,0,0">
-            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBlock Text="Price Overrides" VerticalAlignment="Center" Margin="0,0,5,0" Classes="h2"/>
-                <Button Content="+ Add" Command="{Binding Empire.PriceOverrides.AddNewOverride}"/>
-            </StackPanel>
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <TextBlock Text="On?" Width="25"/>
-                <TextBlock Text="Ticker" Width="70" TextAlignment="Center"/>
-                <TextBlock Text="Price" Width="80" TextAlignment="Center"/>
-            </StackPanel>
-            <ScrollViewer Grid.Row="2">
-                <ItemsControl Items="{Binding Empire.PriceOverrides.OverrideList}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="backend:PriceOverride">
-                            <StackPanel Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding IsEnabled}"/>
-                                <TextBox Text="{Binding Ticker}"/>
-                                <NumericUpDown Value="{Binding Price}" Minimum="0"
-                                               Classes="compact" HorizontalContentAlignment="Right" Padding="5" Width="100"/>
-                                <Button Classes="xButton" Margin="5,0,0,0"
-                                        Command="{Binding ElementName=DockPanel, Path=DataContext.Empire.PriceOverrides.RemoveOverride}"
-                                        CommandParameter="{Binding .}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Grid>
+        <controls:PriceOverridesControl DataContext="{Binding Empire.PriceOverrides}"/>
         
         <Grid DockPanel.Dock="Bottom" RowDefinitions="Auto, *" Margin="0,20,0,0" HorizontalAlignment="Center">
             <StackPanel Grid.Row="0" Orientation="Horizontal">

@@ -87,6 +87,7 @@ namespace PRUNner.Backend.UserDataParser
             
             result.Add(nameof(PlanetaryBase.Planet), planetaryBase.Planet.Id);
             result.Add(nameof(PlanetaryBase.CoGCBonus), planetaryBase.CoGCBonus.ToString());
+            result.Add(nameof(PlanetaryBase.PriceOverrides), WritePriceOverrides(planetaryBase.PriceOverrides));
             
             result.Add(nameof(PlanetaryBase.InfrastructureBuildings), WriteInfrastructureBuildings(planetaryBase.InfrastructureBuildings));
             result.Add(nameof(PlanetaryBase.ProductionBuildings), WriteProductionBuildings(planetaryBase.ProductionBuildings));

@@ -8,7 +8,7 @@
              xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
              xmlns:markupExtensions="clr-namespace:PRUNner.App.MarkupExtensions"
              xmlns:enums="clr-namespace:PRUNner.Backend.Enums"
-             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="800"
+             mc:Ignorable="d" d:DesignWidth="1800" d:DesignHeight="800"
              x:Class="PRUNner.App.Views.BasePlannerView">
     
     <Design.DataContext>
@@ -22,7 +22,7 @@
                    Margin="100" Classes="h1"
                    IsVisible="{Binding ActiveBase, Converter={StaticResource IsNull}}" />
         
-        <Grid RowDefinitions="Auto, Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto" IsVisible="{Binding ActiveBase, Converter={StaticResource IsNotNull}}">
+        <Grid RowDefinitions="Auto, Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto" IsVisible="{Binding ActiveBase, Converter={StaticResource IsNotNull}}">
             <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
                 <TextBlock Text="{Binding ActiveBase.Planet.Name}" Classes="h1" HorizontalAlignment="Center" />
                 <StackPanel Orientation="Horizontal">
@@ -337,6 +337,9 @@
                     </ScrollViewer>
                 </Border>
             </Grid>
+            
+            <controls:PriceOverridesControl Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" 
+                                            DataContext="{Binding ActiveBase.PriceOverrides}"/>
         </Grid>
     </Grid>
 

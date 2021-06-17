@@ -19,19 +19,38 @@ namespace PRUNner.Backend.UserDataParser
             
             var jObject = JObject.Parse(File.ReadAllText(UserDataPaths.UserDataFolder + UserDataPaths.EmpireFile));
             var result = ReadEmpire((JObject) jObject[nameof(Empire)]!);
-            ReadGlobalSettings((JObject) jObject[nameof(GlobalSettings)]!);
+            ReadGlobalSettings((JObject?) jObject[nameof(GlobalSettings)]);
 
             return result;
         }
 
-        public static void ReadGlobalSettings(JObject jObject)
+        public static void ReadGlobalSettings(JObject? jObject)
         {
-            GlobalSettings.PriceDataPreferenceOrder.Clear();
-            var jArray = (JArray) jObject[nameof(GlobalSettings.PriceDataPreferenceOrder)]!;
-            foreach (var jToken in jArray)
+            if (jObject == null)
             {
-                var value = Enum.Parse<PriceDataPollType>(jToken.ToObject<string>());
-                GlobalSettings.PriceDataPreferenceOrder.Add(value);
+                return;
+            }
+            
+            var jArray = (JArray) jObject[nameof(GlobalSettings.PriceDataPreferenceOrder)]!;
+
+            GlobalSettings.PriceDataPreferenceOrder.Clear();
+            foreach (var element in jArray.Select(x => x.ToObject<string>()))
+            {
+                if (string.IsNullOrEmpty(element))
+                {
+                    continue;
+                }
+                
+                if (element.Equals("Custom"))
+                { // version 0.2.1 and below
+                    GlobalSettings.PriceDataPreferenceOrder.Add(PriceDataPollType.PlanetOverrides);
+                    GlobalSettings.PriceDataPreferenceOrder.Add(PriceDataPollType.EmpireOverrides);
+                }
+                else
+                {
+                    var value = Enum.Parse<PriceDataPollType>(element);
+                    GlobalSettings.PriceDataPreferenceOrder.Add(value);
+                }
             }
         }
 
@@ -102,7 +121,8 @@ namespace PRUNner.Backend.UserDataParser
             ReadProductionBuildings((JArray) obj[nameof(PlanetaryBase.ProductionBuildings)]!, result);
             ReadExpertAllocation((JObject) obj[nameof(PlanetaryBase.ExpertAllocation)]!, result.ExpertAllocation);
             ReadConsumableData((JObject) obj[nameof(PlanetaryBase.ProvidedConsumables)]!, result.ProvidedConsumables);
-
+            ReadPriceOverrides((JArray?) obj[nameof(PlanetaryBase.PriceOverrides)], result.PriceOverrides);
+            
             result.FinishLoading();
             return result;
         }

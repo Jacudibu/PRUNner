@@ -1,8 +1,12 @@
 ﻿using System.Linq;
 using System.Text;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using NLog;
 using NLog.Targets;
 using PRUNner.Backend;
+using PRUNner.Backend.BasePlanner;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.PlanetFinder;
 using PRUNner.Backend.UserDataParser;
@@ -117,6 +121,20 @@ namespace PRUNner.App.ViewModels
             
             builder.Append(info.Message);
             StatusBar = builder.ToString();
+        }
+
+        public void OpenBaseInNewWindow(PlanetaryBase planetaryBase)
+        {
+            var basePlanner = new BasePlannerViewModel();
+            basePlanner.SetActiveBase(planetaryBase);
+
+            var window = new Window();
+            window.Content = basePlanner;
+            window.Width = 1550;
+            window.Height = 850;
+            window.Icon = (Application.Current.ApplicationLifetime as ClassicDesktopStyleApplicationLifetime)?.MainWindow.Icon;
+            window.Title = "PRUNner – " + planetaryBase.Planet.Name;
+            window.Show();
         }
     }
 }

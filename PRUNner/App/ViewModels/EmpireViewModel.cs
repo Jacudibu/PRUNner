@@ -8,14 +8,14 @@ namespace PRUNner.App.ViewModels
     {
         public Empire Empire { get; private set; } = new();
 
-        private readonly MainWindowViewModel? _mainWindow;
+        public MainWindowViewModel? MainWindow { get; }
 
         public EmpireViewModel()
         { }
         
         public EmpireViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            _mainWindow = mainWindowViewModel;
+            MainWindow = mainWindowViewModel;
         }
         
         public PlanetaryBase StartNewBase(PlanetData planetData)
@@ -25,8 +25,8 @@ namespace PRUNner.App.ViewModels
 
         public void ViewBase(PlanetaryBase planetaryBase)
         {
-            _mainWindow?.BasePlannerViewModel.SetActiveBase(planetaryBase);
-            _mainWindow?.ViewBasePlanner();
+            MainWindow?.BasePlannerViewModel.SetActiveBase(planetaryBase);
+            MainWindow?.ViewBasePlanner();
         }
 
         public void SetEmpire(Empire empire)

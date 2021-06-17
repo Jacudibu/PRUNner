@@ -75,9 +75,14 @@
                                 <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"
                                            Text="{Binding NetProfit, StringFormat={}{0:F0}}"
                                            HorizontalAlignment="Right" FontFamily="Monospaced" />
-                                <Button Content="View" VerticalAlignment="Center"
-                                        Command="{Binding ElementName=DockPanel, Path=DataContext.ViewBase, FallbackValue=null}"
-                                        CommandParameter="{Binding .}" />
+                                <StackPanel VerticalAlignment="Center">
+                                    <Button Content="View" HorizontalAlignment="Center"
+                                            Command="{Binding ElementName=DockPanel, Path=DataContext.ViewBase, FallbackValue=null}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Content="Pop-Out" HorizontalAlignment="Center"
+                                            Command="{Binding ElementName=DockPanel, Path=DataContext.MainWindow.OpenBaseInNewWindow, FallbackValue=null}"
+                                            CommandParameter="{Binding .}" />
+                                </StackPanel>
 
                                 <StackPanel Margin="10,0,0,0">
                                     <StackPanel Orientation="Horizontal"

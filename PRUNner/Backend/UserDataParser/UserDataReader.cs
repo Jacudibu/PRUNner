@@ -39,20 +39,49 @@ namespace PRUNner.Backend.UserDataParser
         {
             var result = new Empire();
 
-            ReadHeadquarters((JObject) jObject[nameof(Empire.Headquarters)]!, result.Headquarters);
-            ReadPlanetaryBases((JArray) jObject[nameof(Empire.PlanetaryBases)]!, result);
-
+            ReadHeadquarters((JObject?) jObject[nameof(Empire.Headquarters)], result.Headquarters);
+            ReadPlanetaryBases((JArray?) jObject[nameof(Empire.PlanetaryBases)], result);
+            ReadPriceOverrides((JArray?) jObject[nameof(Empire.PriceOverrides)], result.PriceOverrides);
+            
             return result;
         }
 
-        private static void ReadHeadquarters(JObject jObject, Headquarters headquarters)
+        private static void ReadPriceOverrides(JArray? jArray, PriceOverrides priceOverrides)
         {
+            priceOverrides.Clear();
+            
+            if (jArray == null)
+            {
+                return;
+            }
+            
+            foreach (var jObject in jArray.Cast<JObject>())
+            {
+                var priceOverride = new PriceOverride();
+                priceOverride.Ticker = jObject[nameof(PriceOverride.Ticker)]?.ToObject<string>() ?? "";
+                priceOverride.Price = jObject[nameof(PriceOverride.Price)]?.ToObject<double>() ?? 0;
+                priceOverrides.AddOverride(priceOverride);
+            }
+        }
+
+        private static void ReadHeadquarters(JObject? jObject, Headquarters headquarters)
+        {
+            if (jObject == null)
+            {
+                return;
+            }
+            
             headquarters.Faction = Enum.Parse<Faction>(jObject[nameof(Headquarters.Faction)].Value<string>(), true);
         }
 
-        private static void ReadPlanetaryBases(JArray jArray, Empire empire)
+        private static void ReadPlanetaryBases(JArray? jArray, Empire empire)
         {
             empire.PlanetaryBases.Clear();
+
+            if (jArray == null)
+            {
+                return;
+            }
             
             foreach (var jObject in jArray.Cast<JObject>())
             {

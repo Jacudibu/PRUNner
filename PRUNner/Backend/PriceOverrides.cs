@@ -76,5 +76,10 @@ namespace PRUNner.Backend
 
         public delegate void OnPriceUpdateDelegate();
         public event OnPriceUpdateDelegate? OnPriceUpdate;
+
+        public void Clear()
+        {
+            OverrideList.Clear();
+        }
     }
 }

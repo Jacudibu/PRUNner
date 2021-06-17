@@ -39,8 +39,24 @@ namespace PRUNner.Backend.UserDataParser
             JObject result = new();
 
             result.Add(nameof(Empire.Headquarters), WriteHeadquarters(empire.Headquarters));
+            result.Add(nameof(Empire.PriceOverrides), WritePriceOverrides(empire.PriceOverrides));
             result.Add(nameof(Empire.PlanetaryBases), WritePlanetaryBases(empire.PlanetaryBases));
 
+            return result;
+        }
+
+        private static JToken WritePriceOverrides(PriceOverrides priceOverrides)
+        {
+            JArray result = new();
+
+            foreach (var priceOverride in priceOverrides.OverrideList)
+            {
+                var jObject = new JObject();
+                jObject.Add(nameof(PriceOverride.Ticker), priceOverride.Ticker);
+                jObject.Add(nameof(PriceOverride.Price), priceOverride.Price);
+                result.Add(jObject);
+            }
+            
             return result;
         }
 

@@ -41,7 +41,7 @@
                         <DataTemplate DataType="basePlanner:PlanetaryBase">
                             <StackPanel Orientation="Horizontal">
                                 <Button Classes="xButton" VerticalAlignment="Center"
-                                        Command="{Binding ElementName=PlanetList, Path=DataContext.Empire.RemovePlanetaryBase, FallbackValue=null}"
+                                        Command="{Binding ElementName=DockPanel, Path=DataContext.Empire.RemovePlanetaryBase, FallbackValue=null}"
                                         CommandParameter="{Binding .}" />
                                 <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center"
                                            Text="{Binding Planet.Name}" />

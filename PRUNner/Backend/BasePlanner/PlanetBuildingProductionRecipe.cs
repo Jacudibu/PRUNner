@@ -99,16 +99,16 @@ namespace PRUNner.Backend.BasePlanner
         {
             var inputPurchasePrice = Inputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire.PriceOverrides, Source.PlanetaryBase.PriceOverrides));
             var outputSalesPrice = Outputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire.PriceOverrides, Source.PlanetaryBase.PriceOverrides));
-            var profit = outputSalesPrice - inputPurchasePrice;
-
-            var runsPerDay = Constants.MsPerDay / _durationInMilliseconds;
             
-            if (profit == 0)
+            var profit = outputSalesPrice - inputPurchasePrice;
+            
+            if (profit <= 0)
             {
                 ReturnOfInvestment = double.PositiveInfinity;
             }
             else
             {
+                var runsPerDay = Constants.MsPerDay / _durationInMilliseconds;
                 ReturnOfInvestment = Source.BuildingCost / (profit * runsPerDay);
 
                 if (ReturnOfInvestment < 0)

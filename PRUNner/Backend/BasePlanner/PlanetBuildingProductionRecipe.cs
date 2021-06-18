@@ -109,8 +109,7 @@ namespace PRUNner.Backend.BasePlanner
             }
             else
             {
-                var buildingAmount = Source.Amount == 0 ? 1 : Source.Amount;
-                ReturnOfInvestment = (Source.BuildingCost / buildingAmount) / (profit * runsPerDay);
+                ReturnOfInvestment = Source.BuildingCost / (profit * runsPerDay);
 
                 if (ReturnOfInvestment < 0)
                 {

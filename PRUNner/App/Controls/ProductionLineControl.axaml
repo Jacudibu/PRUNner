@@ -70,7 +70,7 @@
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
                                         </StackPanel>
-                                        <StackPanel Width="30">
+                                        <StackPanel Width="35">
                                             <TextBlock Text="ROI" VerticalAlignment="Center" TextAlignment="Center"/>
                                             <TextBlock VerticalAlignment="Center" TextAlignment="Right" 
                                                        Text="{Binding ReturnOfInvestment, StringFormat={}{0:F1}}"

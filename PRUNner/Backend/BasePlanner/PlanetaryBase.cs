@@ -217,7 +217,7 @@ namespace PRUNner.Backend.BasePlanner
         public void RecalculateProfits()
         {
             ProfitPerDay = ProductionTable.Rows.Sum(x => x.Value);
-            ColonyCosts = ProductionBuildings.Sum(x => x.BuildingCost) + InfrastructureBuildings.All.Sum(x => x.BuildingCost);
+            ColonyCosts = ProductionBuildings.Sum(x => x.BuildingCost * x.Amount) + InfrastructureBuildings.All.Sum(x => x.BuildingCost * x.Amount);
             if (!IncludeCoreModuleInColonyCosts)
             {
                 ColonyCosts -= InfrastructureBuildings.CM.BuildingCost;

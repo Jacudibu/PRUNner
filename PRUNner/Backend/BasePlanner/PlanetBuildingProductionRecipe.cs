@@ -97,25 +97,53 @@ namespace PRUNner.Backend.BasePlanner
 
         public void OnPriceDataUpdate()
         {
+            if (!IsThereAnyWorkforce())
+            {
+                ReturnOfInvestment = double.PositiveInfinity;
+                return;
+            }
+            
             var inputPurchasePrice = Inputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire.PriceOverrides, Source.PlanetaryBase.PriceOverrides));
             var outputSalesPrice = Outputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire.PriceOverrides, Source.PlanetaryBase.PriceOverrides));
+            var workforceUpkeepCost = CalculateUpkeepCost();
             
-            var profit = outputSalesPrice - inputPurchasePrice;
+            var runsPerDay = Constants.MsPerDay / _durationInMilliseconds;
+            var dailyProfit = (outputSalesPrice - inputPurchasePrice) * runsPerDay - workforceUpkeepCost;
             
-            if (profit <= 0)
+            if (dailyProfit <= 0)
             {
                 ReturnOfInvestment = double.PositiveInfinity;
             }
             else
             {
-                var runsPerDay = Constants.MsPerDay / _durationInMilliseconds;
-                ReturnOfInvestment = Source.BuildingCost / (profit * runsPerDay);
+                ReturnOfInvestment = Source.BuildingCost / dailyProfit;
 
                 if (ReturnOfInvestment < 0)
                 {
                     ReturnOfInvestment = double.PositiveInfinity;
                 }
             }
+        }
+
+        private bool IsThereAnyWorkforce()
+        {
+            return 0 <
+                   Source.PlanetaryBase.FilledJobRatio.Pioneers * Source.Building.Workforce.Pioneers +
+                   Source.PlanetaryBase.FilledJobRatio.Settlers * Source.Building.Workforce.Settlers +
+                   Source.PlanetaryBase.FilledJobRatio.Technicians * Source.Building.Workforce.Technicians +
+                   Source.PlanetaryBase.FilledJobRatio.Engineers * Source.Building.Workforce.Engineers +
+                   Source.PlanetaryBase.FilledJobRatio.Scientists * Source.Building.Workforce.Scientists;
+        }
+
+        private double CalculateUpkeepCost()
+        {
+            var result = 0d;
+            result += Source.PlanetaryBase.FilledJobRatio.Pioneers * Source.PlanetaryBase.WorkforceUpkeepCosts.Pioneers * Source.Building.Workforce.Pioneers;
+            result += Source.PlanetaryBase.FilledJobRatio.Settlers * Source.PlanetaryBase.WorkforceUpkeepCosts.Settlers * Source.Building.Workforce.Settlers;
+            result += Source.PlanetaryBase.FilledJobRatio.Technicians * Source.PlanetaryBase.WorkforceUpkeepCosts.Technicians * Source.Building.Workforce.Technicians;
+            result += Source.PlanetaryBase.FilledJobRatio.Engineers * Source.PlanetaryBase.WorkforceUpkeepCosts.Engineers * Source.Building.Workforce.Engineers;
+            result += Source.PlanetaryBase.FilledJobRatio.Scientists * Source.PlanetaryBase.WorkforceUpkeepCosts.Scientists * Source.Building.Workforce.Scientists;
+            return result;
         }
 
         public override string ToString()

@@ -24,6 +24,9 @@ namespace PRUNner.Backend.BasePlanner
         public PlanetWorkforce WorkforceRequired { get; } = new();
         public PlanetWorkforce WorkforceCapacity { get; } = new();
         public PlanetWorkforce WorkforceRemaining { get; } = new();
+        public PlanetWorkforceFilledJobRatio FilledJobRatio { get; } = new();
+        public PlanetWorkforceUpkeepCosts WorkforceUpkeepCosts { get; }
+        
         public WorkforceSatisfaction WorkforceSatisfaction { get; } = new();
         public PlanetProductionTable ProductionTable { get; }
         
@@ -58,6 +61,7 @@ namespace PRUNner.Backend.BasePlanner
             Empire = empire;
             Planet = planet;
 
+            WorkforceUpkeepCosts = new PlanetWorkforceUpkeepCosts(this);
             InfrastructureBuildings = new PlanetaryBaseInfrastructure(this);
             ProductionTable = new PlanetProductionTable(this);
             foreach (var infrastructureBuilding in InfrastructureBuildings.All)
@@ -67,7 +71,8 @@ namespace PRUNner.Backend.BasePlanner
 
             ProvidedConsumables.Changed.Subscribe(_ =>
             {
-                WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
+                WorkforceSatisfaction.Recalculate(ProvidedConsumables, FilledJobRatio);
+                OnPriceDataUpdate();
             });
 
             WorkforceSatisfaction.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
@@ -159,7 +164,9 @@ namespace PRUNner.Backend.BasePlanner
             }
 
             WorkforceRemaining.SetRemainingWorkforce(WorkforceRequired, WorkforceCapacity);
-            WorkforceSatisfaction.Recalculate(ProvidedConsumables, WorkforceCapacity, WorkforceRequired);
+            FilledJobRatio.Recalculate(WorkforceCapacity, WorkforceRequired);
+            WorkforceSatisfaction.Recalculate(ProvidedConsumables, FilledJobRatio);
+            WorkforceUpkeepCosts.Recalculate();
         }
 
         private void RecalculateSpace()
@@ -200,6 +207,7 @@ namespace PRUNner.Backend.BasePlanner
 
         public void OnPriceDataUpdate()
         {
+            WorkforceUpkeepCosts.Recalculate();
             foreach (var building in ProductionBuildings)
             {
                 building.OnPriceDataUpdate();

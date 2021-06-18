@@ -100,5 +100,37 @@ namespace PRUNner.Backend.BasePlanner
             if (WIN > 0 && consumables.WIN) addConsumableCallback.Invoke(MaterialData.GetOrThrow("WIN"), WIN * workforce);
             if (NST > 0 && consumables.NST) addConsumableCallback.Invoke(MaterialData.GetOrThrow("NST"), NST * workforce);
         }
+
+        public double CalculateCosts(ProvidedConsumables consumables, PriceOverrides empirePriceOverrides, PriceOverrides planetPriceOverrides)
+        {
+            var result = 0d;
+            
+            if (DW > 0 && consumables.DW) result += DW * MaterialData.GetOrThrow("DW").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (RAT > 0 && consumables.RAT) result += RAT * MaterialData.GetOrThrow("RAT").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (OVE > 0 && consumables.OVE) result += OVE * MaterialData.GetOrThrow("OVE").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (EXO > 0 && consumables.EXO) result += EXO * MaterialData.GetOrThrow("EXO").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (PT > 0 && consumables.PT) result += PT * MaterialData.GetOrThrow("PT").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (MED > 0 && consumables.MED) result += MED * MaterialData.GetOrThrow("MED").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (HMS > 0 && consumables.HMS) result += HMS * MaterialData.GetOrThrow("HMS").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (SCN > 0 && consumables.SCN) result += SCN * MaterialData.GetOrThrow("SCN").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (FIM > 0 && consumables.FIM) result += FIM * MaterialData.GetOrThrow("FIM").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (HSS > 0 && consumables.HSS) result += HSS * MaterialData.GetOrThrow("HSS").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (PDA > 0 && consumables.PDA) result += PDA * MaterialData.GetOrThrow("PDA").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (MEA > 0 && consumables.MEA) result += MEA * MaterialData.GetOrThrow("MEA").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (LC > 0 && consumables.LC) result += LC * MaterialData.GetOrThrow("LC").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (WS > 0 && consumables.WS) result += WS * MaterialData.GetOrThrow("WS").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (COF > 0 && consumables.COF) result += COF * MaterialData.GetOrThrow("COF").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (PWO > 0 && consumables.PWO) result += PWO * MaterialData.GetOrThrow("PWO").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (KOM > 0 && consumables.KOM) result += KOM * MaterialData.GetOrThrow("KOM").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (REP > 0 && consumables.REP) result += REP * MaterialData.GetOrThrow("REP").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (ALE > 0 && consumables.ALE) result += ALE * MaterialData.GetOrThrow("ALE").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (SC > 0 && consumables.SC) result += SC * MaterialData.GetOrThrow("SC").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (GIN > 0 && consumables.GIN) result += GIN * MaterialData.GetOrThrow("GIN").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (VG > 0 && consumables.VG) result += VG * MaterialData.GetOrThrow("VG").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (WIN > 0 && consumables.WIN) result += WIN * MaterialData.GetOrThrow("WIN").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+            if (NST > 0 && consumables.NST) result += NST * MaterialData.GetOrThrow("NST").PriceData.GetPrice(empirePriceOverrides, planetPriceOverrides);
+
+            return result;
+        }
     }
 }

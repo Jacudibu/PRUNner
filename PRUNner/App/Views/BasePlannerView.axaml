@@ -313,10 +313,7 @@
                             <Button Content="AddBuilding" Command="{Binding AddBuilding}" />
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Vertical" Margin="5,0,0,0">
-                        <CheckBox Content="Include Workforce Costs in Recipe ROI" IsEnabled="False"/>
-                        <CheckBox Content="Include Habitation Costs in Recipe ROI" IsEnabled="False"/>
-                    </StackPanel>
+                    <CheckBox Content="Include Habitation Costs in Recipe ROI" IsEnabled="False" Margin="5, 0,0,0" VerticalAlignment="Bottom"/>
                     <StackPanel Orientation="Horizontal" Margin="75,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <TextBlock Text="Net Profit: " Classes="h2"/>
                         <TextBlock Text="{Binding ActiveBase.NetProfit, StringFormat={}{0:F0} $}" Classes="h2" Width="100"

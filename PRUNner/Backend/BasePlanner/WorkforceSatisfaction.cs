@@ -11,28 +11,13 @@ namespace PRUNner.Backend.BasePlanner
         [Reactive] public double Engineers { get; private set; }
         [Reactive] public double Scientists { get; private set; }
         
-        public void Recalculate(ProvidedConsumables consumables, PlanetWorkforce capacity, PlanetWorkforce required)
+        public void Recalculate(ProvidedConsumables consumables, PlanetWorkforceFilledJobRatio filledJobRatio)
         {
-            Pioneers = GetWorkforceHabitationPercentage(capacity.Pioneers, required.Pioneers) * WorkforceSatisfactionFactors.Pioneers.Calculate(consumables);
-            Settlers = GetWorkforceHabitationPercentage(capacity.Settlers, required.Settlers) *  WorkforceSatisfactionFactors.Settlers.Calculate(consumables);
-            Technicians = GetWorkforceHabitationPercentage(capacity.Technicians, required.Technicians) *  WorkforceSatisfactionFactors.Technicians.Calculate(consumables);
-            Engineers = GetWorkforceHabitationPercentage(capacity.Engineers, required.Engineers) * WorkforceSatisfactionFactors.Engineers.Calculate(consumables);
-            Scientists = GetWorkforceHabitationPercentage(capacity.Scientists, required.Scientists) * WorkforceSatisfactionFactors.Scientists.Calculate(consumables);
-        }
-
-        private static double GetWorkforceHabitationPercentage(double capacity, double required)
-        {
-            if (required == 0)
-            {
-                return 0;
-            }
-
-            if (capacity > required)
-            {
-                return 1;
-            }
-
-            return capacity / required;
+            Pioneers = filledJobRatio.Pioneers * WorkforceSatisfactionFactors.Pioneers.Calculate(consumables);
+            Settlers = filledJobRatio.Settlers *  WorkforceSatisfactionFactors.Settlers.Calculate(consumables);
+            Technicians = filledJobRatio.Technicians *  WorkforceSatisfactionFactors.Technicians.Calculate(consumables);
+            Engineers = filledJobRatio.Engineers * WorkforceSatisfactionFactors.Engineers.Calculate(consumables);
+            Scientists = filledJobRatio.Scientists * WorkforceSatisfactionFactors.Scientists.Calculate(consumables);
         }
     }
 }

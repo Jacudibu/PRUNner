@@ -22,7 +22,7 @@ namespace PRUNner.Backend.BasePlanner
         [Reactive] public int Amount { get; set; }
         private readonly double _fertilityBonus;
 
-        public ObservableCollection<PlanetBuildingProductionRecipe> AvailableRecipes { get; }
+        public ObservableCollection<PlanetBuildingProductionRecipe>? AvailableRecipes { get; }
         
         public ObservableCollection<PlanetBuildingProductionQueueElement> Production { get; } = new();
         private readonly ImmutableArray<MaterialIO> _buildingMaterials; 
@@ -35,7 +35,6 @@ namespace PRUNner.Backend.BasePlanner
         {
             Building = null!;
             PlanetaryBase = null!;
-            AvailableRecipes = null!;
             _buildingMaterials = ImmutableArray<MaterialIO>.Empty;
             _fertilityBonus = 0;
         }
@@ -54,7 +53,6 @@ namespace PRUNner.Backend.BasePlanner
         {
             PlanetaryBase = planetaryBase;
             Building = building;
-            AvailableRecipes = null!;
 
             _buildingMaterials = building.GetBuildingMaterialsOnPlanet(planetaryBase.Planet);
         }
@@ -69,7 +67,7 @@ namespace PRUNner.Backend.BasePlanner
             }
             else
             {
-                AvailableRecipes = new ObservableCollection<PlanetBuildingProductionRecipe>(Building.Production.Select(x =>  new PlanetBuildingProductionRecipe(x)));
+                AvailableRecipes = new ObservableCollection<PlanetBuildingProductionRecipe>(Building.Production.Select(x =>  new PlanetBuildingProductionRecipe(this, x)));
             }
             
             AddProduction();
@@ -108,7 +106,7 @@ namespace PRUNner.Backend.BasePlanner
                     throw new ArgumentOutOfRangeException(nameof(building.Ticker), building.Ticker, null);
             }
 
-             return new ObservableCollection<PlanetBuildingProductionRecipe>(resources.Select(x => new PlanetBuildingProductionRecipe(x)));
+             return new ObservableCollection<PlanetBuildingProductionRecipe>(resources.Select(x => new PlanetBuildingProductionRecipe(this, x)));
         }
 
         public int CalculateNeededArea()
@@ -147,6 +145,11 @@ namespace PRUNner.Backend.BasePlanner
             satisfaction += workforceSatisfaction.Scientists * Building.WorkforceRatio.Scientists;
 
             Efficiency = satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * _fertilityBonus;
+            if (AvailableRecipes == null)
+            {
+                return;
+            }
+            
             foreach (var recipe in AvailableRecipes)
             {
                 recipe.UpdateProductionEfficiency(Efficiency);
@@ -187,6 +190,15 @@ namespace PRUNner.Backend.BasePlanner
         public void OnPriceDataUpdate()
         {
             RecalculateBuildingCosts();
+            if (AvailableRecipes == null)
+            {
+                return;
+            }
+            
+            foreach (var recipe in AvailableRecipes)
+            {
+                recipe.OnPriceDataUpdate();
+            }
         }
     }   
 }

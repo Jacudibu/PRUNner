@@ -143,7 +143,7 @@ namespace PRUNner.Backend.UserDataParser
                     production.Percentage = productionObject.GetValue(nameof(PlanetBuildingProductionQueueElement.Percentage))!.ToObject<double>();
                     var recipeName = productionObject.GetValue(nameof(PlanetBuildingProductionQueueElement.ActiveRecipe))!.ToObject<string>();
 
-                    production.ActiveRecipe = building.AvailableRecipes.SingleOrDefault(x => x.RecipeName.Equals(recipeName));
+                    production.ActiveRecipe = building.AvailableRecipes!.SingleOrDefault(x => x.RecipeName.Equals(recipeName));
                 }
             }
         }

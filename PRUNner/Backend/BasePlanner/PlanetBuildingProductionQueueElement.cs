@@ -9,7 +9,7 @@ namespace PRUNner.Backend.BasePlanner
         public PlanetBuildingProductionQueueElement(PlanetBuilding building)
         {
             Building = building;
-            ActiveRecipe = Building.AvailableRecipes.FirstOrDefault();
+            ActiveRecipe = Building.AvailableRecipes!.FirstOrDefault();
         }
 
         public PlanetBuilding Building { get; }

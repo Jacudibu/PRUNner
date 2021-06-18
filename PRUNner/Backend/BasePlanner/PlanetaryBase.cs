@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using DynamicData.Binding;
@@ -45,6 +46,9 @@ namespace PRUNner.Backend.BasePlanner
         [Reactive] public double WeightIn { get; private set; }
         [Reactive] public double WeightOut { get; private set; }
 
+        public IEnumerable<PlanetBuildingProductionRecipe> ActiveRecipes =>
+            ProductionBuildings.SelectMany(building => building.Production.Select(prod => prod.ActiveRecipe!));
+        
         public PlanetaryBase(Empire empire, PlanetData planet)
         {
             BeginLoading();
@@ -191,6 +195,7 @@ namespace PRUNner.Backend.BasePlanner
             RecalculateSpace();
             OnProductionChange();   
             OnPriceDataUpdate();
+            this.RaisePropertyChanged(nameof(ActiveRecipes));
         }
 
         public void OnPriceDataUpdate()

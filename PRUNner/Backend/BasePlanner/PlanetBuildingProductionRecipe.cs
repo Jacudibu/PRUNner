@@ -11,15 +11,19 @@ namespace PRUNner.Backend.BasePlanner
 {
     public class PlanetBuildingProductionRecipe : ReactiveObject
     {
-        public readonly string RecipeName;
+        public PlanetBuilding Source { get; }
+        public string RecipeName { get; }
         public List<MaterialIO> Inputs { get; }
         public List<MaterialIO> Outputs { get; }
         [Reactive] public string DurationString { get; private set; } = null!;
+        [Reactive] public double ReturnOfInvestment { get; private set; }
 
+        private double _durationInMilliseconds;
         private readonly double _baseDurationMs;
 
-        public PlanetBuildingProductionRecipe(ProductionData productionData)
+        public PlanetBuildingProductionRecipe(PlanetBuilding source, ProductionData productionData)
         {
+            Source = source;
             RecipeName = productionData.RecipeName;
             Inputs = productionData.Inputs.ToList();
             Outputs = productionData.Outputs.ToList();
@@ -35,8 +39,9 @@ namespace PRUNner.Backend.BasePlanner
         private const double ExtFactor = ExtTime / Constants.MsPerDay;
         private const double RigFactor = RigTime / Constants.MsPerDay;
         
-        public PlanetBuildingProductionRecipe(ResourceData resourceData)
+        public PlanetBuildingProductionRecipe(PlanetBuilding source, ResourceData resourceData)
         {
+            Source = source;
             RecipeName = resourceData.Material.Ticker;
             var factor = resourceData.ResourceType switch
             {
@@ -65,8 +70,8 @@ namespace PRUNner.Backend.BasePlanner
                 return;
             }
                 
-            var durationInMilliseconds = _baseDurationMs * (2 - efficiencyFactor);
-            var timespan = TimeSpan.FromMilliseconds(durationInMilliseconds);
+            _durationInMilliseconds = _baseDurationMs * (2 - efficiencyFactor);
+            var timespan = TimeSpan.FromMilliseconds(_durationInMilliseconds);
 
             var builder = new StringBuilder();
             if (timespan.Days > 0)
@@ -88,6 +93,35 @@ namespace PRUNner.Backend.BasePlanner
             }
 
             DurationString = builder.ToString();
+        }
+
+        public void OnPriceDataUpdate()
+        {
+            var inputPurchasePrice = Inputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire.PriceOverrides, Source.PlanetaryBase.PriceOverrides));
+            var outputSalesPrice = Outputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire.PriceOverrides, Source.PlanetaryBase.PriceOverrides));
+            var profit = outputSalesPrice - inputPurchasePrice;
+
+            var runsPerDay = Constants.MsPerDay / _durationInMilliseconds;
+            
+            if (profit == 0)
+            {
+                ReturnOfInvestment = double.PositiveInfinity;
+            }
+            else
+            {
+                var buildingAmount = Source.Amount == 0 ? 1 : Source.Amount;
+                ReturnOfInvestment = (Source.BuildingCost / buildingAmount) / (profit * runsPerDay);
+
+                if (ReturnOfInvestment < 0)
+                {
+                    ReturnOfInvestment = double.PositiveInfinity;
+                }
+            }
+        }
+
+        public override string ToString()
+        {
+            return RecipeName;
         }
     }
 }

@@ -86,6 +86,10 @@
         <Button HorizontalContentAlignment="Center" Width="50" Content="HRT" Command="{Binding SortByHortusDistance}"/>
         <Button HorizontalContentAlignment="Center" Width="50" Content="MOR" Command="{Binding SortByMoriaDistance}"/>
         <Button HorizontalContentAlignment="Center" Width="50" Content="{Binding OptionalDataExtraSystemName}" IsVisible="{Binding DisplayOptionalDataExtraSystemName}" Command="{Binding SortByExtraSystemDistance}"/>
+        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="50" Text="Res1"/>
+        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="50" Text="Res2"/>
+        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="50" Text="Res3"/>
+        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="50" Text="Res4"/>
     </StackPanel>
     
     <ItemsControl Items="{Binding CurrentlyShownSearchResults}" IsVisible="{Binding ShowPaginationAndHeaders}">
@@ -103,6 +107,26 @@
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToHortus}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToMoria}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding DistanceToExtraSystem}" IsVisible="{Binding DisplayDistanceToExtraSystem}"/>
+            <Panel>
+                <Rectangle Height="5" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="{Binding Planet.Resources[0], Converter={StaticResource ResourceDataToWidth}}" Fill="{Binding Planet.Resources[0], Converter={StaticResource ResourceDataToColor}}"/>
+                <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.Resources[0].Material.Ticker}" />
+                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="8" Foreground="Gray" Margin="0,0,0,0"  Text="{Binding Planet.Resources[0], Converter={StaticResource ResourceDataToExtractionType}}" />
+            </Panel>
+            <Panel>
+                <Rectangle Height="5" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="{Binding Planet.Resources[1], Converter={StaticResource ResourceDataToWidth}}" Fill="{Binding Planet.Resources[1], Converter={StaticResource ResourceDataToColor}}"/>
+                <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.Resources[1].Material.Ticker}" />
+                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="8" Foreground="Gray" Margin="0,0,0,0"  Text="{Binding Planet.Resources[1], Converter={StaticResource ResourceDataToExtractionType}}" />
+            </Panel>
+            <Panel>
+                <Rectangle Height="5" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="{Binding Planet.Resources[2], Converter={StaticResource ResourceDataToWidth}}" Fill="{Binding Planet.Resources[2], Converter={StaticResource ResourceDataToColor}}"/>
+                <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.Resources[2].Material.Ticker}" />
+                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="8" Foreground="Gray" Margin="0,0,0,0"  Text="{Binding Planet.Resources[2], Converter={StaticResource ResourceDataToExtractionType}}" />
+            </Panel>
+            <Panel>
+                <Rectangle Height="5" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="{Binding Planet.Resources[3], Converter={StaticResource ResourceDataToWidth}}" Fill="{Binding Planet.Resources[3], Converter={StaticResource ResourceDataToColor}}"/>
+                <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.Resources[3].Material.Ticker}" />
+                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="8" Foreground="Gray" Margin="0,0,0,0"  Text="{Binding Planet.Resources[3], Converter={StaticResource ResourceDataToExtractionType}}" />
+            </Panel>
             <Button Content="Plan a new Base" Command="{Binding OpenBasePlanner}"/>
         </StackPanel>
     </DataTemplate>

@@ -8,6 +8,9 @@
         <converters:IsNullConverter x:Key="IsNull" />
         <converters:IsNotNullConverter x:Key="IsNotNull" />
         <converters:TextToProductionLinePercentageConverter x:Key="TextToProductionLinePercentage" />
+        <converters:ResourceDataToWidthConverter x:Key="ResourceDataToWidth" />
+        <converters:ResourceDataToColorConverter x:Key="ResourceDataToColor" />
+        <converters:ResourceDataToExtractionTypeConverter x:Key="ResourceDataToExtractionType" />
     </Application.Resources>
     
     <Application.DataTemplates>

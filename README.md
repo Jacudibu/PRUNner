@@ -9,7 +9,7 @@ First, let's find a planet to settle!
 ![PlanetFinder](https://user-images.githubusercontent.com/9059719/121958201-b65df780-cd63-11eb-9a33-39196aa4a9cf.png)
 
 Then, plan out your base!
-![BasePlanner](https://user-images.githubusercontent.com/9059719/121958212-b78f2480-cd63-11eb-9433-3ea44fbf6738.png)
+![BasePlanner](https://user-images.githubusercontent.com/9059719/122645029-6773e180-d118-11eb-89be-6dfe085d4ae9.png)
 
 And finally, have an overview over your entire empire.
 ![EmpireOverview](https://user-images.githubusercontent.com/9059719/121958208-b78f2480-cd63-11eb-953c-c6537b079cd3.png)

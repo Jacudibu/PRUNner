@@ -86,7 +86,7 @@
         <Button HorizontalContentAlignment="Center" Width="50" Content="HRT" Command="{Binding SortByHortusDistance}"/>
         <Button HorizontalContentAlignment="Center" Width="50" Content="MOR" Command="{Binding SortByMoriaDistance}"/>
         <Button HorizontalContentAlignment="Center" Width="50" Content="{Binding OptionalDataExtraSystemName}" IsVisible="{Binding DisplayOptionalDataExtraSystemName}" Command="{Binding SortByExtraSystemDistance}"/>
-        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="50" Text="Fert"/>
+        <Button HorizontalContentAlignment="Center" Width="75" Content="Fertility" Command="{Binding SortByFertility}"/>
         <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="50" Text="Res1"/>
         <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="50" Text="Res2"/>
         <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="50" Text="Res3"/>
@@ -110,7 +110,7 @@
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding DistanceToExtraSystem}" IsVisible="{Binding DisplayDistanceToExtraSystem}"/>
             <Panel>
                 <Rectangle Height="5" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="{Binding Planet.Fertility, Converter={StaticResource FertilityToWidth}}" Fill="{Binding Planet.Fertility, Converter={StaticResource FertilityToColor}}"/>
-                <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.Fertility, Converter={StaticResource FertilityToText}}" />
+                <TextBlock Width="75" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.Fertility, Converter={StaticResource FertilityToText}}" />
             </Panel>
             <Panel>
                 <Rectangle Height="5" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="{Binding Planet.Resources[0], Converter={StaticResource ResourceDataToWidth}}" Fill="{Binding Planet.Resources[0], Converter={StaticResource ResourceDataToColor}}"/>

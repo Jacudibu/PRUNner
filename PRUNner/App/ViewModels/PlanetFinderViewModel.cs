@@ -146,5 +146,6 @@ namespace PRUNner.App.ViewModels
         public void SortByHortusDistance() => Sort(nameof(SortByHortusDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToHortus);
         public void SortByMoriaDistance() => Sort(nameof(SortByMoriaDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToMoria);
         public void SortByExtraSystemDistance() => Sort(nameof(SortByExtraSystemDistance), SortOrder.Ascending, x => x.DistanceToExtraSystem);
+        public void SortByFertility() => Sort(nameof(SortByFertility), SortOrder.Ascending, x => x.Planet.Fertility);
     }
 }

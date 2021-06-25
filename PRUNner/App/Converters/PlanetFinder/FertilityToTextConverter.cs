@@ -2,17 +2,21 @@ using System;
 using System.Globalization;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
-using PRUNner.Backend.Data.Components;
 
-namespace PRUNner.App.Converters
+namespace PRUNner.App.Converters.PlanetFinder
 {
-    public class ResourceDataToWidthConverter : IValueConverter
+    public class FertilityToTextConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ResourceData resourceData)
+            if (value is double fertility)
             {
-                return 50 * resourceData.Factor;
+                if (fertility <= -1)
+                {
+                    return "–";
+                }
+
+                return fertility.ToString("P0");
             }
             
             return new BindingNotification(new Exception("Unable to Parse."), BindingErrorType.DataValidationError);

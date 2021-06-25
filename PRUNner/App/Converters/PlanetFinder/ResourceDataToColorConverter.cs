@@ -2,25 +2,18 @@ using System;
 using System.Globalization;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
-using PRUNner.Backend;
 using PRUNner.Backend.Data.Components;
-using PRUNner.Backend.Data.Enums;
 
-namespace PRUNner.App.Converters
+namespace PRUNner.App.Converters.PlanetFinder
 {
-    public class ResourceDataToExtractionTypeConverter : IValueConverter
+    public class ResourceDataToColorConverter : PlanetFinderColorBarConverterBase, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is ResourceData resourceData)
             {
-                return resourceData.ResourceType switch
-                {
-                    ResourceType.Gaseous => Names.Buildings.COL,
-                    ResourceType.Liquid => Names.Buildings.RIG,
-                    ResourceType.Mineral => Names.Buildings.EXT,
-                    _ => new BindingNotification(new Exception("Unable to Parse."), BindingErrorType.DataValidationError)
-                };
+                var factor = resourceData.Factor * 1.75; // increases how quickly the color shifts from red to yellow / green
+                return GetBrush(factor);
             }
             
             return new BindingNotification(new Exception("Unable to Parse."), BindingErrorType.DataValidationError);

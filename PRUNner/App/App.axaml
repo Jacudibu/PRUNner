@@ -2,15 +2,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PRUNner"
              xmlns:converters="clr-namespace:PRUNner.App.Converters"
+             xmlns:planetFinder="clr-namespace:PRUNner.App.Converters.PlanetFinder"
              Name="PRUNner"
              x:Class="PRUNner.App.App">
     <Application.Resources>
         <converters:IsNullConverter x:Key="IsNull" />
         <converters:IsNotNullConverter x:Key="IsNotNull" />
         <converters:TextToProductionLinePercentageConverter x:Key="TextToProductionLinePercentage" />
-        <converters:ResourceDataToWidthConverter x:Key="ResourceDataToWidth" />
-        <converters:ResourceDataToColorConverter x:Key="ResourceDataToColor" />
-        <converters:ResourceDataToExtractionTypeConverter x:Key="ResourceDataToExtractionType" />
+        <planetFinder:FertilityToTextConverter x:Key="FertilityToText" />
+        <planetFinder:FertilityToColorConverter x:Key="FertilityToColor" />
+        <planetFinder:FertilityToWidthConverter x:Key="FertilityToWidth" />
+        <planetFinder:ResourceDataToWidthConverter x:Key="ResourceDataToWidth" />
+        <planetFinder:ResourceDataToColorConverter x:Key="ResourceDataToColor" />
+        <planetFinder:ResourceDataToExtractionTypeConverter x:Key="ResourceDataToExtractionType" />
     </Application.Resources>
     
     <Application.DataTemplates>

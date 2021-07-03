@@ -9,6 +9,7 @@
         <converters:IsNullConverter x:Key="IsNull" />
         <converters:IsNotNullConverter x:Key="IsNotNull" />
         <converters:TextToProductionLinePercentageConverter x:Key="TextToProductionLinePercentage" />
+        <converters:MonetaryValueToColor x:Key="MonetaryValueToColor" />
         <planetFinder:FertilityToTextConverter x:Key="FertilityToText" />
         <planetFinder:FertilityToColorConverter x:Key="FertilityToColor" />
         <planetFinder:FertilityToWidthConverter x:Key="FertilityToWidth" />

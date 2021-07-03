@@ -294,6 +294,7 @@
                                                    Text="{Binding Balance, StringFormat={}{0:F2}}" />
                                         <TextBlock Width="80" VerticalAlignment="Center"
                                                    TextAlignment="Right" FontFamily="Monospaced"
+                                                   Foreground="{Binding Value, Converter={StaticResource MonetaryValueToColor}}"
                                                    Text="{Binding Value, StringFormat={}{0:F0}}" />
                                     </StackPanel>
                                 </DataTemplate>

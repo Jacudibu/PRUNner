@@ -6,7 +6,7 @@ There's a .zip file for every major platform, just unpack and run the PRUNner fi
 
 ### Screenshots
 First, let's find a planet to settle!
-![PlanetFinder](https://user-images.githubusercontent.com/9059719/121958201-b65df780-cd63-11eb-9a33-39196aa4a9cf.png)
+![PlanetFinder](https://user-images.githubusercontent.com/9059719/125678028-648e6575-e968-4440-9f01-e918028c9174.png)
 
 Then, plan out your base!
 ![BasePlanner](https://user-images.githubusercontent.com/9059719/122645029-6773e180-d118-11eb-89be-6dfe085d4ae9.png)

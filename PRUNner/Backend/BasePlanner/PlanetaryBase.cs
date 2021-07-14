@@ -19,7 +19,8 @@ namespace PRUNner.Backend.BasePlanner
 
         public PlanetaryBaseInfrastructure InfrastructureBuildings { get; }
         public ObservableCollection<PlanetBuilding> ProductionBuildings { get; } = new();
-
+        public ShoppingCart.ShoppingCart ShoppingCart { get; }
+        
         public ExpertAllocation ExpertAllocation { get; } = new();
         public PlanetWorkforce WorkforceRequired { get; } = new();
         public PlanetWorkforce WorkforceCapacity { get; } = new();
@@ -56,6 +57,7 @@ namespace PRUNner.Backend.BasePlanner
         {
             BeginLoading();
 
+            ShoppingCart = new ShoppingCart.ShoppingCart(this);
             PriceOverrides.OnPriceUpdate += OnPriceDataUpdate;
             
             Empire = empire;
@@ -202,6 +204,7 @@ namespace PRUNner.Backend.BasePlanner
             RecalculateSpace();
             OnProductionChange();   
             OnPriceDataUpdate();
+            ShoppingCart.UpdateBuildings();
             this.RaisePropertyChanged(nameof(ActiveRecipes));
         }
 

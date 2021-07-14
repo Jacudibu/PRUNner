@@ -8,7 +8,7 @@
     <ToolTip.Tip>
         <TextBlock Name="ToolTip" Text="ToolTip"/>
     </ToolTip.Tip>
-    <Border Name="Frame" BorderThickness="0" CornerRadius="1" Background="#3355BB" Width="34" Height="34" HorizontalAlignment="Left">
+    <Border Name="Frame" BorderThickness="0" CornerRadius="1" Background="#3355BB" Width="34" Height="34">
         <Panel>
             <TextBlock Name="ItemName" Text="ASDF" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#99BBFF" FontWeight="Bold" FontSize="10"/>
             <Border Name="NumberFrame" CornerRadius="3,0,0,0" Width="20" Height="12" Background="#23282B" HorizontalAlignment="Right" VerticalAlignment="Bottom">

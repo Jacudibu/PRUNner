@@ -25,7 +25,7 @@ namespace PRUNner.Backend.BasePlanner
         public ObservableCollection<PlanetBuildingProductionRecipe>? AvailableRecipes { get; }
         
         public ObservableCollection<PlanetBuildingProductionQueueElement> Production { get; } = new();
-        private readonly ImmutableArray<MaterialIO> _buildingMaterials; 
+        public ImmutableArray<MaterialIO> BuildingMaterials { get; init; } 
         
         public double Efficiency { get; private set; }
         public double BuildingCost { get; private set; }
@@ -35,7 +35,7 @@ namespace PRUNner.Backend.BasePlanner
         {
             Building = null!;
             PlanetaryBase = null!;
-            _buildingMaterials = ImmutableArray<MaterialIO>.Empty;
+            BuildingMaterials = ImmutableArray<MaterialIO>.Empty;
             _fertilityBonus = 0;
         }
 
@@ -54,7 +54,7 @@ namespace PRUNner.Backend.BasePlanner
             PlanetaryBase = planetaryBase;
             Building = building;
 
-            _buildingMaterials = building.GetBuildingMaterialsOnPlanet(planetaryBase.Planet);
+            BuildingMaterials = building.GetBuildingMaterialsOnPlanet(planetaryBase.Planet);
         }
         
         private PlanetBuilding(PlanetaryBase planetaryBase, PlanetData planet, BuildingData building) : this(planetaryBase, building)
@@ -79,7 +79,7 @@ namespace PRUNner.Backend.BasePlanner
         private void RecalculateBuildingCosts()
         {
             var totalCost = 0d;
-            foreach (var material in _buildingMaterials)
+            foreach (var material in BuildingMaterials)
             {
                 totalCost += material.Material.PriceData.GetPrice(PlanetaryBase.Empire.PriceOverrides) * material.Amount;
             }

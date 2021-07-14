@@ -1,0 +1,374 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:PRUNner.App.Controls"
+             xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
+             xmlns:markupExtensions="clr-namespace:PRUNner.App.MarkupExtensions"
+             xmlns:enums="clr-namespace:PRUNner.Backend.Enums"
+             xmlns:components="clr-namespace:PRUNner.Backend.Data.Components"
+             xmlns:viewModels="clr-namespace:PRUNner.App.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PRUNner.App.Controls.BasePlannerControl">
+    <Design.DataContext> <!-- TODO: Once we have Building Selector we can change the Design to use PlanetaryBase instead -->
+        <viewModels:BasePlannerViewModel />
+    </Design.DataContext>
+    
+    <Grid RowDefinitions="Auto, Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto">
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding ActiveBase.Planet.Name}" Classes="h1" HorizontalAlignment="Center" />
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Width="100">
+                    <TextBlock Text="Resources" Classes="h2" HorizontalAlignment="Center" />
+                    <ItemsControl Items="{Binding ActiveBase.Planet.Resources}" Margin="0,5,0,0">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" Spacing="2" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="components:ResourceData">
+                                <StackPanel Orientation="Horizontal">
+                                    <controls:ItemBoxControl DataContext="{Binding .}" />
+                                    <TextBlock Width="75" VerticalAlignment="Center" TextAlignment="Center"
+                                               Text="{Binding ResourceType}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <StackPanel Margin="20,0,0,0">
+                    <TextBlock Text="Area" Classes="h2" HorizontalAlignment="Center" />
+                    <Grid ColumnDefinitions="70,30" RowDefinitions="25,25,25" Width="100">
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
+                                   HorizontalAlignment="Right" Text="Total" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
+                                   HorizontalAlignment="Right" Text="Developed" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
+                                   HorizontalAlignment="Right" Text="Available" />
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                                   HorizontalAlignment="Right" Text="{Binding ActiveBase.AreaTotal}" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
+                                   HorizontalAlignment="Right" Text="{Binding ActiveBase.AreaDeveloped}" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"
+                                   HorizontalAlignment="Right" Text="{Binding ActiveBase.AreaAvailable}" />
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <StackPanel.Resources>
+                <Thickness x:Key="CellMargin">0,0,0,10</Thickness>
+            </StackPanel.Resources>
+
+            <TextBlock Text="Colony Data" Classes="h2" HorizontalAlignment="Center" />
+            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, 100">
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right" Text="Include CM in costs" />
+                <CheckBox Grid.Row="0" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                          HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.IncludeCoreModuleInColonyCosts}" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right" Text="Colony Costs" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right" Text="{Binding ActiveBase.ColonyCosts, StringFormat={}{0:N2}}"
+                           FontFamily="MonoSpaced" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right" Text="Profit/d" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right" Text="{Binding ActiveBase.ProfitPerDay, StringFormat={}{0:N2}}"
+                           FontFamily="MonoSpaced" />
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right" Text="Repair Costs/d" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right"
+                           Text="{Binding ActiveBase.TotalDailyRepairCosts, StringFormat={}{0:N2}}"
+                           FontFamily="MonoSpaced" />
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right" Text="Net Profit" />
+                <TextBlock Grid.Row="4" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right" Text="{Binding ActiveBase.NetProfit, StringFormat={}{0:N2}}"
+                           FontFamily="MonoSpaced" />
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right" Text="ROI" />
+                <TextBlock Grid.Row="5" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
+                           TextAlignment="Right" Text="{Binding ActiveBase.ReturnOfInvestment, StringFormat={}{0:N2}}"
+                           FontFamily="MonoSpaced" />
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,20,0,0">
+            <TextBlock Text="CoGC Bonus" Classes="h2" HorizontalAlignment="Center" />
+            <ComboBox HorizontalAlignment="Center"
+                      Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:CoGCBonusType}}}"
+                      SelectedItem="{Binding ActiveBase.CoGCBonus}" Width="175" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,20,0,0">
+            <TextBlock Text="Experts" Classes="h2" HorizontalAlignment="Center" />
+            <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Agriculture}" />
+            <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Chemistry}" />
+            <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Construction}" />
+            <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Electronics}" />
+            <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.FoodIndustries}" />
+            <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.FuelRefining}" />
+            <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Manufacturing}" />
+            <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Metallurgy}" />
+            <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.ResourceExtraction}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="30, 0,0,0">
+            <TextBlock Text="Workforce" Classes="h2" HorizontalAlignment="Center" />
+            <Grid ColumnDefinitions="80,75,75,75,50,50,80" RowDefinitions="*,*,*,*,*,*" Width="485">
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="" />
+                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Required" />
+                <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Text="Capacity" />
+                <TextBlock Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Text="Remaining" />
+                <TextBlock Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Text="Lux 1" />
+                <TextBlock Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" Text="Lux 2" />
+                <TextBlock Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" Text="Satisfaction" />
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"
+                           Text="Pioneers" />
+                <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceRequired.Pioneers}" />
+                <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceCapacity.Pioneers}" />
+                <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceRemaining.Pioneers}" />
+                <CheckBox Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ActiveBase.ProvidedConsumables.PWO}" ToolTip.Tip="PWO" />
+                <CheckBox Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ActiveBase.ProvidedConsumables.COF}" ToolTip.Tip="COF" />
+                <TextBlock Grid.Row="1" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceSatisfaction.Pioneers, StringFormat={}{0:P1}}" />
+                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"
+                           Text="Settlers" />
+                <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceRequired.Settlers}" />
+                <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceCapacity.Settlers}" />
+                <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceRemaining.Settlers}" />
+                <CheckBox Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ActiveBase.ProvidedConsumables.REP}" ToolTip.Tip="REP" />
+                <CheckBox Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ActiveBase.ProvidedConsumables.KOM}" ToolTip.Tip="KOM" />
+                <TextBlock Grid.Row="2" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceSatisfaction.Settlers, StringFormat={}{0:P1}}" />
+                <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"
+                           Text="Technicians" />
+                <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceRequired.Technicians}" />
+                <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceCapacity.Technicians}" />
+                <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceRemaining.Technicians}" />
+                <CheckBox Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ActiveBase.ProvidedConsumables.SC}" ToolTip.Tip="SC" />
+                <CheckBox Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ActiveBase.ProvidedConsumables.ALE}" ToolTip.Tip="ALE" />
+                <TextBlock Grid.Row="3" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceSatisfaction.Technicians, StringFormat={}{0:P1}}" />
+                <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"
+                           Text="Engineers" />
+                <TextBlock Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceRequired.Engineers}" />
+                <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceCapacity.Engineers}" />
+                <TextBlock Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceRemaining.Engineers}" />
+                <CheckBox Grid.Row="4" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ActiveBase.ProvidedConsumables.VG}" ToolTip.Tip="CG" />
+                <CheckBox Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ActiveBase.ProvidedConsumables.GIN}" ToolTip.Tip="GIN" />
+                <TextBlock Grid.Row="4" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceSatisfaction.Engineers, StringFormat={}{0:P1}}" />
+                <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"
+                           Text="Scientists" />
+                <TextBlock Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceRequired.Scientists}" />
+                <TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceCapacity.Scientists}" />
+                <TextBlock Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceRemaining.Scientists}" />
+                <CheckBox Grid.Row="5" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ActiveBase.ProvidedConsumables.NST}" ToolTip.Tip="NST" />
+                <CheckBox Grid.Row="5" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ActiveBase.ProvidedConsumables.WIN}" ToolTip.Tip="WIN" />
+                <TextBlock Grid.Row="5" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding ActiveBase.WorkforceSatisfaction.Scientists, StringFormat={}{0:P1}}" />
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="2" Margin="10,0,0,0">
+            <TextBlock Text="Infrastructure Buildings" Classes="h2" HorizontalAlignment="Center" />
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical">
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HB1}" />
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HB2}" />
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HB3}" />
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HB4}" />
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HB5}" />
+                </StackPanel>
+
+                <StackPanel Margin="10,0,0,0">
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HBB}" />
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HBC}" />
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HBM}" />
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.HBL}" />
+                </StackPanel>
+
+                <StackPanel Margin="10,0,0,0">
+                    <controls:BuildingCounterControl DataContext="{Binding ActiveBase.InfrastructureBuildings.STO}" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- <StackPanel Margin="10,0,0,0"> -->
+        <!--     <TextBlock Text="Advanced Settings (extra window later on)" HorizontalAlignment="Center"/> -->
+        <!--     <TextBlock Text="Basic Consumable Coverage" HorizontalAlignment="Left"/> -->
+        <!--     <StackPanel Orientation="Horizontal"> -->
+        <!--         <StackPanel> -->
+        <!--             <CheckBox Content="DW" IsChecked="{Binding ActiveBase.ProvidedConsumables.DW}"/> -->
+        <!--             <CheckBox Content="RAT" IsChecked="{Binding ActiveBase.ProvidedConsumables.RAT}"/> -->
+        <!--             <CheckBox Content="OVE" IsChecked="{Binding ActiveBase.ProvidedConsumables.OVE}"/> -->
+        <!--             <CheckBox Content="EXO" IsChecked="{Binding ActiveBase.ProvidedConsumables.EXO}"/> -->
+        <!--             <CheckBox Content="PT" IsChecked="{Binding ActiveBase.ProvidedConsumables.PT}"/> -->
+        <!--         </StackPanel>                 -->
+        <!--         <StackPanel Margin="5,0,5,0"> -->
+        <!--             <CheckBox Content="MED" IsChecked="{Binding ActiveBase.ProvidedConsumables.MED}"/> -->
+        <!--             <CheckBox Content="HMS" IsChecked="{Binding ActiveBase.ProvidedConsumables.HMS}"/> -->
+        <!--             <CheckBox Content="SCN" IsChecked="{Binding ActiveBase.ProvidedConsumables.SCN}"/> -->
+        <!--             <CheckBox Content="FIM" IsChecked="{Binding ActiveBase.ProvidedConsumables.FIM}"/> -->
+        <!--             <CheckBox Content="HSS" IsChecked="{Binding ActiveBase.ProvidedConsumables.HSS}"/> -->
+        <!--         </StackPanel> -->
+        <!--         <StackPanel> -->
+        <!--             <CheckBox Content="PDA" IsChecked="{Binding ActiveBase.ProvidedConsumables.PDA}"/> -->
+        <!--             <CheckBox Content="MEA" IsChecked="{Binding ActiveBase.ProvidedConsumables.MEA}"/> -->
+        <!--             <CheckBox Content="LC" IsChecked="{Binding ActiveBase.ProvidedConsumables.LC}"/> -->
+        <!--             <CheckBox Content="WS" IsChecked="{Binding ActiveBase.ProvidedConsumables.WS}"/> -->
+        <!--         </StackPanel> -->
+        <!--     </StackPanel> -->
+        <!-- </StackPanel> -->
+
+
+        <Grid Grid.Row="0" RowSpan="4" Grid.Column="3" DockPanel.Dock="Right" VerticalAlignment="Top"
+              Margin="40,0,0,20"
+              RowDefinitions="Auto, Auto, Auto, *">
+            <TextBlock Grid.Row="0" VerticalAlignment="Bottom" Text="Total Production Overview" Classes="h2"
+                       HorizontalAlignment="Center" />
+            <Grid Grid.Row="1" ColumnDefinitions="50, 100, 100" RowDefinitions="Auto, Auto, Auto"
+                  HorizontalAlignment="Center" Margin="0,0,0,10">
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="m³" TextAlignment="Right" Margin="15,0" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="t" TextAlignment="Right" Margin="15,0" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Import" TextAlignment="Right" />
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           Text="{Binding ActiveBase.VolumeIn, StringFormat={}{0:0.00;0.00}}" FontFamily="Monospaced"
+                           TextAlignment="Right" />
+                <TextBlock Grid.Row="1" Grid.Column="2"
+                           Text="{Binding ActiveBase.WeightIn, StringFormat={}{0:0.00;0.00}}" FontFamily="Monospaced"
+                           TextAlignment="Right" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Export" TextAlignment="Right" />
+                <TextBlock Grid.Row="2" Grid.Column="1"
+                           Text="{Binding ActiveBase.VolumeOut, StringFormat={}{0:0.00;0.00}}" FontFamily="Monospaced"
+                           TextAlignment="Right" />
+                <TextBlock Grid.Row="2" Grid.Column="2"
+                           Text="{Binding ActiveBase.WeightOut, StringFormat={}{0:0.00;0.00}}" FontFamily="Monospaced"
+                           TextAlignment="Right" />
+            </Grid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Button Width="55" Height="30" Command="{Binding ActiveBase.ProductionTable.SortByTicker}"
+                        HorizontalContentAlignment="Center" Content="" />
+                <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByInputs}"
+                        HorizontalContentAlignment="Center" Content="Inputs" />
+                <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByOutputs}"
+                        HorizontalContentAlignment="Center" Content="Outputs" />
+                <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByBalance}"
+                        HorizontalContentAlignment="Center" Content="Balance" />
+                <Button Width="95" Command="{Binding ActiveBase.ProductionTable.SortByValue}"
+                        HorizontalContentAlignment="Center" Content="$/day" />
+            </StackPanel>
+            <Border Grid.Row="3" BorderThickness="1" BorderBrush="LightGray">
+                <ScrollViewer>
+                    <ItemsControl Items="{Binding ActiveBase.ProductionTable.Rows}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="2" Margin="10, 10, 30, 10" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="basePlanner:PlanetProductionRow">
+                                <StackPanel Orientation="Horizontal">
+                                    <controls:ItemBoxControl Width="35" DataContext="{Binding .}" />
+                                    <TextBlock Width="80" VerticalAlignment="Center"
+                                               TextAlignment="Right" FontFamily="Monospaced"
+                                               Text="{Binding Inputs, StringFormat={}{0:F2}}" />
+                                    <TextBlock Width="80" VerticalAlignment="Center"
+                                               TextAlignment="Right" FontFamily="Monospaced"
+                                               Text="{Binding Outputs, StringFormat={}{0:F2}}" />
+                                    <TextBlock Width="80" VerticalAlignment="Center"
+                                               TextAlignment="Right" FontFamily="Monospaced"
+                                               Text="{Binding Balance, StringFormat={}{0:F2}}" />
+                                    <TextBlock Width="80" VerticalAlignment="Center"
+                                               TextAlignment="Right" FontFamily="Monospaced"
+                                               Foreground="{Binding Value, Converter={StaticResource MonetaryValueToColor}}"
+                                               Text="{Binding Value, StringFormat={}{0:F0}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1" RowSpan="3" ColumnSpan="2" DockPanel.Dock="Bottom" RowDefinitions="Auto, *"
+              Margin="0,0,0,20"
+              ColumnDefinitions="Auto, Auto" HorizontalAlignment="Center">
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="0,0,0,0">
+                <StackPanel>
+                    <TextBlock Text="Production Buildings" Classes="h2" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding AddBuildingTextBox.BuildingName}" Width="100" />
+                        <Button Content="AddBuilding" Command="{Binding AddBuilding}" />
+                    </StackPanel>
+                </StackPanel>
+                <CheckBox Content="Include Habitation Costs in Recipe ROI" IsEnabled="False" Margin="5, 0,0,0"
+                          VerticalAlignment="Bottom" />
+                <StackPanel Orientation="Horizontal" Margin="75,0,0,0" HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="Net Profit: " Classes="h2" />
+                    <TextBlock Text="{Binding ActiveBase.NetProfit, StringFormat={}{0:F0} $}" Classes="h2" Width="100"
+                               HorizontalAlignment="Left" />
+                </StackPanel>
+            </StackPanel>
+            <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="LightGray" HorizontalAlignment="Left">
+                <ScrollViewer>
+                    <ItemsControl Items="{Binding ActiveBase.ProductionBuildings}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="3" Margin="5" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="basePlanner:PlanetBuilding">
+                                <controls:ProductionLineControl DataContext="{Binding .}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <controls:PriceOverridesControl Grid.Row="0" Grid.Column="4" Grid.RowSpan="4"
+                                        DataContext="{Binding ActiveBase.PriceOverrides}" />
+    </Grid>
+</UserControl>

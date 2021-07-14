@@ -22,6 +22,10 @@
           <DependentUpon>EmpireView.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="App\Controls\ShoppingCartControl.axaml.cs">
+          <DependentUpon>ShoppingCartControl.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.6" />

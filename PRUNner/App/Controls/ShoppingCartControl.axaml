@@ -1,0 +1,135 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:PRUNner.App.Controls"
+             xmlns:shoppingCart="clr-namespace:PRUNner.Backend.BasePlanner.ShoppingCart"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:components="clr-namespace:PRUNner.Backend.Data.Components"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PRUNner.App.Controls.ShoppingCartControl">
+    <Design.DataContext>
+        <shoppingCart:ShoppingCart />
+    </Design.DataContext>
+
+    <UserControl.Resources>
+        <system:Double x:Key="ColumnWidth">80</system:Double>
+        <system:Double x:Key="BuildingWidth">30</system:Double>
+        <system:Double x:Key="TotalWidth">50</system:Double>
+        <system:Double x:Key="PlannedWidth">70</system:Double>
+        <system:Double x:Key="LeftSideTotal">150</system:Double>
+    </UserControl.Resources>
+    
+    <Border BorderThickness="1" BorderBrush="LightGray" Margin="0,0,0,2">
+        <StackPanel Orientation="Vertical" Margin="3,3,3,3">
+
+            <!-- Header -->
+            <StackPanel Orientation="Horizontal" Margin="4,0,0,0">
+                <TextBlock Text="" Width="{StaticResource BuildingWidth}" VerticalAlignment="Center"/>    
+                <TextBlock Text="Total" Width="{StaticResource TotalWidth}" TextAlignment="Center" VerticalAlignment="Center"/>    
+                <TextBlock Text="Planned" Width="{StaticResource PlannedWidth}" TextAlignment="Center" VerticalAlignment="Center"/>    
+                <ItemsControl Items="{Binding Materials}" VerticalAlignment="Top">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="shoppingCart:ShoppingCartMaterial">
+                            <controls:ItemBoxControl DataContext="{Binding Material}"
+                                                     Width="{StaticResource ColumnWidth}"
+                                                     HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <!-- Buildings -->
+            <ItemsControl Items="{Binding Buildings}" VerticalAlignment="Top">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" Spacing="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="shoppingCart:ShoppingCartBuilding">
+                        <StackPanel Orientation="Horizontal">
+                            <controls:ItemBoxControl DataContext="{Binding Building.Building}"/>
+                            <TextBlock Text="{Binding TotalAmount}" 
+                                       Width="{StaticResource TotalWidth}" VerticalAlignment="Center" TextAlignment="Center"/>
+                            <NumericUpDown Text="{Binding PlannedAmount}" Classes="compact"
+                                           Width="{StaticResource PlannedWidth}" Minimum="0"/>
+                            <ItemsControl Items="{Binding RequiredMaterials}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="components:MaterialIO">
+                                        <TextBlock Text="{Binding Amount}"
+                                                   VerticalAlignment="Center" TextAlignment="Center"
+                                                   Width="{StaticResource ColumnWidth}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+            <!-- Totals -->
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                <StackPanel Margin="0,0,5,0">
+                    <TextBlock Text="Total" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right"
+                               Width="{StaticResource LeftSideTotal}"/>    
+                    <TextBlock Text="Inventory" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right"
+                               Width="{StaticResource LeftSideTotal}" Margin="0,7,0,7"/>    
+                    <TextBlock Text="Remaining" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right"
+                               Width="{StaticResource LeftSideTotal}"/>    
+                </StackPanel>
+                
+                <ItemsControl Items="{Binding Materials}" VerticalAlignment="Top">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="shoppingCart:ShoppingCartMaterial">
+                            <StackPanel>
+                                <TextBlock Text="{Binding TotalAmount}" 
+                                           Width="{StaticResource ColumnWidth}" VerticalAlignment="Center" TextAlignment="Center"/>
+                                <NumericUpDown Text="{Binding AvailableAmount}" Classes="compact"
+                                               Width="{StaticResource ColumnWidth}" Minimum="0"/>
+                                <TextBlock Text="{Binding RemainingAmount}" 
+                                           Width="{StaticResource ColumnWidth}" VerticalAlignment="Center" TextAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <!-- Footer -->
+            <StackPanel Orientation="Horizontal" Margin="4,10,0,0">
+                <TextBlock Text="" Width="{StaticResource BuildingWidth}" VerticalAlignment="Center"/>    
+                <TextBlock Text="" Width="{StaticResource TotalWidth}" TextAlignment="Center" VerticalAlignment="Center"/>    
+                <TextBlock Text="" Width="{StaticResource PlannedWidth}" TextAlignment="Center" VerticalAlignment="Center"/>    
+                <ItemsControl Items="{Binding Materials}" VerticalAlignment="Top">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="shoppingCart:ShoppingCartMaterial">
+                            <controls:ItemBoxControl DataContext="{Binding Material}"
+                                                     Width="{StaticResource ColumnWidth}"
+                                                     HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

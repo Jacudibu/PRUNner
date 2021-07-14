@@ -57,7 +57,7 @@
                             <controls:ItemBoxControl DataContext="{Binding Building.Building}"/>
                             <TextBlock Text="{Binding TotalAmount}" 
                                        Width="{StaticResource TotalWidth}" VerticalAlignment="Center" TextAlignment="Center"/>
-                            <NumericUpDown Text="{Binding PlannedAmount}" Classes="compact"
+                            <NumericUpDown Value="{Binding PlannedAmount}" Classes="compact"
                                            Width="{StaticResource PlannedWidth}" Minimum="0"/>
                             <ItemsControl Items="{Binding RequiredMaterials}">
                                 <ItemsControl.ItemsPanel>
@@ -100,7 +100,7 @@
                             <StackPanel>
                                 <TextBlock Text="{Binding TotalAmount}" 
                                            Width="{StaticResource ColumnWidth}" VerticalAlignment="Center" TextAlignment="Center"/>
-                                <NumericUpDown Text="{Binding AvailableAmount}" Classes="compact"
+                                <NumericUpDown Value="{Binding Inventory}" Classes="compact"
                                                Width="{StaticResource ColumnWidth}" Minimum="0"/>
                                 <TextBlock Text="{Binding RemainingAmount}" 
                                            Width="{StaticResource ColumnWidth}" VerticalAlignment="Center" TextAlignment="Center"/>

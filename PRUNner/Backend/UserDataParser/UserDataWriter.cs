@@ -1,7 +1,9 @@
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using PRUNner.Backend.BasePlanner;
+using PRUNner.Backend.BasePlanner.ShoppingCart;
 
 namespace PRUNner.Backend.UserDataParser
 {
@@ -93,8 +95,39 @@ namespace PRUNner.Backend.UserDataParser
             result.Add(nameof(PlanetaryBase.ProductionBuildings), WriteProductionBuildings(planetaryBase.ProductionBuildings));
             result.Add(nameof(PlanetaryBase.ExpertAllocation), WriteExpertAllocation(planetaryBase.ExpertAllocation));
             result.Add(nameof(PlanetaryBase.ProvidedConsumables), WriteProvidedConsumables(planetaryBase.ProvidedConsumables));
-            result.Add(nameof(planetaryBase.IncludeCoreModuleInColonyCosts), planetaryBase.IncludeCoreModuleInColonyCosts);
+            result.Add(nameof(PlanetaryBase.IncludeCoreModuleInColonyCosts), planetaryBase.IncludeCoreModuleInColonyCosts);
+            result.Add(nameof(PlanetaryBase.ShoppingCart), WriteShoppingCart(planetaryBase.ShoppingCart));
+            
+            return result;
+        }
 
+        private static JToken WriteShoppingCart(ShoppingCart shoppingCart)
+        {
+            var result = new JObject();
+
+            var plannedBuildings = new JArray();
+            foreach (var shoppingCartBuilding in shoppingCart.Buildings.Where(x => x.PlannedAmount > 0))
+            {
+                var jObject = new JObject();
+                    
+                jObject.Add(nameof(ShoppingCartBuilding.Building), shoppingCartBuilding.Building.Building.Ticker);
+                jObject.Add(nameof(ShoppingCartBuilding.PlannedAmount), shoppingCartBuilding.PlannedAmount);
+                    
+                plannedBuildings.Add(jObject);
+            }
+            result.Add(nameof(ShoppingCart.Buildings), plannedBuildings);
+
+            var plannedMaterials = new JArray();
+            foreach (var material in shoppingCart.Materials.Where(x => x.Inventory > 0))
+            {
+                var jObject = new JObject();
+                    
+                jObject.Add(nameof(ShoppingCartMaterial.Material), material.Material.Ticker);
+                jObject.Add(nameof(ShoppingCartMaterial.Inventory), material.Inventory);
+                    
+                plannedMaterials.Add(jObject);
+            }
+            result.Add(nameof(ShoppingCart.Materials), plannedMaterials);
             return result;
         }
 

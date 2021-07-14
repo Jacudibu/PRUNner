@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using PRUNner.Backend.BasePlanner;
+using PRUNner.Backend.BasePlanner.ShoppingCart;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.Enums;
 
@@ -124,7 +125,40 @@ namespace PRUNner.Backend.UserDataParser
             ReadPriceOverrides((JArray?) obj[nameof(PlanetaryBase.PriceOverrides)], result.PriceOverrides);
             
             result.FinishLoading();
+
+            ReadShoppingCart((JObject?) obj[nameof(PlanetaryBase.ShoppingCart)], result.ShoppingCart);
+
             return result;
+        }
+
+        private static void ReadShoppingCart(JObject? jObject, ShoppingCart shoppingCart)
+        {
+            if (jObject == null)
+            {
+                return;
+            }
+
+            var buildings = (JArray) jObject[nameof(ShoppingCart.Buildings)]!;
+            foreach (var buildingObject in buildings.Cast<JObject>())
+            {
+                var ticker = buildingObject.GetValue(nameof(ShoppingCartBuilding.Building))!.ToObject<string>();
+                var shoppingCartBuilding = shoppingCart.Buildings.SingleOrDefault(x => x.Building.Building.Ticker.Equals(ticker));
+                if (shoppingCartBuilding != null)
+                {
+                    shoppingCartBuilding.PlannedAmount = buildingObject.GetValue(nameof(ShoppingCartBuilding.PlannedAmount))!.ToObject<int>();
+                }
+            }
+            
+            var materials = (JArray) jObject[nameof(ShoppingCart.Materials)]!;
+            foreach (var materialObject in materials.Cast<JObject>())
+            {
+                var ticker = materialObject.GetValue(nameof(ShoppingCartMaterial.Material))!.ToObject<string>();
+                var shoppingCartMaterial = shoppingCart.Materials.SingleOrDefault(x => x.Material.Ticker.Equals(ticker));
+                if (shoppingCartMaterial != null)
+                {
+                    shoppingCartMaterial.Inventory = materialObject.GetValue(nameof(ShoppingCartMaterial.Inventory))!.ToObject<int>();
+                }
+            }
         }
 
         private static void ReadProductionBuildings(JArray buildingArray, PlanetaryBase planetaryBase)

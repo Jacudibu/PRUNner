@@ -19,7 +19,6 @@ namespace PRUNner.Backend.BasePlanner.ShoppingCart
         public ShoppingCartBuilding(PlanetBuilding building)
         {
             Building = building;
-
         }
 
         public void SetupRequiredMaterials(List<MaterialData> allMaterials)

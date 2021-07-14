@@ -8,17 +8,17 @@ namespace PRUNner.Backend.BasePlanner.ShoppingCart
     public class ShoppingCartMaterial : ReactiveObject
     {
         public MaterialData Material { get; }
-        [Reactive] public int TotalAmount { get; set; }
+        [Reactive] public int TotalAmount { get; internal set; }
         [Reactive] public int RemainingAmount { get; private set; }
 
-        private int _availableAmount;
-        public int AvailableAmount
+        private int _inventory;
+        public int Inventory
         {
-            get => _availableAmount;
+            get => _inventory;
             set
             {
-                _availableAmount = value;
-                RemainingAmount = Math.Max(0, TotalAmount - _availableAmount);
+                _inventory = value;
+                RemainingAmount = Math.Max(0, TotalAmount - _inventory);
             }
         }
 

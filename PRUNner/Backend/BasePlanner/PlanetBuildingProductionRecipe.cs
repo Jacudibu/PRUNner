@@ -69,8 +69,8 @@ namespace PRUNner.Backend.BasePlanner
                 DurationString = "∞";
                 return;
             }
-                
-            _durationInMilliseconds = _baseDurationMs * (2 - efficiencyFactor);
+
+            _durationInMilliseconds = _baseDurationMs / efficiencyFactor;
             var timespan = TimeSpan.FromMilliseconds(_durationInMilliseconds);
 
             var builder = new StringBuilder();

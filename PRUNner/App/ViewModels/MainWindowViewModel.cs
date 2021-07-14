@@ -18,6 +18,7 @@ namespace PRUNner.App.ViewModels
     {
         [Reactive] public ViewModelBase ActiveView { get; private set; }
 
+        public static MainWindowViewModel Instance { get; private set; }
         public readonly EmpireViewModel EmpireViewModel;
         public readonly BasePlannerViewModel BasePlannerViewModel;
         public readonly PlanetFinderViewModel PlanetFinderViewModel;
@@ -28,6 +29,7 @@ namespace PRUNner.App.ViewModels
         
         public MainWindowViewModel()
         {
+            Instance = this;
             LogConfigurator.AddTarget(new MethodCallTarget("StatusBar", LogEventAction), LogLevel.Debug);
 
             DataParser.LoadAndParseFromCache();

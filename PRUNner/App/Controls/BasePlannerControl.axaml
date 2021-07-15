@@ -16,7 +16,6 @@
     
     <Grid RowDefinitions="Auto, Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto">
         <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
-            <TextBlock Text="{Binding ActiveBase.Planet.Name}" Classes="h1" HorizontalAlignment="Center" />
             <StackPanel Orientation="Horizontal">
                 <StackPanel Width="100">
                     <TextBlock Text="Resources" Classes="h2" HorizontalAlignment="Center" />

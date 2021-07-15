@@ -17,8 +17,10 @@
                    Margin="100" Classes="h1"
                    IsVisible="{Binding ActiveBase, Converter={StaticResource IsNull}}" />
 
+        <TextBlock Text="{Binding ActiveBase.Planet.Name}" Classes="h1" FontSize="30" 
+                   Width="300" HorizontalAlignment="Left" Margin="20,5,0,0" TextAlignment="Center"/>
         <TabControl IsVisible="{Binding ActiveBase, Converter={StaticResource IsNotNull}}">
-            <TabItem Header="Base Planner">
+            <TabItem Header="Base Planner" Margin="320,0,0,0">
                 <controls:BasePlannerControl DataContext="{Binding .}" />
             </TabItem>
             <TabItem Header="Shopping Cart">

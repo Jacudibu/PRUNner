@@ -11,7 +11,7 @@ namespace PRUNner.Backend.BasePlanner.ShoppingCart
     {
         public PlanetBuilding Building { get; }
 
-        public int TotalAmount { get; set; }
+        [Reactive] public int TotalAmount { get; set; }
         [Reactive] public int PlannedAmount { get; set; }
 
         public List<MaterialIO> RequiredMaterials { get; set; } = new();

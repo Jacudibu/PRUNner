@@ -25,10 +25,10 @@ namespace PRUNner.Backend.Data.Components
         {
             MMBuy = rainPrices.MMBuy;
             MMSell = rainPrices.MMSell;
-            AI1.Update(rainPrices.AI1Average, rainPrices.AI1AskPrice, rainPrices.AI1BidPrice);
-            CI1.Update(rainPrices.CI1Average, rainPrices.CI1AskPrice, rainPrices.CI1BidPrice);
-            IC1.Update(rainPrices.IC1Average, rainPrices.IC1AskPrice, rainPrices.IC1BidPrice);
-            NC1.Update(rainPrices.NC1Average, rainPrices.NC1AskPrice, rainPrices.NC1BidPrice);
+            AI1.Update(rainPrices.AI1Average ?? 0, rainPrices.AI1AskPrice, rainPrices.AI1BidPrice);
+            CI1.Update(rainPrices.CI1Average ?? 0, rainPrices.CI1AskPrice, rainPrices.CI1BidPrice);
+            IC1.Update(rainPrices.IC1Average ?? 0, rainPrices.IC1AskPrice, rainPrices.IC1BidPrice);
+            NC1.Update(rainPrices.NC1Average ?? 0, rainPrices.NC1AskPrice, rainPrices.NC1BidPrice);
         }
 
         public double GetPrice(PriceOverrides? empirePriceOverrides = null, PriceOverrides? planetPriceOverrides = null)

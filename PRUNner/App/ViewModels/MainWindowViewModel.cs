@@ -43,6 +43,7 @@ namespace PRUNner.App.ViewModels
             PlanetFinderSearchResult.OnOpenBasePlanner += PlanetFinderSelectPlanetEvent;
             
             LoadFromDisk();
+            UpdateChecker.CheckForUpdates(GetType().Assembly.GetName().Version);
         }
 
         public void ViewPlanetFinder()

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -86,7 +87,7 @@ namespace PRUNner.App.Controls
             _itemName = this.FindControl<TextBlock>("ItemName");
             _number = this.FindControl<TextBlock>("Number");
         }
-
+        
         protected override void OnDataContextChanged(EventArgs e)
         {
             switch (DataContext)
@@ -95,7 +96,7 @@ namespace PRUNner.App.Controls
                     _frame.Background = MaterialColors[materialData.Category].Background;
                     _itemName.Foreground = MaterialColors[materialData.Category].Foreground;
                     _itemName.Text = materialData.Ticker;
-                    _toolTip.Text = materialData.Name;
+                    _toolTip.Text = GetMaterialTooltip(materialData);
                     _numberFrame.IsVisible = false;
                     _number.IsVisible = false;
                     break;
@@ -103,7 +104,7 @@ namespace PRUNner.App.Controls
                     _frame.Background = MaterialColors[resourceData.Material.Category].Background;
                     _itemName.Foreground = MaterialColors[resourceData.Material.Category].Foreground;
                     _itemName.Text = resourceData.Material.Ticker;
-                    _toolTip.Text = resourceData.Material.Name;
+                    _toolTip.Text = GetMaterialTooltip(resourceData.Material);
                     _numberFrame.IsVisible = true;
                     _number.IsVisible = true;
                     _number.Text = Math.Round(resourceData.CalculateDailyProduction(1)).ToString("F0");
@@ -112,7 +113,7 @@ namespace PRUNner.App.Controls
                     _frame.Background = MaterialColors[materialIO.Material.Category].Background;
                     _itemName.Foreground = MaterialColors[materialIO.Material.Category].Foreground;
                     _itemName.Text = materialIO.Material.Ticker;
-                    _toolTip.Text = materialIO.Material.Name;
+                    _toolTip.Text = GetMaterialTooltip(materialIO.Material);
                     _numberFrame.IsVisible = true;
                     _number.IsVisible = true;
                     _number.Text = materialIO.Amount.ToString();
@@ -129,7 +130,7 @@ namespace PRUNner.App.Controls
                     _frame.Background = MaterialColors[planetProductionRow.Material.Category].Background;
                     _itemName.Foreground = MaterialColors[planetProductionRow.Material.Category].Foreground;
                     _itemName.Text = planetProductionRow.Material.Ticker;
-                    _toolTip.Text = planetProductionRow.Material.Name;
+                    _toolTip.Text = GetMaterialTooltip(planetProductionRow.Material);
                     _numberFrame.IsVisible = true;
                     _number.IsVisible = true;
 
@@ -154,6 +155,32 @@ namespace PRUNner.App.Controls
             }
         }
 
+        private readonly StringBuilder _tooltipBuilder = new();
+        private string GetMaterialTooltip(MaterialData materialData)
+        {
+            _tooltipBuilder.Append(materialData.Name);
+            _tooltipBuilder.Append(" (min < avg > max)\n");
+            AppendPriceData(_tooltipBuilder, nameof(MaterialPriceData.AI1), materialData.PriceData.AI1);
+            AppendPriceData(_tooltipBuilder, nameof(MaterialPriceData.CI1), materialData.PriceData.CI1);
+            AppendPriceData(_tooltipBuilder, nameof(MaterialPriceData.IC1), materialData.PriceData.IC1);
+            AppendPriceData(_tooltipBuilder, nameof(MaterialPriceData.NC1), materialData.PriceData.NC1);
+            var result = _tooltipBuilder.ToString();
+            _tooltipBuilder.Clear();
+            return result;
+        }
+
+        private void AppendPriceData(StringBuilder sb, string exchangeName, MaterialPriceDataRegional priceData)
+        {
+            sb.Append(exchangeName);
+            sb.Append(" – ");
+            sb.Append(priceData.Ask?.ToString("F2") ?? "-");
+            sb.Append(" < ");
+            sb.Append(priceData.Average.ToString("F2"));
+            sb.Append(" > ");
+            sb.Append(priceData.Bid?.ToString("F2") ?? "-");
+            sb.Append('\n');
+        }
+        
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);

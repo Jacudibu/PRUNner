@@ -1,8 +1,7 @@
 # PRUNner
 PRUNner is a cross-platform standalone tool supposed to ease up base planning on an empire-wide scale by replacing spreadsheets with a custom-made application, yielding way higher response times than one could ever achieve in Google Sheets.
 
-You can grab the latest version over at our [Releases](https://github.com/Jacudibu/PRUNner/releases)
-There's a .zip file for every major platform, just unpack and run the PRUNner file inside.
+You can grab the latest version over at our [Releases](https://github.com/Jacudibu/PRUNner/releases): there's a .zip file for every major platform, just unpack and run the PRUNner file inside.
 
 ### Screenshots
 First, let's find a planet to settle!

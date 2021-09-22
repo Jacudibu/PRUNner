@@ -64,11 +64,11 @@ namespace PRUNner.Backend.UserDataParser
 
         private static JToken WriteHeadquarters(Headquarters headquarters)
         {
-            JObject result = new();
-
-            result.Add(nameof(Headquarters.Faction), headquarters.Faction.ToString());
-            
-            return result;
+            var jObject = new JObject();
+            jObject.Add(nameof(Headquarters.UsedHQSlots), headquarters.UsedHQSlots);
+            jObject.Add(nameof(Headquarters.TotalHQSlots), headquarters.TotalHQSlots);
+            jObject.Add(nameof(Headquarters.Faction), headquarters.Faction.ToString());
+            return jObject;
         }
 
         private static JToken WritePlanetaryBases(ObservableCollection<PlanetaryBase> planetaryBases)

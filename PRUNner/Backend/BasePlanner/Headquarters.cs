@@ -10,6 +10,9 @@ namespace PRUNner.Backend.BasePlanner
 {
     public class Headquarters : ReactiveObject
     {
+        [Reactive] public int UsedHQSlots { get; set; } = 1;
+        [Reactive] public int TotalHQSlots { get; set; } = 2;
+
         [Reactive] public Faction Faction { get; set; } = Faction.None;
 
         // TODO: This feels terribly hacky but I have no clue how else to do it right now... :D
@@ -17,7 +20,7 @@ namespace PRUNner.Backend.BasePlanner
 
         public double GetFactionEfficiencyFactorForIndustry(IndustryType industryType)
         {
-            return industryType switch
+            var res = industryType switch
             {
                 IndustryType.Agriculture => Faction == Faction.Hortus ? 0.03 : 0,
                 IndustryType.Chemistry => Faction == Faction.OutsideRegion ? 0.02 : 0,
@@ -30,6 +33,9 @@ namespace PRUNner.Backend.BasePlanner
                 IndustryType.ResourceExtraction => Faction == Faction.OutsideRegion ? 0.02 : 0,
                 _ => throw new ArgumentOutOfRangeException(nameof(industryType), industryType, null)
             };
+
+            double factor = -2 * ((double)UsedHQSlots / (TotalHQSlots + 1)) + 3;
+            return res * factor;
         }
     }
 }

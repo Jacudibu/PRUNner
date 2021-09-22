@@ -15,7 +15,7 @@ namespace FIOImport
     {
         private static readonly HttpClient Client = new();
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        
+
         private const string CacheFolder = "FIOCache/";
         private const string PlanetFolder = CacheFolder + "Planets/";
 
@@ -24,7 +24,7 @@ namespace FIOImport
         private const string AllSystemsPath = CacheFolder + "systemStars.json";
         private const string AllPlanetIdentifiersPath = CacheFolder + "allPlanetIdentifiers.json";
         private const string RainPricesPath = CacheFolder + "rainPrices.json";
-        
+
         public static RawData LoadAllFromCache()
         {
             if (Directory.Exists(CacheFolder))
@@ -35,12 +35,12 @@ namespace FIOImport
             Logger.Info("Unable to find Cache folder, downloading all data from fio instead. This might take a little while.");
             return ImportAll();
         }
-        
+
         private static RawData ImportAll()
         {
             Directory.CreateDirectory(CacheFolder);
             Directory.CreateDirectory(PlanetFolder);
-            
+
             return new RawData(DownloadBuildings(), DownloadMaterials(), LoadAllPlanetData(), DownloadSystems(), DownloadPrices());
         }
 
@@ -87,11 +87,11 @@ namespace FIOImport
                 Logger.Info("Unable to locate cache file for price data, downloading instead.");
                 return DownloadPrices();
             }
-            
+
             Logger.Info("Loading Price data from Cache...");
             return LoadFromCache<FioRainPrices[]>(RainPricesPath)!;
         }
-        
+
         public static FioRainPrices[] DownloadPrices()
         {
             Logger.Info("Importing Price data from Fio...");
@@ -105,7 +105,7 @@ namespace FIOImport
                 Logger.Info("Unable to locate planet identifier list, going to download it instead instead.");
                 return DownloadPlanetIdentifiers();
             }
-            
+
             return LoadFromCache<FioPlanetIdentifier[]>(AllPlanetIdentifiersPath)!;
         }
 
@@ -117,40 +117,32 @@ namespace FIOImport
 
         private static FioPlanet[] LoadAllPlanetData()
         {
-            var identifiers = LoadPlanetIdentifiers();
-            return GetAllPlanetData(identifiers);
+            LoadPlanetIdentifiers();
+            return GetAllPlanetData();
         }
 
-        private static FioPlanet LoadPlanetData(string fileName)
+        private static FioPlanet[] LoadPlanetData(string fileName)
         {
             var json = File.ReadAllText(fileName);
-            var result = JsonConvert.DeserializeObject<FioPlanet>(json);
+            var result = JsonConvert.DeserializeObject<FioPlanet[]>(json);
 
             return result!;
         }
 
-        private static FioPlanet[] GetAllPlanetData(FioPlanetIdentifier[] identifiers)
+        private static FioPlanet[] GetAllPlanetData()
         {
-            var allPlanets = new FioPlanet[identifiers.Length];
-            for (var i = 0; i < allPlanets.Length; i++)
-            {
-                allPlanets[i] = LoadFromCacheOrDownloadPlanetData(identifiers[i].PlanetNaturalId, i + 1, identifiers.Length);
-            }
-
-            return allPlanets;
+            return LoadFromCacheOrDownloadPlanetData();
         }
 
-        private static FioPlanet LoadFromCacheOrDownloadPlanetData(string planetId, int currentPlanetCount, int totalPlanets)
+        private static FioPlanet[] LoadFromCacheOrDownloadPlanetData()
         {
-            if (File.Exists($"{PlanetFolder}{planetId}.json"))
+            string AllPlanetsJsonFile = $"{PlanetFolder}AllPlanets.json";
+            if (File.Exists(AllPlanetsJsonFile))
             {
-                Logger.Info("Loading Planets [{CurrentPlanetCount}/{TotalPlanets}] – using local cache", currentPlanetCount, totalPlanets);
-                return LoadPlanetData($"{PlanetFolder}{planetId}.json");
+                return LoadPlanetData(AllPlanetsJsonFile);
             }
 
-            Logger.Info("Loading Planets [{CurrentPlanetCount}/{TotalPlanets}] – downloading from FIO", currentPlanetCount, totalPlanets);
-            Thread.Sleep(100); // that's to make sure we don't ddos FIO too hard... :D
-            return DownloadAndCache<FioPlanet>("https://rest.fnar.net/planet/" + planetId, PlanetFolder + planetId + ".json")!;
+            return DownloadAndCache<FioPlanet[]>("https://rest.fnar.net/planet/allplanets/full", AllPlanetsJsonFile);
         }
 
         private static FioSystem[] LoadSystems()
@@ -160,7 +152,7 @@ namespace FIOImport
                 Logger.Info("Unable to locate system data cache file, downloading it instead..");
                 return DownloadSystems();
             }
-            
+
             Logger.Info("Loading System Data from Cache...");
             return LoadFromCache<FioSystem[]>(AllSystemsPath)!;
         }

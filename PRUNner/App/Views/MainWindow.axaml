@@ -14,24 +14,24 @@
         <viewModels:MainWindowViewModel />
     </Design.DataContext>
 
+  <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" AllowAutoHide="false">
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Empire Overview" Command="{Binding ViewEmpire}" />
-            <MenuItem Header="Base Planner" Command="{Binding ViewBasePlanner}" />
-            <MenuItem Header="Planet Finder" Command="{Binding ViewPlanetFinder}" />
-            <MenuItem Width="500" />
-            <MenuItem Header="Update Price Data" Command="{Binding UpdatePriceData}" />
-            <MenuItem Width="500" />
-            <MenuItem Header="Save" Command="{Binding SaveToDisk}" HorizontalAlignment="Right" />
-            <MenuItem Header="Load" Command="{Binding LoadFromDisk}" HorizontalAlignment="Right"  />
-        </Menu>
+      <Menu DockPanel.Dock="Top" HorizontalAlignment="Left">
+        <MenuItem Header="Empire Overview" Command="{Binding ViewEmpire}" />
+        <MenuItem Header="Base Planner" Command="{Binding ViewBasePlanner}" />
+        <MenuItem Header="Planet Finder" Command="{Binding ViewPlanetFinder}" />
+        <MenuItem MinWidth="100"/>
+        <MenuItem Header="Update Price Data" Command="{Binding UpdatePriceData}" />
+        <MenuItem MinWidth="100"/>
+        <MenuItem Header="Save" Command="{Binding SaveToDisk}" HorizontalAlignment="Right" />
+        <MenuItem Header="Load" Command="{Binding LoadFromDisk}" HorizontalAlignment="Right"  />
+      </Menu>
 
-        <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}" />
+      <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}" />
 
-        <Border DockPanel.Dock="Bottom" Background="LightGray" Height="16" VerticalAlignment="Bottom">
-            <TextBlock Text="{Binding StatusBar}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10" Margin="3,0,0,0"/>
-        </Border>
-        
+      <Border DockPanel.Dock="Bottom" Background="LightGray" Height="32" VerticalAlignment="Bottom">
+        <TextBlock Text="{Binding StatusBar}" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" Margin="3,0,0,0"/>
+      </Border>
     </DockPanel>
-
+  </ScrollViewer>
 </Window>

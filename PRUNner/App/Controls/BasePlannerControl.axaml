@@ -111,7 +111,7 @@
                       SelectedItem="{Binding ActiveBase.CoGCBonus}" Width="175" />
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,20,0,0">
+        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,20,0,30">
             <TextBlock Text="Experts" Classes="h2" HorizontalAlignment="Center" />
             <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Agriculture}" />
             <controls:ExpertControl DataContext="{Binding ActiveBase.ExpertAllocation.Chemistry}" />

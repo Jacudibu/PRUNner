@@ -92,6 +92,8 @@ namespace PRUNner.Backend.UserDataParser
             }
             
             headquarters.Faction = Enum.Parse<Faction>(jObject[nameof(Headquarters.Faction)].Value<string>(), true);
+            headquarters.UsedHQSlots = jObject[nameof(Headquarters.UsedHQSlots)]?.ToObject<int>() ?? 1;
+            headquarters.TotalHQSlots = jObject[nameof(Headquarters.TotalHQSlots)]?.ToObject<int>() ?? 2;
         }
 
         private static void ReadPlanetaryBases(JArray? jArray, Empire empire)

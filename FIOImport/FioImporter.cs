@@ -136,13 +136,13 @@ namespace FIOImport
 
         private static FioPlanet[] LoadFromCacheOrDownloadPlanetData()
         {
-            string AllPlanetsJsonFile = $"{PlanetFolder}AllPlanets.json";
-            if (File.Exists(AllPlanetsJsonFile))
+            string allPlanetsJsonFile = $"{PlanetFolder}AllPlanets.json";
+            if (File.Exists(allPlanetsJsonFile))
             {
-                return LoadPlanetData(AllPlanetsJsonFile);
+                return LoadPlanetData(allPlanetsJsonFile);
             }
 
-            return DownloadAndCache<FioPlanet[]>("https://rest.fnar.net/planet/allplanets/full", AllPlanetsJsonFile);
+            return DownloadAndCache<FioPlanet[]>("https://rest.fnar.net/planet/allplanets/full", allPlanetsJsonFile)!;
         }
 
         private static FioSystem[] LoadSystems()

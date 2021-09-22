@@ -132,7 +132,13 @@ namespace PRUNner.App.ViewModels
             basePlanner.SetActiveBase(planetaryBase);
 
             var window = new Window();
-            window.Content = basePlanner;
+            window.Content = new ScrollViewer
+            {
+                HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Visible,
+                VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Visible,
+                AllowAutoHide = false,
+                Content = basePlanner
+            };
             window.Width = 1800;
             window.Height = 850;
             window.Icon = (Application.Current.ApplicationLifetime as ClassicDesktopStyleApplicationLifetime)?.MainWindow.Icon;

@@ -20,7 +20,7 @@ namespace PRUNner.Backend.BasePlanner
 
         public double GetFactionEfficiencyFactorForIndustry(IndustryType industryType)
         {
-            var res = industryType switch
+            var baseValue = industryType switch
             {
                 IndustryType.Agriculture => Faction == Faction.Hortus ? 0.03 : 0,
                 IndustryType.Chemistry => Faction == Faction.OutsideRegion ? 0.02 : 0,
@@ -34,8 +34,8 @@ namespace PRUNner.Backend.BasePlanner
                 _ => throw new ArgumentOutOfRangeException(nameof(industryType), industryType, null)
             };
 
-            double factor = -2 * ((double)UsedHQSlots / (TotalHQSlots + 1)) + 3;
-            return res * factor;
+            var factor = -2 * ((double)UsedHQSlots / TotalHQSlots) + 3;
+            return baseValue * factor;
         }
     }
 }

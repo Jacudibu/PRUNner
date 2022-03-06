@@ -30,46 +30,52 @@ namespace PRUNner.App.Controls
                 
                 Foreground = new SolidColorBrush(foreground);
             }
+
+            public ColorPair(byte ar, byte ag, byte ab, byte br, byte bg, byte bb, byte cr, byte cg, byte cb) : this(
+                    new Color(255, ar, ag, ab), 
+                    new Color(255, br, bg, bb),
+                    new Color(255, cr, cg, cb))
+            { }
         }
 
         public static readonly Dictionary<MaterialCategory, ColorPair> MaterialColors = new()
         {
-            {MaterialCategory.AgriculturalProducts, new ColorPair(new Color(255, 92, 18, 18), new Color(255, 117, 43, 43), new Color(255, 219, 145, 145))},
-            {MaterialCategory.Alloys, new ColorPair(new Color(255, 77, 77, 77), new Color(255, 102, 102, 102), new Color(255, 204, 204, 204))},
-            {MaterialCategory.Chemicals, new ColorPair(new Color(255, 183, 46, 91), new Color(255, 208, 71, 116), new Color(255, 255, 173, 218))},
-            {MaterialCategory.ConstructionMaterials, new ColorPair(new Color(255, 24, 91, 211), new Color(255, 49, 116, 236), new Color(255, 151, 218, 255))},
-            {MaterialCategory.ConstructionParts, new ColorPair(new Color(255, 35, 30, 68), new Color(255, 60, 55, 93), new Color(255, 162, 157, 195))},
-            {MaterialCategory.ConstructionPrefabs, new ColorPair(new Color(255, 54, 54, 54), new Color(255, 79, 79, 79), new Color(255, 181, 181, 181))},
-            {MaterialCategory.ConsumablesBasic, new ColorPair(new Color(255, 73, 85, 97), new Color(255, 98, 110, 122), new Color(255, 200, 212, 224))},
-            {MaterialCategory.ConsumablesLuxury, new ColorPair(new Color(255, 9, 15, 15), new Color(255, 34, 40, 40), new Color(255, 136, 142, 142))},
-            {MaterialCategory.Drones, new ColorPair(new Color(255, 91, 46, 183), new Color(255, 116, 71, 208), new Color(255, 218, 173, 255))},
-            {MaterialCategory.ElectronicDevices, new ColorPair(new Color(255, 86, 20, 147), new Color(255, 111, 45, 172), new Color(255, 213, 147, 255))},
-            {MaterialCategory.ElectronicParts, new ColorPair(new Color(255, 92, 30, 122), new Color(255, 117, 55, 147), new Color(255, 219, 157, 249))},
-            {MaterialCategory.ElectronicPieces, new ColorPair(new Color(255, 73, 85, 97), new Color(255, 98, 110, 122), new Color(255, 200, 212, 224))},
-            {MaterialCategory.ElectronicSystems, new ColorPair(new Color(255, 49, 24, 7), new Color(255, 74, 49, 32), new Color(255, 176, 151, 134))},
-            {MaterialCategory.Elements, new ColorPair(new Color(255, 91, 46, 183), new Color(255, 116, 71, 208), new Color(255, 218, 173, 255))},
-            {MaterialCategory.EnergySystems, new ColorPair(new Color(255, 51, 24, 216), new Color(255, 76, 49, 241), new Color(255, 178, 151, 255))},
-            {MaterialCategory.Fuels, new ColorPair(new Color(255, 30, 123, 30), new Color(255, 55, 148, 55), new Color(255, 157, 250, 157))},
-            {MaterialCategory.Gases, new ColorPair(new Color(255, 67, 77, 87), new Color(255, 92, 102, 112), new Color(255, 194, 204, 214))},
-            {MaterialCategory.Liquids, new ColorPair(new Color(255, 80, 41, 23), new Color(255, 105, 66, 48), new Color(255, 207, 168, 150))},
-            {MaterialCategory.MedicalEquipment, new ColorPair(new Color(255, 9, 15, 15), new Color(255, 34, 40, 40), new Color(255, 136, 142, 142))},
-            {MaterialCategory.Metals, new ColorPair(new Color(255, 16, 92, 87), new Color(255, 41, 117, 112), new Color(255, 143, 219, 214))},
-            {MaterialCategory.Minerals, new ColorPair(new Color(255, 73, 85, 97), new Color(255, 98, 110, 122), new Color(255, 200, 212, 224))},
-            {MaterialCategory.Ores, new ColorPair(new Color(255, 57, 95, 96), new Color(255, 82, 120, 121), new Color(255, 184, 222, 223))},
-            {MaterialCategory.Plastics, new ColorPair(new Color(255, 26, 60, 162), new Color(255, 51, 85, 187), new Color(255, 153, 187, 255))},
-            {MaterialCategory.ShipEngines, new ColorPair(new Color(255, 14, 57, 14), new Color(255, 39, 82, 39), new Color(255, 141, 184, 141))},
-            {MaterialCategory.ShipKits, new ColorPair(new Color(255, 29, 36, 16), new Color(255, 54, 61, 41), new Color(255, 156, 163, 143))},
-            {MaterialCategory.ShipParts, new ColorPair(new Color(255, 59, 45, 148), new Color(255, 84, 70, 173), new Color(255, 186, 172, 255))},
-            {MaterialCategory.ShipShields, new ColorPair(new Color(255, 132, 82, 34), new Color(255, 157, 107, 59), new Color(255, 255, 209, 161))},
-            {MaterialCategory.SoftwareComponents, new ColorPair(new Color(255, 67, 77, 87), new Color(255, 92, 102, 112), new Color(255, 194, 204, 214))},
-            {MaterialCategory.SoftwareSystems, new ColorPair(new Color(255, 26, 60, 162), new Color(255, 51, 85, 187), new Color(255, 153, 187, 255))},
-            {MaterialCategory.SoftwareTools, new ColorPair(new Color(255, 6, 6, 29), new Color(255, 31, 31, 54), new Color(255, 133, 133, 156))},
-            {MaterialCategory.Textiles, new ColorPair(new Color(255, 80, 41, 23), new Color(255, 105, 66, 48), new Color(255, 207, 168, 150))},
-            {MaterialCategory.UnitPrefabs, new ColorPair(new Color(255, 59, 45, 148), new Color(255, 84, 70, 173), new Color(255, 186, 172, 255))},
-            {MaterialCategory.Utility, new ColorPair(new Color(255, 54, 54, 54), new Color(255, 79, 79, 79), new Color(255, 181, 181, 181))},
+            { MaterialCategory.AgriculturalProducts, new ColorPair(92, 18, 18, 117, 43, 43, 219, 145, 145) },
+            { MaterialCategory.Alloys, new ColorPair(123, 76, 30, 148, 101, 55, 250, 203, 157) },
+            { MaterialCategory.Chemicals, new ColorPair(183, 46, 91, 208, 71, 116, 255, 173, 218) },
+            { MaterialCategory.ConstructionMaterials, new ColorPair(24, 91, 211, 49, 116, 236, 151, 218, 255) },
+            { MaterialCategory.ConstructionParts, new ColorPair(41, 77, 107, 66, 102, 132, 168, 204, 234) },
+            { MaterialCategory.ConstructionPrefabs, new ColorPair(15, 30, 98, 40, 55, 123, 142, 157, 225) },
+            { MaterialCategory.ConsumablesBasic, new ColorPair(149, 46, 46, 174, 71, 71, 255, 173, 173) },
+            { MaterialCategory.ConsumablesLuxury, new ColorPair(136, 24, 39, 161, 49, 64, 255, 151, 166) },
+            { MaterialCategory.Drones, new ColorPair(140, 52, 18, 165, 77, 43, 255, 179, 145) },
+            { MaterialCategory.ElectronicDevices, new ColorPair(86, 20, 147, 111, 45, 172, 213, 147, 255) },
+            { MaterialCategory.ElectronicParts, new ColorPair(91, 46, 183, 116, 71, 208, 218, 173, 255) },
+            { MaterialCategory.ElectronicPieces, new ColorPair(119, 82, 189, 144, 107, 214, 246, 209, 255) },
+            { MaterialCategory.ElectronicSystems, new ColorPair(51, 26, 76, 76, 51, 101, 178, 153, 203) },
+            { MaterialCategory.Elements, new ColorPair(61, 46, 31, 86, 71, 57, 188, 173, 159) },
+            { MaterialCategory.EnergySystems, new ColorPair(21, 62, 39, 46, 87, 64, 148, 189, 166) },
+            { MaterialCategory.Fuels, new ColorPair(30, 123, 30, 55, 148, 55, 157, 250, 157) },
+            { MaterialCategory.Gases, new ColorPair(0, 105, 107, 25, 130, 132, 127, 232, 234) },
+            { MaterialCategory.Liquids, new ColorPair(114, 164, 202, 139, 189, 227, 241, 255, 255) },
+            { MaterialCategory.MedicalEquipment, new ColorPair(85, 170, 85, 110, 195, 110, 212, 255, 212) },
+            { MaterialCategory.Metals, new ColorPair(54, 54, 54, 79, 79, 79, 181, 181, 181) },
+            { MaterialCategory.Minerals, new ColorPair(153, 113, 73, 178, 138, 98, 255, 240, 200) },
+            { MaterialCategory.Ores, new ColorPair(82, 87, 97, 107, 112, 122, 209, 214, 224) },
+            { MaterialCategory.Plastics, new ColorPair(121, 31, 60, 146, 56, 85, 248, 158, 187) },
+            { MaterialCategory.ShipEngines, new ColorPair(153, 41, 0, 178, 66, 25, 255, 168, 127) },
+            { MaterialCategory.ShipKits, new ColorPair(153, 84, 9, 178, 109, 25, 255, 211, 127) },
+            { MaterialCategory.ShipParts, new ColorPair(153, 99, 0, 178, 124, 25, 255, 226, 127) },
+            { MaterialCategory.ShipShields, new ColorPair(224, 131, 0, 249, 156, 25, 255, 255, 127) },
+            { MaterialCategory.SoftwareComponents, new ColorPair(136, 121, 47, 161, 146, 72, 255, 248, 174) },
+            { MaterialCategory.SoftwareSystems, new ColorPair(60, 53, 5, 85, 78, 30, 187, 180, 132) },
+            { MaterialCategory.SoftwareTools, new ColorPair(129, 98, 19, 154, 123, 44, 255, 225, 146) },
+            { MaterialCategory.Textiles, new ColorPair(82, 90, 33, 107, 115, 58, 209, 217, 160) },
+            { MaterialCategory.UnitPrefabs, new ColorPair(29, 27, 28, 54, 52, 53, 156, 154, 155) },
+            { MaterialCategory.Utility, new ColorPair(161, 148, 136, 186, 173, 161, 255, 255, 255) },
         };
         
-        public static readonly ColorPair BuildingColorPair = new(new Color(255, 52, 140, 160), new Color(255, 77, 165, 185), new Color(255, 179, 255, 255));
+        public static readonly ColorPair BuildingColorPair = new(52, 140, 160, 77, 165, 185, 179, 255, 255);
 
         private readonly Border _frame; 
         private readonly Border _numberFrame; 

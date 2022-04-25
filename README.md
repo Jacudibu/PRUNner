@@ -3,6 +3,9 @@ PRUNner is a cross-platform standalone tool supposed to ease up base planning on
 
 You can grab the latest version over at our [Releases](https://github.com/Jacudibu/PRUNner/releases): there's a .zip file for every major platform, just unpack and run the PRUNner file inside.
 
+### Always up to date!
+The App polls all relevant data from the wonderful [FIO](https://fio.fnar.net/), which means even if there hasn't been an update to the app for quite some time, you can easily update the data yourself! In case you notice any missing recipes or planets, just delete the FIOCache folder before launching the app in order to force an update. I might eventually add menu buttons to do that. 🙃
+
 ### Screenshots
 First, let's find a planet to settle!
 ![PlanetFinder](https://user-images.githubusercontent.com/9059719/125678028-648e6575-e968-4440-9f01-e918028c9174.png)

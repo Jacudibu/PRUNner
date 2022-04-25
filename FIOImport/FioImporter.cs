@@ -136,12 +136,13 @@ namespace FIOImport
 
         private static FioPlanet[] LoadFromCacheOrDownloadPlanetData()
         {
-            string allPlanetsJsonFile = $"{PlanetFolder}AllPlanets.json";
+            var allPlanetsJsonFile = $"{PlanetFolder}AllPlanets.json";
             if (File.Exists(allPlanetsJsonFile))
             {
                 return LoadPlanetData(allPlanetsJsonFile);
             }
 
+            Directory.CreateDirectory(PlanetFolder);
             return DownloadAndCache<FioPlanet[]>("https://rest.fnar.net/planet/allplanets/full", allPlanetsJsonFile)!;
         }
 
@@ -178,7 +179,7 @@ namespace FIOImport
                 catch (HttpRequestException e)
                 {
                     tries++;
-                    Logger.Error(e, "Errror whilst downlading data – waiting a bit, then retrying [{Tries}/{MaximumRetries}]", tries, MaximumRetries);
+                    Logger.Error(e, "Error whilst downlading data – waiting a bit, then retrying [{Tries}/{MaximumRetries}]", tries, MaximumRetries);
                     Thread.Sleep(2000);
                 }
             }

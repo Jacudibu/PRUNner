@@ -108,6 +108,8 @@ namespace PRUNner.Backend.Data
         public int DistanceToBenten { get; }
         public int DistanceToHortus { get; }
         public int DistanceToMoria { get; }
+        public int DistanceToHubur { get; }
+        public int DistanceToArclight { get; }
 
         public PlanetFinderCache(PlanetData planet)
         {
@@ -116,6 +118,8 @@ namespace PRUNner.Backend.Data
             DistanceToBenten = SystemPathFinder.FindShortestPath(planet.System, SystemData.GetOrThrow(Names.Systems.Benten)).Count;
             DistanceToHortus = SystemPathFinder.FindShortestPath(planet.System, SystemData.GetOrThrow(Names.Systems.Hortus)).Count;
             DistanceToMoria = SystemPathFinder.FindShortestPath(planet.System, SystemData.GetOrThrow(Names.Systems.Moria)).Count;
+            DistanceToHubur = SystemPathFinder.FindShortestPath(planet.System, SystemData.GetOrThrow(Names.Systems.Hubur)).Count;
+            DistanceToArclight = SystemPathFinder.FindShortestPath(planet.System, SystemData.GetOrThrow(Names.Systems.Arclight)).Count;
         }
         
         private static string CreateBuildingMaterialString(PlanetData planet)

@@ -145,6 +145,8 @@ namespace PRUNner.App.ViewModels
         public void SortByBentenDistance() => Sort(nameof(SortByBentenDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToBenten);
         public void SortByHortusDistance() => Sort(nameof(SortByHortusDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToHortus);
         public void SortByMoriaDistance() => Sort(nameof(SortByMoriaDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToMoria);
+        public void SortByHuburDistance() => Sort(nameof(SortByHuburDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToHubur);
+        public void SortByArclightDistance() => Sort(nameof(SortByArclightDistance), SortOrder.Ascending, x => x.Planet.PlanetFinderCache.DistanceToArclight);
         public void SortByExtraSystemDistance() => Sort(nameof(SortByExtraSystemDistance), SortOrder.Ascending, x => x.DistanceToExtraSystem);
         public void SortByFertility() => Sort(nameof(SortByFertility), SortOrder.Ascending, x => x.Planet.Fertility);
     }

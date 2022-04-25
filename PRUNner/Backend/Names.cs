@@ -12,6 +12,8 @@ namespace PRUNner.Backend
             public const string Benten = nameof(Benten);
             public const string Hortus = nameof(Hortus);
             public const string Moria = nameof(Moria);
+            public const string Hubur = nameof(Hubur);
+            public const string Arclight = nameof(Arclight);
         }
 
         public static class Planets

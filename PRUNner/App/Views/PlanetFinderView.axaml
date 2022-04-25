@@ -85,6 +85,8 @@
         <Button HorizontalContentAlignment="Center" Width="50" Content="BEN" Command="{Binding SortByBentenDistance}"/>
         <Button HorizontalContentAlignment="Center" Width="50" Content="HRT" Command="{Binding SortByHortusDistance}"/>
         <Button HorizontalContentAlignment="Center" Width="50" Content="MOR" Command="{Binding SortByMoriaDistance}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" Content="HUB" Command="{Binding SortByHuburDistance}"/>
+        <Button HorizontalContentAlignment="Center" Width="50" Content="ARC" Command="{Binding SortByArclightDistance}"/>
         <Button HorizontalContentAlignment="Center" Width="50" Content="{Binding OptionalDataExtraSystemName}" IsVisible="{Binding DisplayOptionalDataExtraSystemName}" Command="{Binding SortByExtraSystemDistance}"/>
         <Button HorizontalContentAlignment="Center" Width="75" Content="Fertility" Command="{Binding SortByFertility}"/>
         <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="50" Text="Res1"/>
@@ -107,6 +109,8 @@
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToBenten}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToHortus}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToMoria}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToHubur}"/>
+            <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Planet.PlanetFinderCache.DistanceToArclight}"/>
             <TextBlock Width="50" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding DistanceToExtraSystem}" IsVisible="{Binding DisplayDistanceToExtraSystem}"/>
             <Panel>
                 <Rectangle Height="5" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="{Binding Planet.Fertility, Converter={StaticResource FertilityToWidth}}" Fill="{Binding Planet.Fertility, Converter={StaticResource FertilityToColor}}"/>

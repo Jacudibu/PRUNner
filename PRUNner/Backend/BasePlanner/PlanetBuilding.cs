@@ -28,6 +28,7 @@ namespace PRUNner.Backend.BasePlanner
         public ImmutableArray<MaterialIO> BuildingMaterials { get; init; } 
         
         public double Efficiency { get; private set; }
+        public double SetEfficiency { get; private set; }
         public double BuildingCost { get; private set; }
         public double DailyCostForRepairs { get; private set; }
 
@@ -74,6 +75,7 @@ namespace PRUNner.Backend.BasePlanner
 
             this.WhenPropertyChanged(x => x.Amount).Subscribe(value => RecalculateBuildingCosts());
             RecalculateBuildingCosts();
+           
         }
 
         private void RecalculateBuildingCosts()
@@ -132,7 +134,7 @@ namespace PRUNner.Backend.BasePlanner
         }
 
         public void UpdateProductionEfficiency(WorkforceSatisfaction workforceSatisfaction,
-            ExpertAllocation expertAllocation, CoGCBonusType cogcBonusType, Headquarters hq)
+            ExpertAllocation expertAllocation, CoGCBonusType cogcBonusType, Headquarters hq, double setEfficiency)
         {
             var expertBonus = expertAllocation.GetEfficiencyBonus(Building.Expertise);
             var hqBonus = hq.GetFactionEfficiencyFactorForIndustry(Building.Expertise);
@@ -145,6 +147,10 @@ namespace PRUNner.Backend.BasePlanner
             satisfaction += workforceSatisfaction.Scientists * Building.WorkforceRatio.Scientists;
 
             Efficiency = satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * _fertilityBonus;
+            if (double.IsFinite(setEfficiency) && setEfficiency > 0)
+            {
+                Efficiency = setEfficiency/100;
+            }
             if (AvailableRecipes == null)
             {
                 return;

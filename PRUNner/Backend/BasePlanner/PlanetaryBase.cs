@@ -33,6 +33,7 @@ namespace PRUNner.Backend.BasePlanner
         
         public ProvidedConsumables ProvidedConsumables { get; } = new();
         [Reactive] public CoGCBonusType CoGCBonus { get; set; } = CoGCBonusType.None;
+        [Reactive] public SetEfficiency SetEfficiency { get; set; }
         
         public int AreaTotal { get; } = Constants.BaseArea;
         [Reactive] public int AreaDeveloped { get; private set; }
@@ -79,6 +80,7 @@ namespace PRUNner.Backend.BasePlanner
 
             WorkforceSatisfaction.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
             Empire.Headquarters.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
+
             
             // TODO: Figure out why this here does not work, then use Observable.Merge instead of subscribing a dozen times.
             // ExpertAllocation.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
@@ -107,7 +109,7 @@ namespace PRUNner.Backend.BasePlanner
             
             foreach (var building in ProductionBuildings)
             {
-                building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, CoGCBonus, Empire.Headquarters);
+                building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, CoGCBonus, Empire.Headquarters, building.SetEfficiency);
             }
             
             OnProductionChange();
@@ -119,7 +121,8 @@ namespace PRUNner.Backend.BasePlanner
             if (addedBuilding == null)
             {
                 addedBuilding = PlanetBuilding.FromProductionBuilding(this, Planet, building);
-                addedBuilding.Changed.Subscribe(_ => OnBuildingChange());
+                addedBuilding.Changed.Subscribe(_ => { OnBuildingChange(); });
+                
                 addedBuilding.OnProductionUpdate += OnProductionChange;
                 ProductionBuildings.Add(addedBuilding);
             }
@@ -143,12 +146,15 @@ namespace PRUNner.Backend.BasePlanner
             ProductionTable.Update(ProductionBuildings);
 
             RecalculateProfits();
-            
+
+
             VolumeIn = ProductionTable.Inputs.Sum(x => x.Volume);
             WeightIn = ProductionTable.Inputs.Sum(x => x.Weigth);
             
             VolumeOut = ProductionTable.Outputs.Sum(x => x.Volume);
             WeightOut = ProductionTable.Outputs.Sum(x => x.Weigth);
+
+
         }
 
         private void RecalculateWorkforce()
@@ -239,5 +245,9 @@ namespace PRUNner.Backend.BasePlanner
 
             ReturnOfInvestment = ColonyCosts / NetProfit;
         }
+    }
+
+    public class SetEfficiency
+    {
     }
 }

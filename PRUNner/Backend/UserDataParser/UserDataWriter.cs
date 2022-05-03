@@ -140,6 +140,7 @@ namespace PRUNner.Backend.UserDataParser
                 var buildingObject = new JObject();
                 buildingObject.Add(nameof(PlanetBuilding.Building), building.Building.Ticker);
                 buildingObject.Add(nameof(PlanetBuilding.Amount), building.Amount);
+                buildingObject.Add(nameof(PlanetBuilding.SetEfficiency), building.SetEfficiency);
 
                 var productionArray = new JArray();
                 foreach (var production in building.Production)

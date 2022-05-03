@@ -171,6 +171,7 @@ namespace PRUNner.Backend.UserDataParser
             {
                 var building = planetaryBase.AddBuilding(BuildingData.GetOrThrow(buildingObject.GetValue(nameof(PlanetBuilding.Building))?.ToObject<string>() ?? ""));
                 building.Amount = buildingObject.GetValue(nameof(PlanetBuilding.Amount))?.ToObject<int>() ?? 0;
+                building.SetEfficiency = buildingObject.GetValue(nameof(PlanetBuilding.SetEfficiency))?.ToObject<double>() ?? 0;
 
                 building.Production.Clear();
                 foreach (var productionObject in buildingObject.GetValue(nameof(PlanetBuilding.Production))!.Cast<JObject>())

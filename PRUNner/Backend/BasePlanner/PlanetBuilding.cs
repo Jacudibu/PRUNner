@@ -28,7 +28,7 @@ namespace PRUNner.Backend.BasePlanner
         public ImmutableArray<MaterialIO> BuildingMaterials { get; init; } 
         
         public double Efficiency { get; private set; }
-        public double SetEfficiency { get; private set; }
+        [Reactive] public double SetEfficiency { get; set; }
         public double BuildingCost { get; private set; }
         public double DailyCostForRepairs { get; private set; }
 

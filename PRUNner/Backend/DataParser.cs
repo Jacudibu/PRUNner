@@ -47,7 +47,7 @@ namespace PRUNner.Backend
 
         public static void UpdatePriceData()
         {
-            LoadPriceData(FioImporter.DownloadPrices());
+            LoadPriceData(FioPriceDownloader.Instance.DownloadAndCache());
             Logger.Info("Price data has been updated!");
         }
         

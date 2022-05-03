@@ -23,13 +23,14 @@ namespace FIOImport
         private const string AllMaterialsPath = CacheFolder + "allMaterials.json";
         private const string AllSystemsPath = CacheFolder + "systemStars.json";
         private const string AllPlanetIdentifiersPath = CacheFolder + "allPlanetIdentifiers.json";
+        private const string AllExchangesPath = CacheFolder + "comexexchanges.json";
         private const string RainPricesPath = CacheFolder + "rainPrices.json";
 
         public static RawData LoadAllFromCache()
         {
             if (Directory.Exists(CacheFolder))
             {
-                return new RawData(LoadBuildings(), LoadMaterials(), LoadAllPlanetData(), LoadSystems(), LoadPrices());
+                return new RawData(LoadBuildings(), LoadMaterials(), LoadAllPlanetData(), LoadSystems(), LoadCommodityExchanges(), LoadPrices());
             }
 
             Logger.Info("Unable to find Cache folder, downloading all data from fio instead. This might take a little while.");
@@ -41,7 +42,7 @@ namespace FIOImport
             Directory.CreateDirectory(CacheFolder);
             Directory.CreateDirectory(PlanetFolder);
 
-            return new RawData(DownloadBuildings(), DownloadMaterials(), LoadAllPlanetData(), DownloadSystems(), DownloadPrices());
+            return new RawData(DownloadBuildings(), DownloadMaterials(), LoadAllPlanetData(), DownloadSystems(), LoadCommodityExchanges(), DownloadPrices());
         }
 
         private static FioBuilding[] LoadBuildings()
@@ -61,7 +62,7 @@ namespace FIOImport
             Logger.Info("Downloading Building data from FIO...");
             return DownloadAndCache<FioBuilding[]>("https://rest.fnar.net/building/allbuildings", AllBuildingsPath)!;
         }
-
+        
         private static FioMaterial[] LoadMaterials()
         {
             if (!File.Exists(AllMaterialsPath))
@@ -162,6 +163,24 @@ namespace FIOImport
         {
             Logger.Info("Downloading Systems from FIO...");
             return DownloadAndCache<FioSystem[]>("https://rest.fnar.net/systemstars", AllSystemsPath)!;
+        }
+        
+        private static FioCommodityExchange[] LoadCommodityExchanges()
+        {
+            if (!File.Exists(AllExchangesPath))
+            {
+                Logger.Info("Unable to locate cache file for commodity exchanges, downloading instead.");
+                return DownloadCommodityExchanges();
+            }
+
+            Logger.Info("Loading Exchanges...");
+            return LoadFromCache<FioCommodityExchange[]>(AllExchangesPath)!;
+        }
+
+        private static FioCommodityExchange[] DownloadCommodityExchanges()
+        {
+            Logger.Info("Downloading Exchange data from FIO...");
+            return DownloadAndCache<FioCommodityExchange[]>("https://rest.fnar.net/global/comexexchanges", AllExchangesPath)!;
         }
 
         private const int MaximumRetries = 5;

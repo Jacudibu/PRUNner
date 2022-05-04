@@ -140,6 +140,7 @@ namespace PRUNner.Backend.UserDataParser
                 var buildingObject = new JObject();
                 buildingObject.Add(nameof(PlanetBuilding.Building), building.Building.Ticker);
                 buildingObject.Add(nameof(PlanetBuilding.Amount), building.Amount);
+                buildingObject.Add(nameof(PlanetBuilding.AdvancedBuildingConfiguration), WriteAdvancedBuildingConfiguration(building.AdvancedBuildingConfiguration));
 
                 var productionArray = new JArray();
                 foreach (var production in building.Production)
@@ -156,6 +157,17 @@ namespace PRUNner.Backend.UserDataParser
                 result.Add(buildingObject);
             }
 
+            return result;
+        }
+
+        private static JToken WriteAdvancedBuildingConfiguration(AdvancedBuildingConfiguration configuration)
+        {
+            var result = new JObject();
+
+            result.Add(nameof(AdvancedBuildingConfiguration.ProductionLineAge), configuration.ProductionLineAge);
+            result.Add(nameof(AdvancedBuildingConfiguration.UseEfficiencyOverride), configuration.UseEfficiencyOverride);
+            result.Add(nameof(AdvancedBuildingConfiguration.EfficiencyOverride), configuration.EfficiencyOverride);
+            
             return result;
         }
 

@@ -8,7 +8,7 @@ namespace PRUNner.Backend.BasePlanner
     public class AdvancedBuildingConfiguration : ReactiveObject
     {
         private double _productionLineCondition = 100;
-        private double _productionLineAge = 0;
+        private int _productionLineAge = 0;
 
         public double ProductionLineCondition
         {
@@ -20,7 +20,7 @@ namespace PRUNner.Backend.BasePlanner
             }
         }
 
-        public double ProductionLineAge
+        public int ProductionLineAge
         {
             get => _productionLineAge;
             set

@@ -21,7 +21,7 @@ namespace PRUNner.Backend.BasePlanner
 
         [Reactive] public int Amount { get; set; }
 
-        private AdvancedBuildingConfiguration AdvancedBuildingConfiguration { get; } = new();
+        public AdvancedBuildingConfiguration AdvancedBuildingConfiguration { get; } = new();
         private readonly double _fertilityBonus;
 
         public ObservableCollection<PlanetBuildingProductionRecipe>? AvailableRecipes { get; }

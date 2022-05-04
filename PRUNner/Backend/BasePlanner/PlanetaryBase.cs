@@ -40,6 +40,7 @@ namespace PRUNner.Backend.BasePlanner
         [Reactive] public double ProfitPerDay { get; private set; }
         
         [Reactive] public bool IncludeCoreModuleInColonyCosts { get; set; }
+        [Reactive] public bool CorpHQBonus { get; set; }
         [Reactive] public double ColonyCosts { get; private set; }
         [Reactive] public double TotalDailyRepairCosts { get; private set; }
         [Reactive] public double NetProfit { get; private set; }
@@ -93,6 +94,7 @@ namespace PRUNner.Backend.BasePlanner
             ExpertAllocation.ResourceExtraction.Changed.Subscribe(_ => RecalculateBuildingEfficiencies());
 
             this.WhenPropertyChanged(x => x.CoGCBonus).Subscribe(_ => RecalculateBuildingEfficiencies());
+            this.WhenPropertyChanged(x => x.CorpHQBonus).Subscribe(_ => RecalculateBuildingEfficiencies());
             this.WhenPropertyChanged(x => x.IncludeCoreModuleInColonyCosts).Subscribe(_ => RecalculateProfits());
          
             FinishLoading();
@@ -107,7 +109,7 @@ namespace PRUNner.Backend.BasePlanner
             
             foreach (var building in ProductionBuildings)
             {
-                building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, CoGCBonus, Empire.Headquarters);
+                building.UpdateProductionEfficiency(WorkforceSatisfaction, ExpertAllocation, CoGCBonus, Empire.Headquarters, CorpHQBonus);
             }
             
             OnProductionChange();

@@ -136,7 +136,7 @@ namespace PRUNner.Backend.BasePlanner
         }
 
         public void UpdateProductionEfficiency(WorkforceSatisfaction workforceSatisfaction,
-            ExpertAllocation expertAllocation, CoGCBonusType cogcBonusType, Headquarters hq)
+            ExpertAllocation expertAllocation, CoGCBonusType cogcBonusType, Headquarters hq, bool corpHQBonus)
         {
             if (AdvancedBuildingConfiguration.UseEfficiencyOverride)
             {
@@ -147,6 +147,7 @@ namespace PRUNner.Backend.BasePlanner
                 var expertBonus = expertAllocation.GetEfficiencyBonus(Building.Expertise);
                 var hqBonus = hq.GetFactionEfficiencyFactorForIndustry(Building.Expertise);
                 var cogcBonus = GetCoGCBonus(cogcBonusType);
+                var corpBonus = corpHQBonus ? 0.1 : 0;
                 var satisfaction = 0d;
                 satisfaction += workforceSatisfaction.Pioneers * Building.WorkforceRatio.Pioneers;
                 satisfaction += workforceSatisfaction.Settlers * Building.WorkforceRatio.Settlers;
@@ -154,7 +155,7 @@ namespace PRUNner.Backend.BasePlanner
                 satisfaction += workforceSatisfaction.Engineers * Building.WorkforceRatio.Engineers;
                 satisfaction += workforceSatisfaction.Scientists * Building.WorkforceRatio.Scientists;
 
-                Efficiency = satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * (AdvancedBuildingConfiguration.ProductionLineCondition / 100) * _fertilityBonus;
+                Efficiency = satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * (1 + corpBonus) * (AdvancedBuildingConfiguration.ProductionLineCondition / 100) * _fertilityBonus;
             }
 
             if (AvailableRecipes == null)

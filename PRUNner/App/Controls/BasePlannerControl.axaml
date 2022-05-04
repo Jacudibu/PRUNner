@@ -104,11 +104,16 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,20,0,0">
+        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,20,0,0" HorizontalAlignment="Center">
             <TextBlock Text="CoGC Bonus" Classes="h2" HorizontalAlignment="Center" />
             <ComboBox HorizontalAlignment="Center"
                       Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:CoGCBonusType}}}"
                       SelectedItem="{Binding ActiveBase.CoGCBonus}" Width="175" />
+
+			<StackPanel Orientation="Horizontal" Margin="10,5,0,0">
+			    <TextBlock Text="Corp HQ Bonus" VerticalAlignment="Center" Classes="h2" Margin="0,0,30,0" />
+			    <CheckBox VerticalAlignment="Center" IsChecked="{Binding ActiveBase.CorpHQBonus}" ToolTip.Tip="Check if this planet is your Corporation's HQ (+10% Efficiency)"/>
+			</StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,20,0,30">

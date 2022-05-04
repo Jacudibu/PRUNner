@@ -18,10 +18,10 @@ namespace PRUNner.Backend.BasePlanner
     {
         public BuildingData Building { get; }
         public PlanetaryBase PlanetaryBase { get; }
-        
+
         [Reactive] public int Amount { get; set; }
-        [Reactive] public double ProductionLineCondition { get; set; } = 100;
-        
+
+        private AdvancedBuildingConfiguration AdvancedBuildingConfiguration { get; } = new();
         private readonly double _fertilityBonus;
 
         public ObservableCollection<PlanetBuildingProductionRecipe>? AvailableRecipes { get; }
@@ -33,25 +33,17 @@ namespace PRUNner.Backend.BasePlanner
         public double BuildingCost { get; private set; }
         public double DailyCostForRepairs { get; private set; }
 
-        public PlanetBuilding() // This feels like a hack, but otherwise we can't set the Design.DataContext in BuildingRow...
+        public PlanetBuilding()
         {
-            Building = null!;
             PlanetaryBase = null!;
+            Building = null!;
             BuildingMaterials = ImmutableArray<MaterialIO>.Empty;
             _fertilityBonus = 0;
+
+            AdvancedBuildingConfiguration.Changed.Subscribe(_ => this.RaisePropertyChanged(nameof(AdvancedBuildingConfiguration)));
         }
 
-        public static PlanetBuilding FromInfrastructureBuilding(PlanetaryBase planetaryBase, BuildingData building)
-        {
-            return new(planetaryBase, building);
-        }
-        
-        public static PlanetBuilding FromProductionBuilding(PlanetaryBase planetaryBase, PlanetData planet, BuildingData building)
-        {
-            return new(planetaryBase, planet, building);
-        }
-        
-        private PlanetBuilding(PlanetaryBase planetaryBase, BuildingData building)
+        private PlanetBuilding(PlanetaryBase planetaryBase, BuildingData building) : this()
         {
             PlanetaryBase = planetaryBase;
             Building = building;
@@ -76,6 +68,16 @@ namespace PRUNner.Backend.BasePlanner
 
             this.WhenPropertyChanged(x => x.Amount).Subscribe(value => RecalculateBuildingCosts());
             RecalculateBuildingCosts();
+        }
+        
+        public static PlanetBuilding FromInfrastructureBuilding(PlanetaryBase planetaryBase, BuildingData building)
+        {
+            return new(planetaryBase, building);
+        }
+        
+        public static PlanetBuilding FromProductionBuilding(PlanetaryBase planetaryBase, PlanetData planet, BuildingData building)
+        {
+            return new(planetaryBase, planet, building);
         }
 
         private void RecalculateBuildingCosts()
@@ -136,17 +138,25 @@ namespace PRUNner.Backend.BasePlanner
         public void UpdateProductionEfficiency(WorkforceSatisfaction workforceSatisfaction,
             ExpertAllocation expertAllocation, CoGCBonusType cogcBonusType, Headquarters hq)
         {
-            var expertBonus = expertAllocation.GetEfficiencyBonus(Building.Expertise);
-            var hqBonus = hq.GetFactionEfficiencyFactorForIndustry(Building.Expertise);
-            var cogcBonus = GetCoGCBonus(cogcBonusType);
-            var satisfaction = 0d;
-            satisfaction += workforceSatisfaction.Pioneers * Building.WorkforceRatio.Pioneers;
-            satisfaction += workforceSatisfaction.Settlers * Building.WorkforceRatio.Settlers;
-            satisfaction += workforceSatisfaction.Technicians * Building.WorkforceRatio.Technicians;
-            satisfaction += workforceSatisfaction.Engineers * Building.WorkforceRatio.Engineers;
-            satisfaction += workforceSatisfaction.Scientists * Building.WorkforceRatio.Scientists;
+            if (AdvancedBuildingConfiguration.UseEfficiencyOverride)
+            {
+                Efficiency = AdvancedBuildingConfiguration.EfficiencyOverride / 100;
+            }
+            else
+            {
+                var expertBonus = expertAllocation.GetEfficiencyBonus(Building.Expertise);
+                var hqBonus = hq.GetFactionEfficiencyFactorForIndustry(Building.Expertise);
+                var cogcBonus = GetCoGCBonus(cogcBonusType);
+                var satisfaction = 0d;
+                satisfaction += workforceSatisfaction.Pioneers * Building.WorkforceRatio.Pioneers;
+                satisfaction += workforceSatisfaction.Settlers * Building.WorkforceRatio.Settlers;
+                satisfaction += workforceSatisfaction.Technicians * Building.WorkforceRatio.Technicians;
+                satisfaction += workforceSatisfaction.Engineers * Building.WorkforceRatio.Engineers;
+                satisfaction += workforceSatisfaction.Scientists * Building.WorkforceRatio.Scientists;
 
-            Efficiency = satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * (ProductionLineCondition / 100) * _fertilityBonus;
+                Efficiency = satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * (AdvancedBuildingConfiguration.ProductionLineCondition / 100) * _fertilityBonus;
+            }
+
             if (AvailableRecipes == null)
             {
                 return;

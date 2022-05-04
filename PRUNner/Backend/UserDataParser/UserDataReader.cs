@@ -172,6 +172,8 @@ namespace PRUNner.Backend.UserDataParser
                 var building = planetaryBase.AddBuilding(BuildingData.GetOrThrow(buildingObject.GetValue(nameof(PlanetBuilding.Building))?.ToObject<string>() ?? ""));
                 building.Amount = buildingObject.GetValue(nameof(PlanetBuilding.Amount))?.ToObject<int>() ?? 0;
 
+                ReadAdvancedBuildingConfiguration(building, buildingObject.GetValue(nameof(PlanetBuilding.AdvancedBuildingConfiguration)));
+                
                 building.Production.Clear();
                 foreach (var productionObject in buildingObject.GetValue(nameof(PlanetBuilding.Production))!.Cast<JObject>())
                 {
@@ -182,6 +184,18 @@ namespace PRUNner.Backend.UserDataParser
                     production.ActiveRecipe = building.AvailableRecipes!.SingleOrDefault(x => x.RecipeName.Equals(recipeName));
                 }
             }
+        }
+
+        private static void ReadAdvancedBuildingConfiguration(PlanetBuilding building, JToken? config)
+        {
+            if (config == null)
+            {
+                return;
+            }
+
+            building.AdvancedBuildingConfiguration.ProductionLineAge = config[nameof(AdvancedBuildingConfiguration.ProductionLineAge)]?.ToObject<int>() ?? 0;
+            building.AdvancedBuildingConfiguration.UseEfficiencyOverride = config[nameof(AdvancedBuildingConfiguration.UseEfficiencyOverride)]?.ToObject<bool>() ?? false;
+            building.AdvancedBuildingConfiguration.EfficiencyOverride = config[nameof(AdvancedBuildingConfiguration.EfficiencyOverride)]?.ToObject<double>() ?? 100;
         }
 
         private static void ReadConsumableData(JObject jObject, ProvidedConsumables providedConsumables)

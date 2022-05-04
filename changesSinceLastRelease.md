@@ -1,0 +1,2 @@
+- Added advanced building configuration settings: Press the gear-wheel button next to a building inside the base planner to set it's age to adjust production line degradation, or set a completely custom efficiency override.
+- Reworked & optimized how FIO Caching works internally

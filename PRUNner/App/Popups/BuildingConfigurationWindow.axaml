@@ -18,10 +18,17 @@
                 <TextBlock Text="Advanced Configuration" VerticalAlignment="Center" Classes="h2" Margin="5, 0, 0, 0"/>
             </StackPanel>
             
-            <StackPanel Orientation="Horizontal">
-                <ToolTip.Tip>The condition of your production line decreases non-linearly based on your building's age, and bottoms out at ~33% after 200 days.</ToolTip.Tip>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <ToolTip.Tip>The condition of your production line decreases non-linearly based on your building's average age, and bottoms out at ~33% after 200 days.</ToolTip.Tip>
                 <TextBlock Text="Production Line Condition: " VerticalAlignment="Center" />
-                <NumericUpDown Classes="compact" Value="{Binding ProductionLineCondition}"/>
+                <NumericUpDown Classes="compact" Value="{Binding AdvancedBuildingConfiguration.ProductionLineCondition}"/>
+                <TextBlock Text="%" VerticalAlignment="Center" />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <ToolTip.Tip>Hardcode building efficiency to this value. This will cause all other factors (hq, experts, fertility...) to be ignored. Useful if you want to experiment a bit, or some production modifiers haven't been implemented yet.</ToolTip.Tip>
+                <CheckBox IsChecked="{Binding AdvancedBuildingConfiguration.UseEfficiencyOverride}">Use Efficiency Override:</CheckBox>
+                <NumericUpDown Classes="compact" Value="{Binding AdvancedBuildingConfiguration.EfficiencyOverride}" Margin="5, 0, 0, 0"/>
                 <TextBlock Text="%" VerticalAlignment="Center" />
             </StackPanel>
         </StackPanel>

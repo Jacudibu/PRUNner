@@ -15,6 +15,8 @@ namespace PRUNner.App.Popups
 
             Deactivated += OnDeactivated;
             Closing += OnClosing;
+
+            App.MainWindow.Closed += OnMainWindowClosed;
         }
 
         private void OnClosing(object? sender, CancelEventArgs e)

@@ -40,7 +40,7 @@ namespace PRUNner.App.ViewModels
         private List<PlanetFinderSearchResult> _allResults = new();
         [Reactive] public IEnumerable<PlanetFinderSearchResult> CurrentlyShownSearchResults { get; private set; } = new List<PlanetFinderSearchResult>();
 
-        public int ItemsPerPage { get; set; } = 15;
+        public int ItemsPerPage { get; set; } = 40;
 
         public void Search()
         {

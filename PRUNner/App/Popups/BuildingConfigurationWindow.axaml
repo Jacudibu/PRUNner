@@ -1,0 +1,30 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
+        xmlns:controls="clr-namespace:PRUNner.App.Controls"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="200"
+        x:Class="PRUNner.App.Popups.BuildingConfigurationPopup"
+        Title="BuildingConfigurationWindow">
+    <Design.DataContext>
+        <basePlanner:PlanetBuilding/>
+    </Design.DataContext>
+    
+    <Border BorderThickness="2" BorderBrush="LightGray">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <controls:ItemBoxControl DataContext="{Binding Building}"/>
+                <TextBlock Text="Advanced Configuration" VerticalAlignment="Center" Classes="h2" Margin="5, 0, 0, 0"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <ToolTip.Tip>The condition of your production line decreases non-linearly based on your building's age, and bottoms out at ~33% after 200 days.</ToolTip.Tip>
+                <TextBlock Text="Production Line Condition: " VerticalAlignment="Center" />
+                <NumericUpDown Classes="compact" Value="{Binding ProductionLineCondition}"/>
+                <TextBlock Text="%" VerticalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+    
+</Window>

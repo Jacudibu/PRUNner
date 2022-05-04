@@ -26,6 +26,10 @@
           <DependentUpon>ShoppingCartControl.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="App\Popups\BuildingConfigurationWindow.axaml.cs">
+          <DependentUpon>BuildingConfigurationWindow.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.6" />

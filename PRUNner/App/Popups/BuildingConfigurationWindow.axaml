@@ -28,7 +28,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="10, 0, 0, 0">
                     <TextBlock Text=" ==> Production Line Condition: " VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding AdvancedBuildingConfiguration.ProductionLineCondition}"/>
+                    <TextBlock Text="{Binding AdvancedBuildingConfiguration.ProductionLineCondition, StringFormat={}{0:N2}}"/>
                     <TextBlock Text="%" VerticalAlignment="Center" />
                 </StackPanel>
             </StackPanel>

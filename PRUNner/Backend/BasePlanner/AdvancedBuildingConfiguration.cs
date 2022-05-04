@@ -44,7 +44,13 @@ namespace PRUNner.Backend.BasePlanner
         private const double C = 100.87;
         private void RecalculateConditionBasedOnAge()
         {
-            _productionLineCondition = 100 * ((2d / 3d) / (1 + Math.Exp(0.07156 * (_productionLineAge - C))) + (1d / 3d));
+            _productionLineCondition = _productionLineAge switch
+            {
+                <= 0 => 100,
+                >= 200 => 1d / 3d,
+                _ => 100 * ((2d / 3d) / (1 + Math.Exp(0.07156 * (_productionLineAge - C))) + (1d / 3d))
+            };
+
             this.RaisePropertyChanged(nameof(ProductionLineCondition));
         }
 

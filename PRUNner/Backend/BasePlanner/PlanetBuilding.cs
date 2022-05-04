@@ -20,6 +20,8 @@ namespace PRUNner.Backend.BasePlanner
         public PlanetaryBase PlanetaryBase { get; }
         
         [Reactive] public int Amount { get; set; }
+        [Reactive] public double ProductionLineCondition { get; set; } = 100;
+        
         private readonly double _fertilityBonus;
 
         public ObservableCollection<PlanetBuildingProductionRecipe>? AvailableRecipes { get; }
@@ -144,7 +146,7 @@ namespace PRUNner.Backend.BasePlanner
             satisfaction += workforceSatisfaction.Engineers * Building.WorkforceRatio.Engineers;
             satisfaction += workforceSatisfaction.Scientists * Building.WorkforceRatio.Scientists;
 
-            Efficiency = satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * _fertilityBonus;
+            Efficiency = satisfaction * (1 + expertBonus) * (1 + hqBonus) * (1 + cogcBonus) * (ProductionLineCondition / 100) * _fertilityBonus;
             if (AvailableRecipes == null)
             {
                 return;

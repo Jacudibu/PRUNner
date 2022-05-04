@@ -18,7 +18,7 @@ namespace PRUNner.App.ViewModels
 
         public LastPlanetFinderSearch LastSearch { get; } = new();
 
-        public bool DisplayFertile { get; set; }
+        public bool MustBeFertile { get; set; }
         public bool DisplayRocky { get; set; } = true;
         public bool DisplayGaseous { get; set; }
         public bool DisplayLowGravity { get; set; }
@@ -48,7 +48,7 @@ namespace PRUNner.App.ViewModels
             {
                 ExcludeGaseous = !DisplayGaseous,
                 ExcludeRocky = !DisplayRocky,
-                ExcludeInfertile = DisplayFertile,
+                ExcludeInfertile = MustBeFertile,
                 ExcludeLowGravity = !DisplayLowGravity,
                 ExcludeLowPressure = !DisplayLowPressure,
                 ExcludeLowTemperature = !DisplayLowTemperature,

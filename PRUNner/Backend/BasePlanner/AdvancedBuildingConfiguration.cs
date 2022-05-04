@@ -1,4 +1,5 @@
 using System;
+using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -28,10 +29,18 @@ namespace PRUNner.Backend.BasePlanner
                 RecalculateConditionBasedOnAge();
             }
         }
-
+        
         [Reactive] public bool UseEfficiencyOverride { get; set; }
         [Reactive] public double EfficiencyOverride { get; set; } = 100;
 
+        public bool IsAnyAdvancedConfigurationPresent => UseEfficiencyOverride || _productionLineAge != 0;
+
+        public AdvancedBuildingConfiguration()
+        {
+            this.WhenPropertyChanged(x => x.UseEfficiencyOverride).Subscribe(_ => this.RaisePropertyChanged(nameof(IsAnyAdvancedConfigurationPresent)));
+            this.WhenPropertyChanged(x => x.ProductionLineAge).Subscribe(_ => this.RaisePropertyChanged(nameof(IsAnyAdvancedConfigurationPresent)));
+        }
+        
         private const double C = 100.87;
         private void RecalculateConditionBasedOnAge()
         {

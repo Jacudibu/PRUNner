@@ -97,9 +97,9 @@
                            FontFamily="MonoSpaced" />
 
                 <TextBlock Grid.Row="5" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
-                           TextAlignment="Right" Text="ROI" />
+                           TextAlignment="Right" Text="Payback Period"/>
                 <TextBlock Grid.Row="5" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
-                           TextAlignment="Right" Text="{Binding ActiveBase.ReturnOfInvestment, StringFormat={}{0:N2}}"
+                           TextAlignment="Right" Text="{Binding ActiveBase.PaybackPeriod, StringFormat={}{0:N2} days}"
                            FontFamily="MonoSpaced" />
             </Grid>
         </StackPanel>
@@ -340,7 +340,7 @@
                         <Button Content="AddBuilding" Command="{Binding AddBuilding}" />
                     </StackPanel>
                 </StackPanel>
-                <CheckBox Content="Include Habitation Costs in Recipe ROI" IsEnabled="False" Margin="5, 0,0,0"
+                <CheckBox Content="Include Habitation Costs in Recipe PP" IsEnabled="False" Margin="5, 0,0,0"
                           VerticalAlignment="Bottom" />
                 <StackPanel Orientation="Horizontal" Margin="75,0,0,0" HorizontalAlignment="Right"
                             VerticalAlignment="Center">

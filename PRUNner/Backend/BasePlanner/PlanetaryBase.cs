@@ -43,7 +43,7 @@ namespace PRUNner.Backend.BasePlanner
         [Reactive] public double ColonyCosts { get; private set; }
         [Reactive] public double TotalDailyRepairCosts { get; private set; }
         [Reactive] public double NetProfit { get; private set; }
-        [Reactive] public double ReturnOfInvestment { get; private set; }
+        [Reactive] public double PaybackPeriod { get; private set; }
         
         [Reactive] public double VolumeIn { get; private set; }
         [Reactive] public double VolumeOut { get; private set; }
@@ -237,7 +237,7 @@ namespace PRUNner.Backend.BasePlanner
             TotalDailyRepairCosts = ProductionBuildings.Sum(x => x.DailyCostForRepairs);
             NetProfit = ProfitPerDay - TotalDailyRepairCosts;
 
-            ReturnOfInvestment = ColonyCosts / NetProfit;
+            PaybackPeriod = ColonyCosts / NetProfit;
         }
     }
 }

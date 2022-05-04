@@ -75,9 +75,9 @@
                                             </ItemsControl>
                                         </StackPanel>
                                         <StackPanel Width="45">
-                                            <TextBlock Text="ROI" VerticalAlignment="Center" TextAlignment="Center"/>
+                                            <TextBlock Text="PP" VerticalAlignment="Center" TextAlignment="Center"/>
                                             <TextBlock VerticalAlignment="Center" TextAlignment="Right" 
-                                                       Text="{Binding ReturnOfInvestment, StringFormat={}{0:F1}}"
+                                                       Text="{Binding PaybackPeriod, StringFormat={}{0:F1}}"
                                                        FontFamily="Monospaced"/>
                                         </StackPanel>
                                     </StackPanel>

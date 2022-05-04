@@ -16,7 +16,7 @@ namespace PRUNner.Backend.BasePlanner
         public List<MaterialIO> Inputs { get; }
         public List<MaterialIO> Outputs { get; }
         [Reactive] public string DurationString { get; private set; } = null!;
-        [Reactive] public double ReturnOfInvestment { get; private set; }
+        [Reactive] public double PaybackPeriod { get; private set; }
 
         private double _durationInMilliseconds;
         private readonly double _baseDurationMs;
@@ -99,7 +99,7 @@ namespace PRUNner.Backend.BasePlanner
         {
             if (!IsThereAnyWorkforce())
             {
-                ReturnOfInvestment = double.PositiveInfinity;
+                PaybackPeriod = double.PositiveInfinity;
                 return;
             }
             
@@ -112,15 +112,15 @@ namespace PRUNner.Backend.BasePlanner
             
             if (dailyProfit <= 0)
             {
-                ReturnOfInvestment = double.PositiveInfinity;
+                PaybackPeriod = double.PositiveInfinity;
             }
             else
             {
-                ReturnOfInvestment = Source.BuildingCost / dailyProfit;
+                PaybackPeriod = Source.BuildingCost / dailyProfit;
 
-                if (ReturnOfInvestment < 0)
+                if (PaybackPeriod < 0)
                 {
-                    ReturnOfInvestment = double.PositiveInfinity;
+                    PaybackPeriod = double.PositiveInfinity;
                 }
             }
         }

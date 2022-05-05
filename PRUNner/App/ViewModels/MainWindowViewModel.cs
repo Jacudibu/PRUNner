@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using NLog;
 using NLog.Targets;
+using PRUNner.App.Popups;
 using PRUNner.Backend;
 using PRUNner.Backend.BasePlanner;
 using PRUNner.Backend.Data;
@@ -43,7 +44,18 @@ namespace PRUNner.App.ViewModels
             PlanetFinderSearchResult.OnOpenBasePlanner += PlanetFinderSelectPlanetEvent;
             
             LoadFromDisk();
-            UpdateChecker.CheckForUpdates(GetType().Assembly.GetName().Version);
+        }
+
+        public void CheckForUpdates()
+        {
+            var updateData = UpdateChecker.CheckForUpdates(GetType().Assembly.GetName().Version);
+            
+            if (updateData.UpdateAvailable)
+            {
+                var updatePopup = new UpdateNotificationWindow();
+                updatePopup.DataContext = updateData;
+                updatePopup.ShowDialog(App.MainWindow);
+            }
         }
 
         public void ViewPlanetFinder()

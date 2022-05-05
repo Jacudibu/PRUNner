@@ -34,6 +34,7 @@ namespace PRUNner.App.ViewModels
         
         [Reactive] public bool ShowPaginationAndHeaders { get; set; }
         [Reactive] public bool NoResultsFound { get; set; }
+        [Reactive] public string NoResultsMessage { get; set; } = "Nothing found, let's blame FIO! </3";
         [Reactive] public int CurrentPage { get; set; }
         [Reactive] public int TotalPages { get; set; }
         
@@ -83,7 +84,26 @@ namespace PRUNner.App.ViewModels
             TotalPages = _allResults.Count / ItemsPerPage + 1;
             ShowPaginationAndHeaders = _allResults.Count > 0;
             NoResultsFound = _allResults.Count == 0;
+            if (NoResultsFound)
+            {
+                NoResultsMessage = GetNoResultMessage(filterCriteria);
+            }
             ResetView();
+        }
+
+        private static string GetNoResultMessage(FilterCriteria filter)
+        {
+            if (filter.ExcludeGaseous && filter.ExcludeRocky)
+            {
+                return "Unable to find anything! If you're looking for planets, you'll need to select either a rocky or gaseous surface type (or both).";
+            }
+
+            if (filter.ExcludeRocky && filter.ExcludeInfertile)
+            {
+                return "Nope, nothing! But don't worry, we'd be just as surprised as you if there was a fertile gas giant in this game.";
+            }
+            
+            return "Unable to find any planets matching your filter criteria!";
         }
 
         private void ResetView()

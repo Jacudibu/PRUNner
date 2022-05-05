@@ -149,7 +149,7 @@
     </ItemsControl>
         
     <StackPanel IsVisible="{Binding NoResultsFound}">
-        <TextBlock Text="Nothing found, let's blame FIO! :(" Margin="300, 50"/>
+        <TextBlock Text="{Binding NoResultsMessage}" Margin="300, 50"/>
     </StackPanel>
     
 </StackPanel>

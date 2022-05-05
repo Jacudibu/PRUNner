@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:PRUNner.App.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200"
+        x:Class="PRUNner.App.Popups.UpdateNotification"
+        Title="An Update is available!">
+    
+    <Design.DataContext>
+        <viewModels:UpdateNotificationViewModel />
+    </Design.DataContext>
+    
+    <Border BorderThickness="2" BorderBrush="LightGray">
+        <StackPanel>
+            <TextBlock Text="Hurray, a new version is available!" Classes="h2" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding Release.TagName}" Classes="h1" HorizontalAlignment="Center"/>
+            
+            <Button Command="{Binding OpenReleasePage}" Content="🚀 Update now 🚀" HorizontalAlignment="Center" FontSize="20"/>
+            
+            <Button Command="{Binding CloseWindow}" Content="Close and remind me next time." 
+                    HorizontalAlignment="Center" Margin="0, 20"/>
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <Button Command="{Binding IgnoreAndClose}" Content="Ignore this Update." FontSize="8" HorizontalAlignment="Center"/>
+                <TextBlock Foreground="LightGray" Text="*sad dev noises*" VerticalAlignment="Center" FontSize="8" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+    
+</Window>

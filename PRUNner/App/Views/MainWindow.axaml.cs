@@ -30,7 +30,7 @@ namespace PRUNner.App.Views
         protected override void OnOpened(EventArgs e)
         {
             base.OnOpened(e);
-            MainWindowViewModel.Instance.CheckForUpdates();
+            UpdateNotificationViewModel.CheckForUpdate();
         }
     }
 }

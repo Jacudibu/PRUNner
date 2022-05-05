@@ -25,12 +25,19 @@ namespace PRUNner.App.ViewModels
         public static void CheckForUpdate()
         {
             var updateData = UpdateChecker.CheckForUpdates(MainWindowViewModel.Instance.GetType().Assembly.GetName().Version);
-            if (updateData.UpdateAvailable)
+            if (!updateData.UpdateAvailable || updateData.LatestRelease == null)
             {
-                var viewModel = new UpdateNotificationViewModel();
-                viewModel.Release = updateData.LatestRelease!;
-                viewModel.Open();
+                return;
             }
+
+            if (string.Equals(updateData.LatestRelease!.TagName, GlobalSettings.IgnoreUpdateTag))
+            {
+                return; 
+            }
+
+            var viewModel = new UpdateNotificationViewModel();
+            viewModel.Release = updateData.LatestRelease;
+            viewModel.Open();
         }
         
         public void OpenReleasePage()
@@ -46,6 +53,9 @@ namespace PRUNner.App.ViewModels
 
         public void IgnoreAndClose()
         {
+            GlobalSettings.IgnoreUpdateTag = Release.TagName;
+            MainWindowViewModel.Instance.SaveToDisk();
+            
             CloseWindow();
         }
         

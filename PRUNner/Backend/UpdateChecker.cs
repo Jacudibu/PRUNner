@@ -8,49 +8,49 @@ namespace PRUNner.Backend
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         
-        public static void CheckForUpdates(Version? currentVersion)
+        public static UpdateData CheckForUpdates(Version? currentVersion)
         {
             Logger.Info("Checking for Updates...");
             var client = new GitHubClient(new ProductHeaderValue("PRUNner"));
-            Release latest;
+            Release latestRelease;
             try
             {
                 var response = client.Repository.Release.GetAll("jacudibu", "prunner").Result;
-                latest = response[0];
+                latestRelease = response[0];
             }
             catch (Exception e)
             {
                 Logger.Error(e, "Error whilst checking for updates: " + e);
-                return;
+                return UpdateData.NoUpdate;
             }
             
-            if (latest.TagName == null)
+            if (latestRelease.TagName == null)
             {
                 Logger.Error("Error whilst checking for updates: Version String was null.");
-                return;
+                return UpdateData.NoUpdate;
             }
 
-            var versionString = latest.TagName.Trim('v');
+            var versionString = latestRelease.TagName.Trim('v');
             if (!Version.TryParse(versionString, out var availableVersion))
             {
                 Logger.Error("Error whilst checking for updates: Unable to parse git version string.");
-                return;
+                return UpdateData.NoUpdate;
             }
             
             if (currentVersion == null)
             {
                 Logger.Error("Error whilst checking for updates: PRUNner version was null..");
-                return;
+                return UpdateData.NoUpdate;
             }
 
             if (currentVersion < availableVersion)
             {
                 Logger.Info("A new PRUNner version is available: " + availableVersion.ToString(3));
+                return new UpdateData(latestRelease);
             }
-            else
-            {
-                Logger.Info("PRUNner is up to date!");
-            }
+            
+            Logger.Info("PRUNner is up to date!");
+            return UpdateData.NoUpdate;
         }
     }
 }

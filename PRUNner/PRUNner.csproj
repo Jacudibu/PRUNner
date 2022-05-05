@@ -30,6 +30,10 @@
           <DependentUpon>BuildingConfigurationWindow.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="App\Popups\UpdateNotificationWindow.axaml.cs">
+          <DependentUpon>UpdateNotificationWindow.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.6" />

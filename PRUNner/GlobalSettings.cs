@@ -15,5 +15,7 @@ namespace PRUNner
             PriceDataPollType.NC1Ask,
             PriceDataPollType.MMSell
         };
+        
+        public static string? IgnoreUpdateTag { get; set; }
     }
 }

@@ -31,6 +31,8 @@ namespace PRUNner.Backend.UserDataParser
             {
                 return;
             }
+
+            GlobalSettings.IgnoreUpdateTag = jObject[nameof(GlobalSettings.IgnoreUpdateTag)]?.ToString();
             
             var jArray = (JArray) jObject[nameof(GlobalSettings.PriceDataPreferenceOrder)]!;
 

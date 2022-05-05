@@ -26,6 +26,8 @@ namespace PRUNner.Backend.UserDataParser
         {
             JObject result = new();
 
+            result[nameof(GlobalSettings.IgnoreUpdateTag)] = GlobalSettings.IgnoreUpdateTag;
+            
             var priceDataArray = new JArray();
             foreach (var priceDataPollType in GlobalSettings.PriceDataPreferenceOrder)
             {

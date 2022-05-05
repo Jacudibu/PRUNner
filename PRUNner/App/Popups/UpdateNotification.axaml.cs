@@ -1,10 +1,11 @@
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
 namespace PRUNner.App.Popups
 {
-    public class UpdateNotificationWindow : PopupWindowBase
+    public class UpdateNotification : Window
     {
-        public UpdateNotificationWindow()
+        public UpdateNotification()
         {
             InitializeComponent();
         }

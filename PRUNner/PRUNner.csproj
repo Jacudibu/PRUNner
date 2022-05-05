@@ -30,7 +30,7 @@
           <DependentUpon>BuildingConfigurationWindow.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
-        <Compile Update="App\Popups\UpdateNotificationWindow.axaml.cs">
+        <Compile Update="App\Popups\UpdateNotification.axaml.cs">
           <DependentUpon>UpdateNotificationWindow.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>

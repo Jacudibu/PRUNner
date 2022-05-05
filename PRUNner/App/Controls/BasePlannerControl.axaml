@@ -67,37 +67,49 @@
             <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, 100">
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
-                           TextAlignment="Right" Text="Include CM in costs" />
+                           TextAlignment="Right" Text="Include CM in costs" >
+                    <ToolTip.Tip>Check this if you haven't colonized the planet yet and want to include the costs for that into the colony costs.</ToolTip.Tip>
+                </TextBlock>
                 <CheckBox Grid.Row="0" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
                           HorizontalAlignment="Center" IsChecked="{Binding ActiveBase.IncludeCoreModuleInColonyCosts}" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
-                           TextAlignment="Right" Text="Colony Costs" />
+                           TextAlignment="Right" Text="Colony Costs" >
+                    <ToolTip.Tip>How much the entire base would cost if you where to buy every building material right now.</ToolTip.Tip>
+                </TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
                            TextAlignment="Right" Text="{Binding ActiveBase.ColonyCosts, StringFormat={}{0:N2}}"
                            FontFamily="MonoSpaced" />
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
-                           TextAlignment="Right" Text="Profit/d" />
+                           TextAlignment="Right" Text="Profit/d" >
+                    <ToolTip.Tip>This is how much money this base makes each day after taking input materials and consumables into account!</ToolTip.Tip>
+                </TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
                            TextAlignment="Right" Text="{Binding ActiveBase.ProfitPerDay, StringFormat={}{0:N2}}"
                            FontFamily="MonoSpaced" />
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
-                           TextAlignment="Right" Text="Repair Costs/d" />
+                           TextAlignment="Right" Text="Repair Costs/d" >
+                    <ToolTip.Tip>This is the cost of your daily building degradation. Eventually you'll have to repair your buildings so they remain efficient! There are other tools out there to tell you when the perfect time to repair is.</ToolTip.Tip>
+                </TextBlock>
                 <TextBlock Grid.Row="3" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
                            TextAlignment="Right"
                            Text="{Binding ActiveBase.TotalDailyRepairCosts, StringFormat={}{0:N2}}"
                            FontFamily="MonoSpaced" />
 
                 <TextBlock Grid.Row="4" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
-                           TextAlignment="Right" Text="Net Profit" />
+                           TextAlignment="Right" Text="Net Profit" >
+                    <ToolTip.Tip>Your profit minus the costs.</ToolTip.Tip>
+                </TextBlock>
                 <TextBlock Grid.Row="4" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
                            TextAlignment="Right" Text="{Binding ActiveBase.NetProfit, StringFormat={}{0:N2}}"
                            FontFamily="MonoSpaced" />
 
                 <TextBlock Grid.Row="5" Grid.Column="0" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
-                           TextAlignment="Right" Text="Payback Period"/>
+                           TextAlignment="Right" Text="(PP) Payback Period">
+                    <ToolTip.Tip>How long it will take to make back the costs of this whole base.</ToolTip.Tip>
+                </TextBlock>
                 <TextBlock Grid.Row="5" Grid.Column="1" Margin="{StaticResource CellMargin}" VerticalAlignment="Center"
                            TextAlignment="Right" Text="{Binding ActiveBase.PaybackPeriod, StringFormat={}{0:N2} days}"
                            FontFamily="MonoSpaced" />
@@ -105,14 +117,18 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,20,0,0" HorizontalAlignment="Center">
-            <TextBlock Text="CoGC Bonus" Classes="h2" HorizontalAlignment="Center" />
-            <ComboBox HorizontalAlignment="Center"
-                      Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:CoGCBonusType}}}"
-                      SelectedItem="{Binding ActiveBase.CoGCBonus}" Width="175" />
-
+            <StackPanel>
+                <ToolTip.Tip>If your planet has a Chamber of Global Commerce, you can select the active bonus here.</ToolTip.Tip>
+                <TextBlock Text="CoGC Bonus" Classes="h2" HorizontalAlignment="Center" />
+                <ComboBox HorizontalAlignment="Center"
+                          Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:CoGCBonusType}}}"
+                          SelectedItem="{Binding ActiveBase.CoGCBonus}" Width="175" />
+            </StackPanel>
+            
 			<StackPanel Orientation="Horizontal" Margin="10,5,0,0">
-			    <TextBlock Text="Corp HQ Bonus" VerticalAlignment="Center" Classes="h2" Margin="0,0,30,0" />
-			    <CheckBox VerticalAlignment="Center" IsChecked="{Binding ActiveBase.CorpHQBonus}" ToolTip.Tip="Check if this planet is your Corporation's HQ (+10% Efficiency)"/>
+                <ToolTip.Tip>If your corporation's HQ is on this planet, you'll gain a 10% efficiency bonus.</ToolTip.Tip>
+                <TextBlock Text="Corp HQ Bonus" VerticalAlignment="Center" Classes="h2" Margin="0,0,30,0" />
+			    <CheckBox VerticalAlignment="Center" IsChecked="{Binding ActiveBase.CorpHQBonus}"/>
 			</StackPanel>
         </StackPanel>
 

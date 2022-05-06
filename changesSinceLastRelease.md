@@ -1,5 +1,0 @@
-- Added advanced building configuration settings: Press the gear-wheel button next to a building inside the base planner to set it's age to adjust production line degradation, or set a completely custom efficiency override.
-- You can now select to receive corporation HQ bonuses in your bases (thanks to NorseFTX!)
-- Reworked & optimized how FIO Caching works internally
-- Renamed ROI to PP (Payback Period), as that's the accurate term for it.
-- If an update is available, there'll now be a proper notification window. There's also a button to disable it in case you don't want to update to the new version.

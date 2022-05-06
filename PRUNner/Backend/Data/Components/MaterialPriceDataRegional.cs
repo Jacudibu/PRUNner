@@ -1,3 +1,6 @@
+using System;
+using FIOImport.Pocos;
+using PRUNner.Backend.Enums;
 using ReactiveUI;
 
 namespace PRUNner.Backend.Data.Components
@@ -7,12 +10,30 @@ namespace PRUNner.Backend.Data.Components
         public double Average { get; private set; }
         public double? Ask { get; private set; }
         public double? Bid { get; private set; }
+        public double? MMBuy { get; private set; }
+        public double? MMSell { get; private set; }
 
-        internal void Update(double average, double? ask, double? bid)
+        public void Update(FioExchangeData exchangeData)
         {
-            Average = average;
-            Ask = ask;
-            Bid = bid;
+            MMBuy = exchangeData.MMBuy;
+            MMSell = exchangeData.MMSell;
+
+            Ask = exchangeData.Ask;
+            Average = exchangeData.PriceAverage;
+            Bid = exchangeData.Bid;
+        }
+
+        public double? Get(ExchangePriceType configPriceType)
+        {
+            return configPriceType switch
+            {
+                ExchangePriceType.Ask => Ask,
+                ExchangePriceType.Average => Average,
+                ExchangePriceType.Bid => Bid,
+                ExchangePriceType.MMBuy => MMBuy,
+                ExchangePriceType.MMSell => MMSell,
+                _ => throw new ArgumentOutOfRangeException(nameof(configPriceType), configPriceType, null)
+            };
         }
     }
 }

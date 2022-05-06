@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using PRUNner.Backend.BasePlanner;
 using PRUNner.Backend.BasePlanner.ShoppingCart;
 using PRUNner.Backend.Data;
+using PRUNner.Backend.Data.Components;
 using PRUNner.Backend.Enums;
 
 namespace PRUNner.Backend.UserDataParser
@@ -46,13 +47,12 @@ namespace PRUNner.Backend.UserDataParser
                 
                 if (element.Equals("Custom"))
                 { // version 0.2.1 and below
-                    GlobalSettings.PriceDataPreferenceOrder.Add(PriceDataPollType.PlanetOverrides);
-                    GlobalSettings.PriceDataPreferenceOrder.Add(PriceDataPollType.EmpireOverrides);
+                    GlobalSettings.PriceDataPreferenceOrder.Add(MaterialPriceDataQueryElement.PlanetOverrides);
+                    GlobalSettings.PriceDataPreferenceOrder.Add(MaterialPriceDataQueryElement.EmpireOverrides);
                 }
                 else
                 {
-                    var value = Enum.Parse<PriceDataPollType>(element);
-                    GlobalSettings.PriceDataPreferenceOrder.Add(value);
+                    GlobalSettings.PriceDataPreferenceOrder.Add(MaterialPriceDataQueryElement.FromString(element));
                 }
             }
         }

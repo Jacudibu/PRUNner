@@ -18,7 +18,7 @@ namespace FIOImport
                     FioPlanetDownloader.Instance.LoadFromCacheOrDownload(), 
                     FioSystemDownloader.Instance.LoadFromCacheOrDownload(),
                     FioCommodityExchangeDownloader.Instance.LoadFromCacheOrDownload(),
-                    FioPriceDownloader.Instance.LoadFromCacheOrDownload());
+                    FioExchangeDataDownloader.Instance.LoadFromCacheOrDownload());
             }
 
             Logger.Info("Unable to find Cache folder, downloading all data from fio instead. This might take a little while.");
@@ -34,7 +34,7 @@ namespace FIOImport
                 FioPlanetDownloader.Instance.LoadFromCacheOrDownload(),
                 FioSystemDownloader.Instance.LoadFromCacheOrDownload(),
                 FioCommodityExchangeDownloader.Instance.LoadFromCacheOrDownload(),
-                FioPriceDownloader.Instance.LoadFromCacheOrDownload());
+                FioExchangeDataDownloader.Instance.LoadFromCacheOrDownload());
         }
     }
 }

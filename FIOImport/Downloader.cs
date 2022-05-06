@@ -111,4 +111,11 @@ namespace FIOImport
         protected override string CachePath => "priceData.json";
         protected override string DownloadPath => "https://rest.fnar.net/rain/prices";
     }
+    
+    public class FioExchangeDataDownloader : Downloader<FioExchangeDataDownloader, FioExchangeData>
+    {
+        protected override string DataName => "exchange data";
+        protected override string CachePath => "exchangeData.json";
+        protected override string DownloadPath => "https://rest.fnar.net/exchange/all";
+    }
 }

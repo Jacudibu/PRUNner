@@ -166,10 +166,10 @@ namespace PRUNner.App.Controls
         {
             _tooltipBuilder.Append(materialData.Name);
             _tooltipBuilder.Append(" (min < avg > max)\n");
-            AppendPriceData(_tooltipBuilder, nameof(MaterialPriceData.AI1), materialData.PriceData.AI1);
-            AppendPriceData(_tooltipBuilder, nameof(MaterialPriceData.CI1), materialData.PriceData.CI1);
-            AppendPriceData(_tooltipBuilder, nameof(MaterialPriceData.IC1), materialData.PriceData.IC1);
-            AppendPriceData(_tooltipBuilder, nameof(MaterialPriceData.NC1), materialData.PriceData.NC1);
+            foreach (var (key, value) in materialData.PriceData.ExchangePrices)
+            {
+                AppendPriceData(_tooltipBuilder, key, value);
+            }
             var result = _tooltipBuilder.ToString();
             _tooltipBuilder.Clear();
             return result;
@@ -179,11 +179,11 @@ namespace PRUNner.App.Controls
         {
             sb.Append(exchangeName);
             sb.Append(" – ");
-            sb.Append(priceData.Ask?.ToString("F2") ?? "-");
+            sb.Append(priceData.Ask?.ToString("F2") ?? "none");
             sb.Append(" < ");
             sb.Append(priceData.Average.ToString("F2"));
             sb.Append(" > ");
-            sb.Append(priceData.Bid?.ToString("F2") ?? "-");
+            sb.Append(priceData.Bid?.ToString("F2") ?? "none");
             sb.Append('\n');
         }
         

@@ -12,17 +12,17 @@ namespace FIOImport
         public readonly FioPlanet[] AllPlanets;
         public readonly FioSystem[] AllSystems;
         public readonly FioCommodityExchange[] AllCommodityExchanges;
-        public readonly FioRainPrices[] RainPrices;
+        public readonly FioExchangeData[] AllExchangeData;
         
         internal RawData(FioBuilding[] allBuildings, FioMaterial[] allMaterials, FioPlanet[] allPlanets,
-            FioSystem[] allSystems, FioCommodityExchange[] allCommodityExchanges, FioRainPrices[] rainPrices)
+            FioSystem[] allSystems, FioCommodityExchange[] allCommodityExchanges, FioExchangeData[] allExchangeData)
         {
             AllBuildings = allBuildings;
             AllMaterials = allMaterials;
             AllPlanets = allPlanets;
             AllSystems = allSystems;
             AllCommodityExchanges = allCommodityExchanges;
-            RainPrices = rainPrices;
+            AllExchangeData = allExchangeData;
         }
     }
 }

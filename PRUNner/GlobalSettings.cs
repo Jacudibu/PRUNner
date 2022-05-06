@@ -1,19 +1,20 @@
 using System.Collections.ObjectModel;
+using PRUNner.Backend.Data.Components;
 using PRUNner.Backend.Enums;
 
 namespace PRUNner
 {
     public static class GlobalSettings
     {
-        public static ObservableCollection<PriceDataPollType> PriceDataPreferenceOrder { get; private set; } = new()
+        public static ObservableCollection<MaterialPriceDataQueryElement> PriceDataPreferenceOrder { get; private set; } = new()
         {
-            PriceDataPollType.PlanetOverrides,
-            PriceDataPollType.EmpireOverrides,
-            PriceDataPollType.NC1Bid,
-            PriceDataPollType.NC1Average,
-            PriceDataPollType.MMBuy,
-            PriceDataPollType.NC1Ask,
-            PriceDataPollType.MMSell
+            MaterialPriceDataQueryElement.PlanetOverrides,
+            MaterialPriceDataQueryElement.EmpireOverrides,
+            new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.Bid),
+            new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.Average),
+            new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.MMBuy),
+            new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.Ask),
+            new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.MMSell),
         };
         
         public static string? IgnoreUpdateTag { get; set; }

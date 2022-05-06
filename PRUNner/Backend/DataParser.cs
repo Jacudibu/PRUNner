@@ -42,20 +42,29 @@ namespace PRUNner.Backend
             SystemData.PostProcessData(rawData.AllSystems);
             BuildingData.PostProcessData(rawData.AllBuildings);
             
-            LoadPriceData(rawData.RainPrices);
+            InitializePriceData(rawData.AllCommodityExchanges, rawData.AllExchangeData);
+            UpdatePriceData();
         }
 
         public static void UpdatePriceData()
         {
-            LoadPriceData(FioPriceDownloader.Instance.DownloadAndCache());
+            LoadPriceData(FioExchangeDataDownloader.Instance.DownloadAndCache());
             Logger.Info("Price data has been updated!");
         }
         
-        private static void LoadPriceData(FioRainPrices[] fioPrices)
+        private static void LoadPriceData(FioExchangeData[] allExchangeData)
         {
-            foreach (var price in fioPrices)
+            foreach (var exchangeData in allExchangeData)
             {
-                MaterialData.Get(price.Ticker)?.PriceData.Update(price);
+                MaterialData.Get(exchangeData.MaterialTicker)?.PriceData.Update(exchangeData);
+            }
+        }      
+        
+        private static void InitializePriceData(FioCommodityExchange[] allExchanges, FioExchangeData[] allExchangeData)
+        {
+            foreach (var exchangeData in allExchangeData)
+            {
+                MaterialData.Get(exchangeData.MaterialTicker)?.PriceData.Initialize(allExchanges);
             }
         }
     }

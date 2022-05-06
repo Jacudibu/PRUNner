@@ -1,5 +1,7 @@
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.Linq;
+using PRUNner.Backend.Data;
 using PRUNner.Backend.Data.Components;
 using PRUNner.Backend.Enums;
 
@@ -15,27 +17,24 @@ namespace PRUNner.Backend.BasePlanner
             {
                 MaterialPriceDataQueryElement.PlanetOverrides,
                 MaterialPriceDataQueryElement.EmpireOverrides,
-                new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.Bid),
-                new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.Average),
-                new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.MMBuy),
-                new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.Ask),
-                new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.MMSell),
+                new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, CommodityExchangeData.GetAll().First(), ExchangePriceType.Bid),
+                new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, CommodityExchangeData.GetAll().First(), ExchangePriceType.Average),
+                new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, CommodityExchangeData.GetAll().First(), ExchangePriceType.MMBuy),
+                new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, CommodityExchangeData.GetAll().First(), ExchangePriceType.Ask),
+                new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, CommodityExchangeData.GetAll().First(), ExchangePriceType.MMSell),
             }
         };
 
         public void AddNewElement()
         {
-            PriceDataQueryPreferences.Add(new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, "NC1", ExchangePriceType.Ask));
+            PriceDataQueryPreferences.Add(new MaterialPriceDataQueryElement(PriceDataQueryType.Exchange, CommodityExchangeData.GetAll().First(), ExchangePriceType.Ask));
         }
         
         public void RemoveElement(MaterialPriceDataQueryElement element)
         {
             PriceDataQueryPreferences.Remove(element);
         }
-        
-        public List<string> TemporaryExchangeCodes { get; } = new()
-        {
-            "NC1", "IC1", "AI1"
-        };
+
+        public ImmutableArray<CommodityExchangeData> OrderedExchangeList => CommodityExchangeData.GetAll();
     }
 }

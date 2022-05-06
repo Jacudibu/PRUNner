@@ -20,7 +20,7 @@ namespace PRUNner.Backend.Data.BaseClasses
         
         internal static void PostProcessData(TPoco[] pocos)
         {
-            AllItemsWithoutAliases = AllItems.Values.ToImmutableArray();
+            AllItemsWithoutAliases = AllItems.Values.OrderBy(x => x.Id).ToImmutableArray();
             foreach (var value in AllItemsByPocoId.Values)
             {
                 value.PostProcessData(pocos.Single(x => value.GetFioIdFromPoco(x).Equals(value.FioId)));

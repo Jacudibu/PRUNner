@@ -54,7 +54,7 @@ namespace PRUNner.Backend.Data.Components
             {
                 PriceDataQueryType.EmpireOverrides => empirePriceOverrides?.GetOverrideForTicker(_materialData.Ticker) ?? null,
                 PriceDataQueryType.PlanetOverrides => planetPriceOverrides?.GetOverrideForTicker(_materialData.Ticker) ?? null,
-                PriceDataQueryType.Exchange => ExchangePrices[queryElement.ExchangeCode].Get(queryElement.PriceType),
+                PriceDataQueryType.Exchange => ExchangePrices[queryElement.Exchange.Id].Get(queryElement.PriceType),
                 _ => throw new ArgumentOutOfRangeException(nameof(queryElement.QueryType), queryElement.QueryType, null)
             };
         }

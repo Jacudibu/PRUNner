@@ -60,8 +60,9 @@
 
         <Border BorderThickness="1" BorderBrush="LightGray" Margin="10,0,0,0">
             <StackPanel Orientation="Vertical" Margin="5">
-                <TextBlock Text="Additional Table Data"/>
+                <TextBlock Text="Additional Table Data" HorizontalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal">
+                    <ToolTip.Tip>This will add a sortable colum containing the distance to a specific system. Useful if you want to search for a specific planet or intend to set up camp in a distant region.</ToolTip.Tip>
                     <TextBlock VerticalAlignment="Center" Text="Distance to System: "/>
                     <TextBox Text="{Binding OptionalFinderData.ExtraSystem.SystemName}"/>
                 </StackPanel>

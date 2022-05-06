@@ -55,6 +55,8 @@ namespace PRUNner.Backend.Data.BaseClasses
         {
             return AllItemsWithoutAliases;
         }
+
+        public static ImmutableArray<TData> GetAllProperty => GetAll();
         
         public override string ToString()
         {

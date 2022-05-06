@@ -16,6 +16,7 @@ namespace PRUNner.Backend.BasePlanner
         public readonly Empire Empire;
         public PlanetData Planet { get; }
         public PriceOverrides PriceOverrides { get; } = new();
+        public PriceDataPreferences PriceDataPreferences { get; } = new();
 
         public PlanetaryBaseInfrastructure InfrastructureBuildings { get; }
         public ObservableCollection<PlanetBuilding> ProductionBuildings { get; } = new();
@@ -60,6 +61,9 @@ namespace PRUNner.Backend.BasePlanner
 
             ShoppingCart = new ShoppingCart.ShoppingCart(this);
             PriceOverrides.OnPriceUpdate += OnPriceDataUpdate;
+            
+            PriceDataPreferences.PriceDataQueryPreferences.CollectionChanged += OnPriceDataUpdate;
+            PriceDataPreferences.PropertyChanged += OnPriceDataUpdate;
             
             Empire = empire;
             Planet = planet;
@@ -210,6 +214,11 @@ namespace PRUNner.Backend.BasePlanner
             this.RaisePropertyChanged(nameof(ActiveRecipes));
         }
 
+        private void OnPriceDataUpdate(object? sender, EventArgs e)
+        {
+            OnPriceDataUpdate();
+        }
+        
         public void OnPriceDataUpdate()
         {
             WorkforceUpkeepCosts.Recalculate();

@@ -388,7 +388,12 @@
             </Border>
         </Grid>
 
-        <controls:PriceOverridesControl Grid.Row="0" Grid.Column="4" Grid.RowSpan="4"
-                                        DataContext="{Binding ActiveBase.PriceOverrides}" />
+        <StackPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="4">
+            <StackPanel Margin="0, 0, 0, 10">
+                <ToolTip.Tip>You can set up planet-specific price fetching preferences here. This is optional, and if no prices are found, the app will continue searching for a price using your empire-wide preferences. See the tooltip there for a more detailed explanation.</ToolTip.Tip>
+                <controls:PriceDataPreferenceControl DataContext="{Binding ActiveBase.PriceDataPreferences}"/>
+            </StackPanel>
+            <controls:PriceOverridesControl DataContext="{Binding ActiveBase.PriceOverrides}" />
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -119,6 +119,8 @@ namespace PRUNner.Backend.UserDataParser
             ReadConsumableData((JObject) obj[nameof(PlanetaryBase.ProvidedConsumables)]!, result.ProvidedConsumables);
             ReadPriceOverrides((JArray?) obj[nameof(PlanetaryBase.PriceOverrides)], result.PriceOverrides);
             
+            result.PriceDataPreferences.ParseJson(obj[nameof(PlanetaryBase.PriceDataPreferences)]);
+
             result.FinishLoading();
 
             ReadShoppingCart((JObject?) obj[nameof(PlanetaryBase.ShoppingCart)], result.ShoppingCart);

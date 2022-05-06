@@ -103,8 +103,8 @@ namespace PRUNner.Backend.BasePlanner
                 return;
             }
             
-            var inputPurchasePrice = Inputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire.PriceOverrides, Source.PlanetaryBase.PriceOverrides));
-            var outputSalesPrice = Outputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire.PriceOverrides, Source.PlanetaryBase.PriceOverrides));
+            var inputPurchasePrice = Inputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire, Source.PlanetaryBase));
+            var outputSalesPrice = Outputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire, Source.PlanetaryBase));
             var workforceUpkeepCost = CalculateUpkeepCost();
             
             var runsPerDay = Constants.MsPerDay / _durationInMilliseconds;

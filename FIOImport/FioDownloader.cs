@@ -11,7 +11,7 @@ using NLog;
 
 namespace FIOImport
 {
-    public abstract class Downloader<TInstance, TFioPoco> where TInstance : Downloader<TInstance, TFioPoco>, new()
+    public abstract class FioDownloader<TInstance, TFioPoco> where TInstance : FioDownloader<TInstance, TFioPoco>, new()
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private static readonly HttpClient Client = new();
@@ -70,49 +70,42 @@ namespace FIOImport
         }
     }
 
-    internal class FioMaterialDownloader : Downloader<FioMaterialDownloader, FioMaterial>
+    internal class FioMaterialDownloader : FioDownloader<FioMaterialDownloader, FioMaterial>
     {
         protected override string DataName => "material data";
         protected override string CachePath => "allMaterials.json";
         protected override string DownloadPath => "https://rest.fnar.net/material/allmaterials";
     }
     
-    internal class FioBuildingDownloader : Downloader<FioBuildingDownloader, FioBuilding>
+    internal class FioBuildingDownloader : FioDownloader<FioBuildingDownloader, FioBuilding>
     {
         protected override string DataName => "building data";
         protected override string CachePath => "allBuildings.json";
         protected override string DownloadPath => "https://rest.fnar.net/building/allbuildings";
     }
     
-    internal class FioSystemDownloader : Downloader<FioSystemDownloader, FioSystem>
+    internal class FioSystemDownloader : FioDownloader<FioSystemDownloader, FioSystem>
     {
         protected override string DataName => "system data";
         protected override string CachePath => "allSystems.json";
         protected override string DownloadPath => "https://rest.fnar.net/systemstars";
     }
     
-    internal class FioCommodityExchangeDownloader : Downloader<FioCommodityExchangeDownloader, FioCommodityExchange>
+    internal class FioCommodityExchangeDownloader : FioDownloader<FioCommodityExchangeDownloader, FioCommodityExchangeStation>
     {
         protected override string DataName => "commodity exchange data";
-        protected override string CachePath => "allCommodityExchanges.json";
-        protected override string DownloadPath => "https://rest.fnar.net/global/comexexchanges";
+        protected override string CachePath => "allCommodityExchangeStations.json";
+        protected override string DownloadPath => "https://rest.fnar.net/exchange/station";
     }
 
-    internal class FioPlanetDownloader : Downloader<FioPlanetDownloader, FioPlanet>
+    internal class FioPlanetDownloader : FioDownloader<FioPlanetDownloader, FioPlanet>
     {
         protected override string DataName => "planet data";
         protected override string CachePath => "allPlanets.json";
         protected override string DownloadPath => "https://rest.fnar.net/planet/allplanets/full";
     }
 
-    public class FioPriceDownloader : Downloader<FioPriceDownloader, FioRainPrices>
-    {
-        protected override string DataName => "price data";
-        protected override string CachePath => "priceData.json";
-        protected override string DownloadPath => "https://rest.fnar.net/rain/prices";
-    }
-    
-    public class FioExchangeDataDownloader : Downloader<FioExchangeDataDownloader, FioExchangeData>
+    public class FioExchangeDataDownloader : FioDownloader<FioExchangeDataDownloader, FioExchangeData>
     {
         protected override string DataName => "exchange data";
         protected override string CachePath => "exchangeData.json";

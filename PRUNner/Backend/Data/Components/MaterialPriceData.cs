@@ -16,11 +16,11 @@ namespace PRUNner.Backend.Data.Components
             _materialData = materialData;
         }
 
-        internal void Initialize(FioCommodityExchange[] fioCommodityExchanges)
+        internal void Initialize()
         {
-            foreach (var exchange in fioCommodityExchanges)
+            foreach (var exchange in CommodityExchangeData.GetAll())
             {
-                ExchangePrices[exchange.ExchangeCode] = new MaterialPriceDataRegional();
+                ExchangePrices[exchange.Id] = new MaterialPriceDataRegional();
             }
         }
         

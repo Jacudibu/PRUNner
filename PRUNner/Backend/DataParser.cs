@@ -19,18 +19,24 @@ namespace PRUNner.Backend
                 MaterialData.CreateFrom(material);
             }
 
-            Logger.Info("Parsing Planets");
-            foreach (var planet in rawData.AllPlanets)
-            {
-                PlanetData.CreateFrom(planet);
-            }
-
             Logger.Info("Parsing Systems");
             foreach (var system in rawData.AllSystems)
             {
                 SystemData.CreateFrom(system);
             }
 
+            Logger.Info("Parsing Commodity Exchanges");
+            foreach (var system in rawData.AllCommodityExchanges)
+            {
+                CommodityExchangeData.CreateFrom(system);
+            }
+
+            Logger.Info("Parsing Planets");
+            foreach (var planet in rawData.AllPlanets)
+            {
+                PlanetData.CreateFrom(planet);
+            }
+            
             Logger.Info("Parsing Buildings");
             foreach (var building in rawData.AllBuildings)
             {
@@ -38,8 +44,9 @@ namespace PRUNner.Backend
             }
             
             MaterialData.PostProcessData(rawData.AllMaterials);
-            PlanetData.PostProcessData(rawData.AllPlanets);
             SystemData.PostProcessData(rawData.AllSystems);
+            CommodityExchangeData.PostProcessData(rawData.AllCommodityExchanges);
+            PlanetData.PostProcessData(rawData.AllPlanets);
             BuildingData.PostProcessData(rawData.AllBuildings);
             
             InitializePriceData(rawData.AllCommodityExchanges, rawData.AllExchangeData);
@@ -60,11 +67,11 @@ namespace PRUNner.Backend
             }
         }      
         
-        private static void InitializePriceData(FioCommodityExchange[] allExchanges, FioExchangeData[] allExchangeData)
+        private static void InitializePriceData(FioCommodityExchangeStation[] allExchanges, FioExchangeData[] allExchangeData)
         {
             foreach (var exchangeData in allExchangeData)
             {
-                MaterialData.Get(exchangeData.MaterialTicker)?.PriceData.Initialize(allExchanges);
+                MaterialData.Get(exchangeData.MaterialTicker)?.PriceData.Initialize();
             }
         }
     }

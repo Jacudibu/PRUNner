@@ -11,11 +11,11 @@ namespace FIOImport
         public readonly FioMaterial[] AllMaterials;
         public readonly FioPlanet[] AllPlanets;
         public readonly FioSystem[] AllSystems;
-        public readonly FioCommodityExchange[] AllCommodityExchanges;
+        public readonly FioCommodityExchangeStation[] AllCommodityExchanges;
         public readonly FioExchangeData[] AllExchangeData;
         
         internal RawData(FioBuilding[] allBuildings, FioMaterial[] allMaterials, FioPlanet[] allPlanets,
-            FioSystem[] allSystems, FioCommodityExchange[] allCommodityExchanges, FioExchangeData[] allExchangeData)
+            FioSystem[] allSystems, FioCommodityExchangeStation[] allCommodityExchanges, FioExchangeData[] allExchangeData)
         {
             AllBuildings = allBuildings;
             AllMaterials = allMaterials;

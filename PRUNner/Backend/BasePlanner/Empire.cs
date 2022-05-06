@@ -7,6 +7,7 @@ namespace PRUNner.Backend.BasePlanner
     {
         public Headquarters Headquarters { get; } = new();
         public PriceOverrides PriceOverrides { get; } = new();
+        public PriceDataPreferences PriceDataPreferences { get; set; } = PriceDataPreferences.Default;
         
         public ObservableCollection<PlanetaryBase> PlanetaryBases { get; } = new();
 

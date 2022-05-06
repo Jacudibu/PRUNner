@@ -6,6 +6,7 @@
              Name="PRUNner"
              x:Class="PRUNner.App.App">
     <Application.Resources>
+        <converters:InvertBooleanConverter x:Key="InvertBoolean" />
         <converters:IsNullConverter x:Key="IsNull" />
         <converters:IsNotNullConverter x:Key="IsNotNull" />
         <converters:TextToProductionLinePercentageConverter x:Key="TextToProductionLinePercentage" />

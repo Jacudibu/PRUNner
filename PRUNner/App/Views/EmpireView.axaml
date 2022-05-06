@@ -7,7 +7,6 @@
              xmlns:controls="clr-namespace:PRUNner.App.Controls"
              xmlns:markupExtensions="clr-namespace:PRUNner.App.MarkupExtensions"
              xmlns:enums="clr-namespace:PRUNner.Backend.Enums"
-             xmlns:backend="clr-namespace:PRUNner.Backend"
              mc:Ignorable="d" d:DesignWidth="1800" d:DesignHeight="800"
              x:Class="PRUNner.App.Views.EmpireView">
 
@@ -32,7 +31,10 @@
             </StackPanel>
         </StackPanel>
 
-        <controls:PriceOverridesControl DataContext="{Binding Empire.PriceOverrides}"/>
+        <StackPanel>
+            <controls:PriceDataPreferenceControl DataContext="{Binding Empire.PriceDataPreferences}" Margin="0, 0, 0, 10"/>
+            <controls:PriceOverridesControl DataContext="{Binding Empire.PriceOverrides}"/>
+        </StackPanel>
         
         <Grid DockPanel.Dock="Bottom" RowDefinitions="Auto, *" Margin="0,20,0,0" HorizontalAlignment="Center">
             <StackPanel Grid.Row="0" Orientation="Horizontal">

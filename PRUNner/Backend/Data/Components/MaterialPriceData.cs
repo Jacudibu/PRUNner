@@ -37,14 +37,21 @@ namespace PRUNner.Backend.Data.Components
 
         public double GetPrice(Empire empire, PlanetaryBase? planetaryBase = null)
         {
-            return GetPrice(empire.PriceDataPreferences.PriceDataQueryPreferences, empire.PriceOverrides, planetaryBase?.PriceOverrides);
-        }
-
-        private double GetPrice(IEnumerable<MaterialPriceDataQueryElement> queries, PriceOverrides? empirePriceOverrides, PriceOverrides? planetPriceOverrides)
-        {
-            foreach (var query in queries)
+            if (planetaryBase != null)
             {
-                var result = GetPrice(query, empirePriceOverrides, planetPriceOverrides);
+                foreach (var query in planetaryBase.PriceDataPreferences.PriceDataQueryPreferences)
+                {
+                    var result = GetPrice(query, empire.PriceOverrides, planetaryBase.PriceOverrides);
+                    if (result != null)
+                    {
+                        return (double) result;
+                    }
+                }
+            }
+            
+            foreach (var query in empire.PriceDataPreferences.PriceDataQueryPreferences)
+            {
+                var result = GetPrice(query, empire.PriceOverrides, planetaryBase?.PriceOverrides);
                 if (result != null)
                 {
                     return (double) result;

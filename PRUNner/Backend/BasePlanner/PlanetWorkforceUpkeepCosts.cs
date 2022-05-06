@@ -29,7 +29,7 @@ namespace PRUNner.Backend.BasePlanner
 
         private double Recalculate(WorkforceConsumptionFactors factors)
         {
-            return factors.CalculateCosts(_planetaryBase.ProvidedConsumables, _planetaryBase.Empire.PriceOverrides, _planetaryBase.PriceOverrides);
+            return factors.CalculateCosts(_planetaryBase);
         }
     }
 }

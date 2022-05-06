@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FIOImport.Pocos;
+using PRUNner.Backend.BasePlanner;
 using PRUNner.Backend.Enums;
 using ReactiveUI;
 
@@ -29,11 +30,16 @@ namespace PRUNner.Backend.Data.Components
             ExchangePrices[exchangeData.ExchangeCode].Update(exchangeData);
         }
 
-        public double GetPrice(PriceOverrides? empirePriceOverrides = null, PriceOverrides? planetPriceOverrides = null)
+        public double GetPrice(PlanetaryBase planetaryBase)
         {
-            return GetPrice(GlobalSettings.PriceDataPreferenceOrder, empirePriceOverrides, planetPriceOverrides);
+            return GetPrice(planetaryBase.Empire, planetaryBase);
         }
-        
+
+        public double GetPrice(Empire empire, PlanetaryBase? planetaryBase = null)
+        {
+            return GetPrice(empire.PriceDataPreferences.PriceDataQueryPreferences, empire.PriceOverrides, planetaryBase?.PriceOverrides);
+        }
+
         private double GetPrice(IEnumerable<MaterialPriceDataQueryElement> queries, PriceOverrides? empirePriceOverrides, PriceOverrides? planetPriceOverrides)
         {
             foreach (var query in queries)

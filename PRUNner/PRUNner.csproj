@@ -34,6 +34,10 @@
           <DependentUpon>UpdateNotificationWindow.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="App\Controls\PriceDataPreferenceControl.axaml.cs">
+          <DependentUpon>PriceDataPreferenceControl.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.6" />

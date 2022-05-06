@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:markupExtensions="clr-namespace:PRUNner.App.MarkupExtensions"
+             xmlns:enums="clr-namespace:PRUNner.Backend.Enums"
+             xmlns:components="clr-namespace:PRUNner.Backend.Data.Components"
+             xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="450"
+             x:Class="PRUNner.App.Controls.PriceDataPreferenceControl">
+
+    <Design.DataContext>
+        <basePlanner:PriceDataPreferences />
+    </Design.DataContext>
+    
+    <StackPanel Name="PricePreferences" Width="275">
+        <ToolTip.Tip>The app will use these data points in descending order to determine item prices. MM stands for the automated Market Maker orders.</ToolTip.Tip>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Width="275">
+            <TextBlock Text="Price Data Preferences" VerticalAlignment="Center" HorizontalAlignment="Left" Classes="h2" />
+            <Button Content="+ Add" Command="{Binding AddNewElement}" HorizontalAlignment="Right" />
+        </StackPanel>
+        <ItemsControl Items="{Binding PriceDataQueryPreferences}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" Spacing="2" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="components:MaterialPriceDataQueryElement">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" IsVisible="{Binding RequiresExchange}">
+                            <ComboBox Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:PriceDataQueryType}}}"
+                                      SelectedItem="{Binding QueryType}" Width="75" />
+                        
+                            <ComboBox Items="{Binding ElementName=PricePreferences, Path=DataContext.TemporaryExchangeCodes, FallbackValue={}}" 
+                                      SelectedIndex="{Binding ExchangeCode}" Width="75"/>
+                        
+                            <ComboBox Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:ExchangePriceType}}}"
+                                      SelectedItem="{Binding PriceType}" Width="100" />
+                        </StackPanel>
+                        <StackPanel IsVisible="{Binding RequiresExchange, Converter={StaticResource InvertBoolean}}">
+                            <ComboBox Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:PriceDataQueryType}}}"
+                                      SelectedItem="{Binding QueryType}" Width="250" />
+                        </StackPanel>
+                    
+                    <Button Classes="xButton" Margin="5,0,0,0"
+                            Command="{Binding ElementName=PricePreferences, Path=DataContext.RemoveElement, FallbackValue={}}"
+                            CommandParameter="{Binding .}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+    
+</UserControl>

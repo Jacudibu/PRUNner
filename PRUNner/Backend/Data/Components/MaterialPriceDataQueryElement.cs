@@ -1,16 +1,29 @@
 using System;
 using PRUNner.Backend.Enums;
+using ReactiveUI;
 
 namespace PRUNner.Backend.Data.Components
 {
-    public class MaterialPriceDataQueryElement
+    public class MaterialPriceDataQueryElement : ReactiveObject
     {
-        public PriceDataQueryType QueryType;
-        public string ExchangeCode = "";
-        public ExchangePriceType PriceType;
+        public PriceDataQueryType QueryType
+        {
+            get => _queryType;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _queryType, value);
+                this.RaisePropertyChanged(nameof(RequiresExchange));
+            }
+        }
+
+        public string ExchangeCode { get; set; } = "";
+        public ExchangePriceType PriceType { get; set; }
 
         public static readonly MaterialPriceDataQueryElement EmpireOverrides = new() {QueryType = PriceDataQueryType.EmpireOverrides};
         public static readonly MaterialPriceDataQueryElement PlanetOverrides = new() {QueryType = PriceDataQueryType.PlanetOverrides};
+        private PriceDataQueryType _queryType;
+
+        public bool RequiresExchange => QueryType == PriceDataQueryType.Exchange;
 
         private MaterialPriceDataQueryElement()
         { }

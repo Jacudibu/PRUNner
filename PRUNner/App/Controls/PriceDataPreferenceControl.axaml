@@ -6,6 +6,7 @@
              xmlns:enums="clr-namespace:PRUNner.Backend.Enums"
              xmlns:components="clr-namespace:PRUNner.Backend.Data.Components"
              xmlns:basePlanner="clr-namespace:PRUNner.Backend.BasePlanner"
+             xmlns:data="clr-namespace:PRUNner.Backend.Data"
              mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="450"
              x:Class="PRUNner.App.Controls.PriceDataPreferenceControl">
 
@@ -17,7 +18,7 @@
         <ToolTip.Tip>The app will use these data points in descending order to determine item prices. Occasionally Items aren't in stock at every exchange, so it's best to have multiple data points just to be sure. MM stands for the automated Market Maker orders.</ToolTip.Tip>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Width="275">
             <TextBlock Text="Price Data Preferences" VerticalAlignment="Center" TextAlignment="Center" Classes="h2" Width="200" />
-            <Button Content="+ Add" Command="{Binding AddNewElement}" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Width="75"/>
+            <Button Content="+ Add" Command="{Binding AddNewDefaultElement}" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Width="75"/>
         </StackPanel>
         <ItemsControl Items="{Binding PriceDataQueryPreferences}">
             <ItemsControl.ItemsPanel>
@@ -32,7 +33,7 @@
                             <ComboBox Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:PriceDataQueryType}}}"
                                       SelectedItem="{Binding QueryType}" Width="75" />
                         
-                            <ComboBox Items="{Binding ElementName=PricePreferences, Path=DataContext.OrderedExchangeList, FallbackValue={}}" 
+                            <ComboBox Items="{x:Static data:CommodityExchangeData.GetAllProperty}" 
                                       SelectedItem="{Binding Exchange}" Width="75"/>
                         
                             <ComboBox Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:ExchangePriceType}}}"

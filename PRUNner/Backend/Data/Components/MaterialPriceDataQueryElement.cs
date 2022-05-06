@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using PRUNner.Backend.Enums;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.Backend.Data.Components
 {
@@ -17,11 +18,11 @@ namespace PRUNner.Backend.Data.Components
             }
         }
 
-        public CommodityExchangeData Exchange { get; set; }
-        public ExchangePriceType PriceType { get; set; }
+        [Reactive] public CommodityExchangeData Exchange { get; set; }
+        [Reactive] public ExchangePriceType PriceType { get; set; }
 
-        public static readonly MaterialPriceDataQueryElement EmpireOverrides = new() {QueryType = PriceDataQueryType.EmpireOverrides};
-        public static readonly MaterialPriceDataQueryElement PlanetOverrides = new() {QueryType = PriceDataQueryType.PlanetOverrides};
+        public static MaterialPriceDataQueryElement EmpireOverrides => new() {QueryType = PriceDataQueryType.EmpireOverrides};
+        public static MaterialPriceDataQueryElement PlanetOverrides => new() {QueryType = PriceDataQueryType.PlanetOverrides};
         private PriceDataQueryType _queryType;
 
         public bool RequiresExchange => QueryType == PriceDataQueryType.Exchange;

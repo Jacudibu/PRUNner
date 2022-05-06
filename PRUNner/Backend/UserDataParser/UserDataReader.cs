@@ -5,13 +5,14 @@ using Newtonsoft.Json.Linq;
 using PRUNner.Backend.BasePlanner;
 using PRUNner.Backend.BasePlanner.ShoppingCart;
 using PRUNner.Backend.Data;
-using PRUNner.Backend.Data.Components;
 using PRUNner.Backend.Enums;
 
 namespace PRUNner.Backend.UserDataParser
 {
     public static class UserDataReader
     {
+        private static JArray? _v03GlobalPricePreferenceSettings; // For backwards compatibility with v0.3.14 and lower. Can be removed at some point.
+        
         public static Empire Load()
         {
             if (!File.Exists(UserDataPaths.UserDataFolder + UserDataPaths.EmpireFile))
@@ -34,27 +35,7 @@ namespace PRUNner.Backend.UserDataParser
             }
 
             GlobalSettings.IgnoreUpdateTag = jObject[nameof(GlobalSettings.IgnoreUpdateTag)]?.ToString();
-            
-            var jArray = (JArray) jObject[nameof(GlobalSettings.PriceDataPreferenceOrder)]!;
-
-            GlobalSettings.PriceDataPreferenceOrder.Clear();
-            foreach (var element in jArray.Select(x => x.ToObject<string>()))
-            {
-                if (string.IsNullOrEmpty(element))
-                {
-                    continue;
-                }
-                
-                if (element.Equals("Custom"))
-                { // version 0.2.1 and below
-                    GlobalSettings.PriceDataPreferenceOrder.Add(MaterialPriceDataQueryElement.PlanetOverrides);
-                    GlobalSettings.PriceDataPreferenceOrder.Add(MaterialPriceDataQueryElement.EmpireOverrides);
-                }
-                else
-                {
-                    GlobalSettings.PriceDataPreferenceOrder.Add(MaterialPriceDataQueryElement.FromString(element));
-                }
-            }
+            _v03GlobalPricePreferenceSettings = (JArray?) jObject["PriceDataPreferenceOrder"];
         }
 
         public static Empire ReadEmpire(JObject jObject)
@@ -64,6 +45,15 @@ namespace PRUNner.Backend.UserDataParser
             ReadHeadquarters((JObject?) jObject[nameof(Empire.Headquarters)], result.Headquarters);
             ReadPlanetaryBases((JArray?) jObject[nameof(Empire.PlanetaryBases)], result);
             ReadPriceOverrides((JArray?) jObject[nameof(Empire.PriceOverrides)], result.PriceOverrides);
+
+            if (_v03GlobalPricePreferenceSettings != null)
+            {
+                result.PriceDataPreferences.ParseJson(_v03GlobalPricePreferenceSettings);
+            }
+            else
+            {
+                result.PriceDataPreferences.ParseJson(jObject[nameof(Empire.PriceDataPreferences)]);
+            }
             
             return result;
         }

@@ -27,14 +27,7 @@ namespace PRUNner.Backend.UserDataParser
             JObject result = new();
 
             result[nameof(GlobalSettings.IgnoreUpdateTag)] = GlobalSettings.IgnoreUpdateTag;
-            
-            var priceDataArray = new JArray();
-            foreach (var priceDataPollType in GlobalSettings.PriceDataPreferenceOrder)
-            {
-                priceDataArray.Add(priceDataPollType.ToString());
-            }
-            result[nameof(GlobalSettings.PriceDataPreferenceOrder)] = priceDataArray;
-            
+
             return result;
         }
         
@@ -43,6 +36,7 @@ namespace PRUNner.Backend.UserDataParser
             JObject result = new();
 
             result.Add(nameof(Empire.Headquarters), WriteHeadquarters(empire.Headquarters));
+            result.Add(nameof(Empire.PriceDataPreferences), empire.PriceDataPreferences.ToJson());
             result.Add(nameof(Empire.PriceOverrides), WritePriceOverrides(empire.PriceOverrides));
             result.Add(nameof(Empire.PlanetaryBases), WritePlanetaryBases(empire.PlanetaryBases));
 

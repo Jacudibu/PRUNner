@@ -45,7 +45,7 @@ namespace PRUNner.Backend
 
             if (currentVersion < availableVersion)
             {
-                Logger.Info("A new PRUNner version is available: " + availableVersion.ToString(3));
+                Logger.Info("A new PRUNner version is available: " + versionString);
                 return new UpdateData(latestRelease);
             }
             

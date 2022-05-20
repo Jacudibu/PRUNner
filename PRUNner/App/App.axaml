@@ -17,6 +17,8 @@
         <planetFinder:ResourceDataToWidthConverter x:Key="ResourceDataToWidth" />
         <planetFinder:ResourceDataToColorConverter x:Key="ResourceDataToColor" />
         <planetFinder:ResourceDataToExtractionTypeConverter x:Key="ResourceDataToExtractionType" />
+        
+        <x:Double x:Key="ControlContentThemeFontSize">14</x:Double>
     </Application.Resources>
     
     <Application.DataTemplates>

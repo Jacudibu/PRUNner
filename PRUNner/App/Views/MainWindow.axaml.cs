@@ -16,9 +16,28 @@ namespace PRUNner.App.Views
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Key == Key.S && e.KeyModifiers == KeyModifiers.Control)
+            if (e.KeyModifiers == KeyModifiers.Control)
             {
-                MainWindowViewModel.Instance.SaveToDisk();
+                switch (e.Key)
+                {
+                    case Key.S:
+                    {
+                        MainWindowViewModel.Instance.SaveToDisk();
+                        break;   
+                    }
+                    case Key.OemPlus:
+                    {
+                        var res = Avalonia.Application.Current.Resources["ControlContentThemeFontSize"] as double?;
+                        Avalonia.Application.Current.Resources["ControlContentThemeFontSize"] = res + 1;
+                        break;
+                    }
+                    case Key.OemMinus:
+                    {
+                        var res = Avalonia.Application.Current.Resources["ControlContentThemeFontSize"] as double?;
+                        Avalonia.Application.Current.Resources["ControlContentThemeFontSize"] = res - 1;
+                        break;
+                    }
+                }
             }
         }
 

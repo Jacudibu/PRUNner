@@ -245,7 +245,7 @@ namespace PRUNner.Backend.BasePlanner
                 ColonyCosts -= InfrastructureBuildings.CM.BuildingCost;
             }
             
-            TotalDailyRepairCosts = ProductionBuildings.Sum(x => x.DailyCostForRepairs);
+            TotalDailyRepairCosts = ProductionBuildings.Sum(x => x.DailyCostForRepairs * x.Amount);
             NetProfit = ProfitPerDay - TotalDailyRepairCosts;
 
             PaybackPeriod = ColonyCosts / NetProfit;

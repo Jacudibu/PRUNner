@@ -73,6 +73,21 @@ namespace PRUNner.App.ViewModels
             EmpireViewModel.Empire.OnPriceDataUpdate();
         }
 
+        public void OpenCommunityToolsDiscord()
+        {
+            Utils.OpenWebsite("https://discord.gg/2MDR5DYSfY");
+        }
+
+        public void OpenGithubSite()
+        {
+            Utils.OpenWebsite("https://github.com/Jacudibu/PRUNner");
+        }
+        
+        public void OpenApexHandbookCommunityResourceSite()
+        {
+            Utils.OpenWebsite("https://handbook.apex.prosperousuniverse.com/wiki/community-resources/");
+        }
+
         public void BlameFio()
         {
             Logger.Debug("Not yet implemented. If you want to invalidate your cache, delete your FIOCache folder and restart. " +

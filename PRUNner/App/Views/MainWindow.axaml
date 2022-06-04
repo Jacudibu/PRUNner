@@ -17,14 +17,22 @@
   <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" AllowAutoHide="false">
     <DockPanel>
       <Menu DockPanel.Dock="Top" HorizontalAlignment="Left">
-        <MenuItem Header="Empire Overview" Command="{Binding ViewEmpire}" />
-        <MenuItem Header="Base Planner" Command="{Binding ViewBasePlanner}" />
-        <MenuItem Header="Planet Finder" Command="{Binding ViewPlanetFinder}" />
-        <MenuItem MinWidth="100"/>
-        <MenuItem Header="Update Price Data" Command="{Binding UpdatePriceData}" />
-        <MenuItem MinWidth="100"/>
-        <MenuItem Header="Save" Command="{Binding SaveToDisk}" HorizontalAlignment="Right" />
-        <MenuItem Header="Load" Command="{Binding LoadFromDisk}" HorizontalAlignment="Right"  />
+        <MenuItem Header="_Empire Overview" Command="{Binding ViewEmpire}" />
+        <MenuItem Header="_Base Planner" Command="{Binding ViewBasePlanner}" />
+        <MenuItem Header="Planet _Finder" Command="{Binding ViewPlanetFinder}" />
+        <Separator MinWidth="100"/>
+        <MenuItem Header="_Update Price Data" Command="{Binding UpdatePriceData}" />
+        <Separator MinWidth="100"/>
+        <MenuItem Header="_Save" Command="{Binding SaveToDisk}" />
+        <MenuItem Header="_Load" Command="{Binding LoadFromDisk}" />
+        <Separator MinWidth="100"/>
+        <MenuItem Header="Useful Links">
+          <MenuItem Header="PRUNner Github" Command="{Binding OpenGithubSite}"/>
+          <MenuItem Header="Community Tools Discord Server" Command="{Binding OpenCommunityToolsDiscord}">
+            <ToolTip.Tip>PRUNner has a dedicated channel for questions and discussions here!</ToolTip.Tip>
+          </MenuItem>
+          <MenuItem Header="Other Community Resources" Command="{Binding OpenApexHandbookCommunityResourceSite}"/>
+        </MenuItem>        
       </Menu>
 
       <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}" />

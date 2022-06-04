@@ -43,12 +43,7 @@ namespace PRUNner.App.ViewModels
         public void OpenReleasePage()
         {
             var uri = Release.HtmlUrl;
-            var psi = new System.Diagnostics.ProcessStartInfo
-            {
-                UseShellExecute = true,
-                FileName = uri
-            };
-            System.Diagnostics.Process.Start(psi);
+            Utils.OpenWebsite(uri);
         }
 
         public void IgnoreAndClose()

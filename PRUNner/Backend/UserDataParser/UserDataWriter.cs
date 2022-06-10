@@ -84,6 +84,7 @@ namespace PRUNner.Backend.UserDataParser
             JObject result = new();
             
             result.Add(nameof(PlanetaryBase.Planet), planetaryBase.Planet.Id);
+            result.Add(nameof(PlanetaryBase.AreaPermitIncreaseCount), planetaryBase.AreaPermitIncreaseCount);
             result.Add(nameof(PlanetaryBase.CoGCBonus), planetaryBase.CoGCBonus.ToString());
             result.Add(nameof(PlanetaryBase.CorpHQBonus), planetaryBase.CorpHQBonus);
             result.Add(nameof(PlanetaryBase.PriceDataPreferences), planetaryBase.PriceDataPreferences.ToJson());

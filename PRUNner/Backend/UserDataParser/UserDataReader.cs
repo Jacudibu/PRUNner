@@ -109,6 +109,7 @@ namespace PRUNner.Backend.UserDataParser
             result.BeginLoading();
 
             var cogcString = obj.GetValue(nameof(PlanetaryBase.CoGCBonus))?.ToObject<string>() ?? CoGCBonusType.None.ToString();
+            result.AreaPermitIncreaseCount = obj.GetValue(nameof(PlanetaryBase.AreaPermitIncreaseCount))?.ToObject<int>() ?? 0;
             result.CoGCBonus = Enum.Parse<CoGCBonusType>(cogcString, true);
             result.CorpHQBonus = obj.GetValue(nameof(PlanetaryBase.CorpHQBonus))?.ToObject<bool>() ?? false;
             result.IncludeCoreModuleInColonyCosts = obj.GetValue(nameof(PlanetaryBase.IncludeCoreModuleInColonyCosts))?.ToObject<bool>() ?? false;

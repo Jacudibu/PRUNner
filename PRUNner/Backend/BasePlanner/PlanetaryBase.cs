@@ -34,10 +34,12 @@ namespace PRUNner.Backend.BasePlanner
         
         public ProvidedConsumables ProvidedConsumables { get; } = new();
         [Reactive] public CoGCBonusType CoGCBonus { get; set; } = CoGCBonusType.None;
-        
-        public int AreaTotal { get; } = Constants.BaseArea;
+
+        [Reactive] public int AreaTotal { get; private set; } = Constants.BaseArea;
         [Reactive] public int AreaDeveloped { get; private set; }
         [Reactive] public int AreaAvailable { get; private set; } = Constants.BaseArea;
+        [Reactive] public int AreaPermitIncreaseCount { get; set; } = 0;
+
         [Reactive] public double ProfitPerDay { get; private set; }
         
         [Reactive] public bool IncludeCoreModuleInColonyCosts { get; set; }
@@ -103,7 +105,29 @@ namespace PRUNner.Backend.BasePlanner
          
             FinishLoading();
         }
+        
+        public void IncreaseAreaPermits()
+        {
+            if (AreaPermitIncreaseCount == Constants.BaseAreaPermitMaxCount)
+            {
+                return;
+            }
+            
+            AreaPermitIncreaseCount++;
+            RecalculateArea();
+        }
 
+        public void DecreaseAreaPermits()
+        {
+            if (AreaPermitIncreaseCount == 0)
+            {
+                return;
+            }
+
+            AreaPermitIncreaseCount--;
+            RecalculateArea();
+        }
+        
         private void RecalculateBuildingEfficiencies()
         {
             if (_loading)
@@ -177,8 +201,10 @@ namespace PRUNner.Backend.BasePlanner
             WorkforceUpkeepCosts.Recalculate();
         }
 
-        private void RecalculateSpace()
+        private void RecalculateArea()
         {
+            AreaTotal = Constants.BaseArea + Constants.BaseAreaPerPermit * AreaPermitIncreaseCount;
+
             var usedArea = ProductionBuildings.Sum(x => x.CalculateNeededArea())
                 + InfrastructureBuildings.All.Sum(x => x.CalculateNeededArea());
             
@@ -207,7 +233,7 @@ namespace PRUNner.Backend.BasePlanner
         {
             RecalculateWorkforce();
             RecalculateBuildingEfficiencies();
-            RecalculateSpace();
+            RecalculateArea();
             OnProductionChange();   
             OnPriceDataUpdate();
             ShoppingCart.UpdateBuildings();

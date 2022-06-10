@@ -116,7 +116,7 @@ namespace PRUNner.Backend.BasePlanner
             }
             else
             {
-                PaybackPeriod = Source.BuildingCost / dailyProfit;
+                PaybackPeriod = Source.BuildingCost / (dailyProfit - Source.DailyCostForRepairs);
 
                 if (PaybackPeriod < 0)
                 {

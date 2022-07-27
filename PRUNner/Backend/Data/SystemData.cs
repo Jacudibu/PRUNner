@@ -27,12 +27,12 @@ namespace PRUNner.Backend.Data
         {
             foreach (var connection in poco.Connections)
             {
-                if (Connections.Any(x => x.FioId.Equals(connection.Connection)))
+                if (Connections.Any(x => x.FioId.Equals(connection.ConnectingId)))
                 {
                     continue;
                 }
                 
-                var connectedSystem = AllItemsByPocoId[connection.Connection];
+                var connectedSystem = AllItemsByPocoId[connection.ConnectingId];
                 connectedSystem.Connections.Add(this);
                 Connections.Add(connectedSystem);
             }

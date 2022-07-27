@@ -5,7 +5,8 @@ namespace FIOImport.Pocos
 {
     public class FioConnection
     {
-        public string Connection { get; set; }
+        public string SystemConnectionId { get; set; }
+        public string ConnectingId { get; set; }
     }
     
     public class FioSystem

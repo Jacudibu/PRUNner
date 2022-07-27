@@ -43,6 +43,7 @@ namespace PRUNner.Backend
                 BuildingData.CreateFrom(building);
             }
             
+            Logger.Info("Postprocessing Data...");
             MaterialData.PostProcessData(rawData.AllMaterials);
             SystemData.PostProcessData(rawData.AllSystems);
             CommodityExchangeData.PostProcessData(rawData.AllCommodityExchanges);

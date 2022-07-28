@@ -174,7 +174,6 @@ namespace PRUNner.Backend.UserDataParser
                 foreach (var productionObject in buildingObject.GetValue(nameof(PlanetBuilding.Production))!.Cast<JObject>())
                 {
                     var production = building.AddProduction();
-                    production.Percentage = productionObject.GetValue(nameof(PlanetBuildingProductionQueueElement.Percentage))!.ToObject<double>();
                     var recipeName = productionObject.GetValue(nameof(PlanetBuildingProductionQueueElement.ActiveRecipe))!.ToObject<string>();
 
                     // fix for 0.4.1 -> 0.4.2 save data, transforming to new FIO recipe names.

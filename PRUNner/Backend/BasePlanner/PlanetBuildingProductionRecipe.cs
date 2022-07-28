@@ -18,7 +18,7 @@ namespace PRUNner.Backend.BasePlanner
         [Reactive] public string DurationString { get; private set; } = null!;
         [Reactive] public double PaybackPeriod { get; private set; }
 
-        private double _durationInMilliseconds;
+        public double DurationInMilliseconds { get; private set; }
         private readonly double _baseDurationMs;
 
         public PlanetBuildingProductionRecipe(PlanetBuilding source, ProductionData productionData)
@@ -70,8 +70,8 @@ namespace PRUNner.Backend.BasePlanner
                 return;
             }
 
-            _durationInMilliseconds = _baseDurationMs / efficiencyFactor;
-            var timespan = TimeSpan.FromMilliseconds(_durationInMilliseconds);
+            DurationInMilliseconds = _baseDurationMs / efficiencyFactor;
+            var timespan = TimeSpan.FromMilliseconds(DurationInMilliseconds);
 
             var builder = new StringBuilder();
             if (timespan.Days > 0)
@@ -107,7 +107,7 @@ namespace PRUNner.Backend.BasePlanner
             var outputSalesPrice = Outputs.Sum(x => x.Amount * x.Material.PriceData.GetPrice(Source.PlanetaryBase.Empire, Source.PlanetaryBase));
             var workforceUpkeepCost = CalculateUpkeepCost();
             
-            var runsPerDay = Constants.MsPerDay / _durationInMilliseconds;
+            var runsPerDay = Constants.MsPerDay / DurationInMilliseconds;
             var dailyProfit = (outputSalesPrice - inputPurchasePrice) * runsPerDay - workforceUpkeepCost;
             
             if (dailyProfit <= 0)

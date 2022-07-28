@@ -1,11 +1,5 @@
 ### Changes:
-- Added advanced building configuration settings: Press the gear-wheel button next to a building inside the base planner to set it's age to adjust production line degradation, or set a completely custom efficiency override.
-- You can now select to receive corporation HQ bonuses in your bases (thanks to NorseFTX!)
-- Price Data Preferences are now configurable within the app and support per-planet overrides!
-- Price Data Preferences now support NC2 and AI2 as well as any other exchange that might get added in the future.
-- Reworked & optimized how FIO Caching works internally
-- Renamed ROI to PP (Payback Period), as that's the accurate term for it.
-- If an update is available, there'll now be a proper notification window. If you don't want to update to a specific version, you can disable that temporarily.
+- Reworked how Production Buildings are set up – you can now set your production lines just like ingame and no longer need to calculate the percentages yourself! **⚠️This might break some of your base setups! Please double check your production lines after updating.** Opening both the old version and the new version at once should make it easy to fix.
 
 ### General Information
 To start a base you'll have to search for your planet through the Planet Finder.

@@ -377,11 +377,11 @@
                 </StackPanel>
             </StackPanel>
             <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="LightGray" HorizontalAlignment="Left">
-                <ScrollViewer>
+                <ScrollViewer Width="850" Height="600" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" VerticalContentAlignment="Top" VerticalAlignment="Top">
                     <ItemsControl Items="{Binding ActiveBase.ProductionBuildings}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Spacing="3" Margin="5" />
+                                <StackPanel Spacing="3" Margin="5" Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>

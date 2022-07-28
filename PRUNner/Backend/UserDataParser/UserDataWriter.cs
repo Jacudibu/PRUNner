@@ -146,7 +146,6 @@ namespace PRUNner.Backend.UserDataParser
                 {
                     var productionObject = new JObject();
                     
-                    productionObject.Add(nameof(PlanetBuildingProductionQueueElement.Percentage), production.Percentage);
                     productionObject.Add(nameof(PlanetBuildingProductionQueueElement.ActiveRecipe), production.ActiveRecipe?.RecipeName);
                     
                     productionArray.Add(productionObject);

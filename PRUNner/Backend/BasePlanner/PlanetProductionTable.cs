@@ -82,7 +82,7 @@ namespace PRUNner.Backend.BasePlanner
 
         private double CalculateAmount(PlanetBuilding building, PlanetBuildingProductionQueueElement recipe, MaterialIO input)
         {
-            return building.Amount * building.Efficiency * input.DailyAmount * recipe.Percentage * 0.01;
+            return building.Amount * building.Efficiency * input.DailyAmount * recipe.Percentage;
         }
 
         private void AddInput(MaterialData material, double amount)

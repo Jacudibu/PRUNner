@@ -120,12 +120,14 @@ namespace PRUNner.Backend.BasePlanner
 
         public delegate void OnProductionUpdateEvent();
         public event OnProductionUpdateEvent? OnProductionUpdate;
-        
+
         public PlanetBuildingProductionQueueElement AddProduction()
         {
             var production = new PlanetBuildingProductionQueueElement(this);
             Production.Add(production);
             production.Changed.Subscribe(_ => OnProductionUpdate?.Invoke());
+            production.Changed.Subscribe(_ => UpdateProductionPercentages());
+            UpdateProductionPercentages();
             return production;
         }
 
@@ -133,6 +135,7 @@ namespace PRUNner.Backend.BasePlanner
         {
             Production.Remove(element);
             OnProductionUpdate?.Invoke();
+            UpdateProductionPercentages();
         }
 
         public void UpdateProductionEfficiency(WorkforceSatisfaction workforceSatisfaction,
@@ -166,6 +169,16 @@ namespace PRUNner.Backend.BasePlanner
             foreach (var recipe in AvailableRecipes)
             {
                 recipe.UpdateProductionEfficiency(Efficiency);
+            }
+        }
+
+        private void UpdateProductionPercentages()
+        {
+            var totalTime = Production.Sum(x => x.ActiveRecipe?.DurationInMilliseconds);
+            
+            foreach (var production in Production)
+            {
+                production.Percentage = production.ActiveRecipe?.DurationInMilliseconds / totalTime ?? 0;
             }
         }
 

@@ -1,5 +1,5 @@
 ### Changes:
-- Reworked how Production Buildings are set up – you can now set your production lines just like ingame and no longer need to calculate the percentages yourself! **⚠️This might break some of your base setups! Please double check your production lines after updating.** Opening both the old version and the new version at once should make it easy to fix.
+- Reworked how Production Buildings are set up – you can now set up your production lines just like you'd do ingame and no longer need to calculate the percentages yourself! **⚠️This might break some of your base setups! Please double check your production lines after updating. Opening both the old version and the new version at once should make it easy to fix.**
 
 ### General Information
 To start a base you'll have to search for your planet through the Planet Finder.

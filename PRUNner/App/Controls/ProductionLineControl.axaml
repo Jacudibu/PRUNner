@@ -27,22 +27,47 @@
         <ItemsControl Items="{Binding Production}" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" Spacing="2"/>
+                    <StackPanel Orientation="Vertical" Spacing="4"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="basePlanner:PlanetBuildingProductionQueueElement">
-                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                        <ComboBox SelectedItem="{Binding ActiveRecipe}" Items="{Binding Building.AvailableRecipes}" Width="180"> 
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <StackPanel Orientation="Horizontal" Width="500"> <!-- Enough to fit APF.AIR -->
-                                            <StackPanel Orientation="Horizontal" Width="150">
-                                                <ItemsControl Items="{Binding Outputs}">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <NumericUpDown Classes="compact" Minimum="1" Maximum="20" Value="{Binding OrderSize}"/>
+                                <TextBlock Text="x" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <ComboBox SelectedItem="{Binding ActiveRecipe}" Items="{Binding Building.AvailableRecipes}" Width="120"> 
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal" Width="500"> <!-- Enough to fit APF.AIR -->
+                                                <StackPanel Orientation="Horizontal" Width="70">
+                                                    <ItemsControl Items="{Binding Outputs}">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Horizontal" Spacing="2"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate DataType="components:MaterialIO">
+                                                                <controls:ItemBoxControl DataContext="{Binding .}"/>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                                
+                                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Width="90">
+                                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding DurationString}" Margin="5,0" /> 
+                                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="⬅" 
+                                                               Margin="5,0" IsVisible="{Binding Inputs.Count}"/> 
+                                                </StackPanel>
+                                                
+                                                <ItemsControl Items="{Binding Inputs}">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
-                                                            <StackPanel Orientation="Horizontal" Spacing="2"/>
+                                                            <StackPanel Orientation="Horizontal" Spacing="2" />
                                                         </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
                                                     <ItemsControl.ItemTemplate>
@@ -51,46 +76,28 @@
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>
                                                 </ItemsControl>
-                                                
-                                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding DurationString}" Margin="5,0" /> 
                                             </StackPanel>
-                                            
-                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="⬅" 
-                                                       Margin="5,0" IsVisible="{Binding Inputs.Count}"/> 
-
-                                            
-                                            <ItemsControl Items="{Binding Inputs}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" Spacing="2" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate DataType="components:MaterialIO">
-                                                        <controls:ItemBoxControl DataContext="{Binding .}"/>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
+                                            <StackPanel Width="45">
+                                                <TextBlock Text="PP" VerticalAlignment="Center" TextAlignment="Center"/>
+                                                <TextBlock VerticalAlignment="Center" TextAlignment="Right" HorizontalAlignment="Center"
+                                                           Text="{Binding PaybackPeriod, StringFormat={}{0:F1}}"
+                                                           FontFamily="Monospaced"/>
+                                            </StackPanel>
                                         </StackPanel>
-                                        <StackPanel Width="45">
-                                            <TextBlock Text="PP" VerticalAlignment="Center" TextAlignment="Center"/>
-                                            <TextBlock VerticalAlignment="Center" TextAlignment="Right" HorizontalAlignment="Center"
-                                                       Text="{Binding PaybackPeriod, StringFormat={}{0:F1}}"
-                                                       FontFamily="Monospaced"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        
-                        <Button Classes="xButton" Command="{Binding Remove}" Margin="5,0,0,0"/>
-                        
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Text="{Binding DurationString}" HorizontalAlignment="Left" Width="90"/>
+                            <Button Classes="xButton" Command="{Binding Remove}" Margin="5,0,0,0"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         
-        <Button HorizontalAlignment="Center" Margin="0, 5, 0, 0" Content="New Order" Command="{Binding AddProduction}"/>
+        <Button HorizontalAlignment="Center" Margin="0, 10, 0, 0" Content="New Order" Command="{Binding AddProduction}"/>
 
     </StackPanel>
     </Border>

@@ -127,7 +127,9 @@ namespace PRUNner.Backend.BasePlanner
             Production.Add(production);
             production.Changed.Subscribe(_ => OnProductionUpdate?.Invoke());
             production.Changed.Subscribe(_ => UpdateProductionPercentages());
+            production.Changed.Subscribe(_ => production.UpdateDuration());
             UpdateProductionPercentages();
+            production.UpdateDuration();
             return production;
         }
 
@@ -170,15 +172,20 @@ namespace PRUNner.Backend.BasePlanner
             {
                 recipe.UpdateProductionEfficiency(Efficiency);
             }
+                        
+            foreach (var productionQueueElement in Production)
+            {
+                productionQueueElement.UpdateDuration();
+            }
         }
 
         private void UpdateProductionPercentages()
         {
-            var totalTime = Production.Sum(x => x.ActiveRecipe?.DurationInMilliseconds);
+            var totalProductionTime = Production.Sum(x => x.OrderSize * x.ActiveRecipe?.DurationInMilliseconds ?? 0);
             
-            foreach (var production in Production)
+            foreach (var productionQueueElement in Production)
             {
-                production.Percentage = production.ActiveRecipe?.DurationInMilliseconds / totalTime ?? 0;
+                productionQueueElement.UpdatePercentage(totalProductionTime);
             }
         }
 

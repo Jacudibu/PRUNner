@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using PRUNner.Backend.Data.Components;
 using PRUNner.Backend.Data.Enums;
 using ReactiveUI;
@@ -67,32 +66,11 @@ namespace PRUNner.Backend.BasePlanner
             if (efficiencyFactor <= 0)
             {
                 DurationString = "∞";
-                return;
+                DurationInMilliseconds = double.PositiveInfinity;
             }
 
             DurationInMilliseconds = _baseDurationMs / efficiencyFactor;
-            var timespan = TimeSpan.FromMilliseconds(DurationInMilliseconds);
-
-            var builder = new StringBuilder();
-            if (timespan.Days > 0)
-            {
-                builder.Append(timespan.Days);
-                builder.Append("d ");
-            }
-        
-            if (timespan.Hours > 0)
-            {
-                builder.Append(timespan.Hours);
-                builder.Append("h ");
-            }
-        
-            if (timespan.Minutes > 0)
-            {
-                builder.Append(timespan.Minutes);
-                builder.Append('m');
-            }
-
-            DurationString = builder.ToString();
+            DurationString = Utils.GetDurationString(DurationInMilliseconds);
         }
 
         public void OnPriceDataUpdate()

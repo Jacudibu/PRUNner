@@ -11,7 +11,7 @@ First, let's find a planet to settle!
 ![PlanetFinder](https://user-images.githubusercontent.com/9059719/125678028-648e6575-e968-4440-9f01-e918028c9174.png)
 
 Then, plan out your base!
-![BasePlanner](https://user-images.githubusercontent.com/9059719/122645029-6773e180-d118-11eb-89be-6dfe085d4ae9.png)
+![BasePlanner](https://user-images.githubusercontent.com/9059719/181455996-45bcc5d8-a5bd-4b90-88c7-00cb53afdeaa.png)
 
 And finally, have an overview over your entire empire.
 ![EmpireOverview](https://user-images.githubusercontent.com/9059719/121958208-b78f2480-cd63-11eb-953c-c6537b079cd3.png)
@@ -24,5 +24,3 @@ Check out our [Issues](https://github.com/Jacudibu/PRUNner/issues) for a list of
 ### Building / Running PRUNner from Code
 You'll need the .Net 5 SDK installed to build the application from source.
 There's no special configuration required. If you want to see how to build the app via the command line for your operating system, take a look at [publish.sh](https://github.com/Jacudibu/PRUNner/blob/main/publish.sh).
-
-I'd recommend grabbing the FIOCache folder from one of the releases and putting it into the output directory, as downloading all of it can take a while.

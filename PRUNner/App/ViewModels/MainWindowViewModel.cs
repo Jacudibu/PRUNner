@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Text;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -10,6 +9,7 @@ using PRUNner.Backend.BasePlanner;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.PlanetFinder;
 using PRUNner.Backend.UserDataParser;
+using PRUNner.Backend.Utility;
 using ReactiveUI.Fody.Helpers;
 
 namespace PRUNner.App.ViewModels
@@ -114,7 +114,7 @@ namespace PRUNner.App.ViewModels
         
         public void LogEventAction(LogEventInfo info, object[] objects)
         {
-            var builder = new StringBuilder();
+            var builder = ObjectPools.StringBuilderPool.Get();
             builder.Append('[');
             builder.Append(info.TimeStamp.ToString("HH:mm:ss"));
             builder.Append("] ");
@@ -138,6 +138,8 @@ namespace PRUNner.App.ViewModels
             
             builder.Append(info.Message);
             StatusBar = builder.ToString();
+            
+            ObjectPools.StringBuilderPool.Return(builder);
         }
 
         public void OpenBaseInNewWindow(PlanetaryBase planetaryBase)

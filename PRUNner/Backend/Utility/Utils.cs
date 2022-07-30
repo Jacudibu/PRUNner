@@ -1,7 +1,6 @@
 using System;
-using System.Text;
 
-namespace PRUNner.Backend
+namespace PRUNner.Backend.Utility
 {
     public static class Utils
     {
@@ -24,7 +23,7 @@ namespace PRUNner.Backend
             
             var timespan = TimeSpan.FromMilliseconds(milliseconds);
 
-            var builder = new StringBuilder();
+            var builder = ObjectPools.StringBuilderPool.Get();
             if (timespan.Days > 0)
             {
                 builder.Append(timespan.Days);
@@ -43,7 +42,9 @@ namespace PRUNner.Backend
                 builder.Append('m');
             }
 
-            return builder.ToString();
+            var result = builder.ToString();
+            ObjectPools.StringBuilderPool.Return(builder);
+            return result;
         }
     }
 }

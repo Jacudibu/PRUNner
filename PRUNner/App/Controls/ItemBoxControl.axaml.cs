@@ -9,6 +9,7 @@ using PRUNner.Backend.BasePlanner;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.Data.Components;
 using PRUNner.Backend.Data.Enums;
+using PRUNner.Backend.Utility;
 
 namespace PRUNner.App.Controls
 {
@@ -161,17 +162,22 @@ namespace PRUNner.App.Controls
             }
         }
 
-        private readonly StringBuilder _tooltipBuilder = new();
         private string GetMaterialTooltip(MaterialData materialData)
         {
-            _tooltipBuilder.Append(materialData.Name);
-            _tooltipBuilder.Append(" (min < avg > max)\n");
+            var sb = ObjectPools.StringBuilderPool.Get();
+            
+            sb.Append(materialData.Name);
+            sb.Append(" (min < avg > max)\n");
             foreach (var (key, value) in materialData.PriceData.ExchangePrices)
             {
-                AppendPriceData(_tooltipBuilder, key, value);
+                AppendPriceData(sb, key, value);
             }
-            var result = _tooltipBuilder.ToString();
-            _tooltipBuilder.Clear();
+
+            BuildProductionDataList(sb, "\nRecipes:\n", materialData.Recipes);
+            BuildProductionDataList(sb, "\nUsages:\n", materialData.Usages);
+
+            var result = sb.ToString();
+            ObjectPools.StringBuilderPool.Return(sb);
             return result;
         }
 
@@ -186,7 +192,24 @@ namespace PRUNner.App.Controls
             sb.Append(priceData.Bid?.ToString("F2") ?? "none");
             sb.Append('\n');
         }
-        
+
+        private void BuildProductionDataList(StringBuilder sb, string header, List<ProductionData> data)
+        {
+            if (data.Count == 0)
+            {
+                return;
+            }
+            
+            sb.Append(header);
+            foreach (var entry in data)
+            {
+                sb.Append(entry.Building.Ticker);
+                sb.Append(": ");
+                sb.Append(entry.RecipeName);
+                sb.Append('\n');
+            }
+        }
+
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);

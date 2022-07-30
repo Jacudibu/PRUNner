@@ -1,6 +1,7 @@
 using Octokit;
 using PRUNner.App.Popups;
 using PRUNner.Backend;
+using PRUNner.Backend.Utility;
 using ReactiveUI;
 
 namespace PRUNner.App.ViewModels

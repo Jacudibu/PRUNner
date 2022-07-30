@@ -1,5 +1,5 @@
 ### Changes:
-- Reworked how Production Buildings are set up – you can now set up your production lines just like you'd do ingame and no longer need to calculate the percentages yourself! **⚠️This might break some of your base setups! Please double check your production lines after updating. Opening both the old version and the new version at once should make it easy to fix.**
+- Material Tooltips now show recipes and usages
 
 ### Installation
 Just select the zip file for your operating system below, download & unpack it and then run the executable inside. :)

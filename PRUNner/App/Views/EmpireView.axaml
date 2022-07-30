@@ -18,14 +18,15 @@
         <StackPanel DockPanel.Dock="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Classes="h2" Text="Headquarters" />
             <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Location:" Margin="0,0,3,0"/>
                 <ComboBox Items="{Binding Source={markupExtensions:EnumBindingSource {x:Type enums:Faction}}}"
                           SelectedItem="{Binding Empire.Headquarters.Faction}" Width="150"/>
                 <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
-	                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Classes="h3" Text="Used Slots:" Width="80" Margin="0,5,0,0"/>
+                    <TextBlock VerticalAlignment="Center" Text="Used Permits:" Margin="0,0,3,0"/>
 	                <NumericUpDown Classes="compact" Value="{Binding Empire.Headquarters.UsedHQSlots}" Minimum="0" Maximum="{Binding Empire.Headquarters.TotalHQSlots}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
-	                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Classes="h3" Text="Total Slots:" Width="80" Margin="0,5,0,0" />
+	                <TextBlock VerticalAlignment="Center" Text="Total Permits:" Margin="0,0,3,0" />
 	                <NumericUpDown Classes="compact" Value="{Binding Empire.Headquarters.TotalHQSlots}" Minimum="{Binding Empire.Headquarters.UsedHQSlots}"/>
                 </StackPanel>
             </StackPanel>

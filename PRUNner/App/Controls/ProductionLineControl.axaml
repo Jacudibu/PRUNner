@@ -35,7 +35,9 @@
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <NumericUpDown Classes="compact" Minimum="1" Maximum="20" Value="{Binding OrderSize}"/>
+                                <NumericUpDown Classes="compact" Minimum="1" Maximum="20" Value="{Binding OrderSize}">
+                                    <ToolTip.Tip>Order Size</ToolTip.Tip>
+                                </NumericUpDown>
                                 <TextBlock Text="x" VerticalAlignment="Center"/>
                             </StackPanel>
                             <ComboBox SelectedItem="{Binding ActiveRecipe}" Items="{Binding Building.AvailableRecipes}" Width="120"> 

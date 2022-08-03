@@ -56,8 +56,15 @@ namespace PRUNner.Backend
 
         public static void UpdatePriceData()
         {
-            LoadPriceData(FioExchangeDataDownloader.Instance.DownloadAndCache());
-            Logger.Info("Price data has been updated!");
+            try
+            {
+                LoadPriceData(FioExchangeDataDownloader.Instance.DownloadAndCache());
+                Logger.Info("Price data has been updated!");
+            }
+            catch (FioDownloaderException e)
+            {
+                Logger.Error("Unable to update price data! Maybe FIO is down?");
+            }
         }
         
         private static void LoadPriceData(FioExchangeData[] allExchangeData)

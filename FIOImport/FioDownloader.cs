@@ -44,7 +44,7 @@ namespace FIOImport
         private static TFioPoco[]? DownloadAndCache(string requestUri, string cacheFilePath)
         {
             var tries = 0;
-            while (tries < MaximumRetries + 1)
+            while (tries < MaximumRetries)
             {
                 try
                 {
@@ -60,7 +60,7 @@ namespace FIOImport
                 }
             }
 
-            throw new Exception("Unable to query " + requestUri);
+            throw new FioDownloaderException("Unable to query " + requestUri);
         }
 
         private static TFioPoco[]? LoadFromCache(string path)
@@ -70,6 +70,12 @@ namespace FIOImport
         }
     }
 
+    public class FioDownloaderException : Exception
+    {
+        public FioDownloaderException(string text) : base(text)
+        { }
+    }
+    
     internal class FioMaterialDownloader : FioDownloader<FioMaterialDownloader, FioMaterial>
     {
         protected override string DataName => "material data";

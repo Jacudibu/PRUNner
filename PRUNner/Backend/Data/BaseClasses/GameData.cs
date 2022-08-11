@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NLog;
 
 namespace PRUNner.Backend.Data.BaseClasses
 {
     public abstract class GameData<TData, TPoco> where TData : GameData<TData, TPoco>, new()
     {
+        protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         protected static ImmutableArray<TData> AllItemsWithoutAliases; 
         protected static readonly Dictionary<string, TData> AllItems = new();
         internal static readonly Dictionary<string, TData> AllItemsByPocoId = new();
@@ -32,8 +34,25 @@ namespace PRUNner.Backend.Data.BaseClasses
             var result = new TData();
             result.Id = result.GetIdFromPoco(poco).ToUpper();
             result.FioId = result.GetFioIdFromPoco(poco);
-            AllItems[result.Id] = result;
-            AllItemsByPocoId[result.FioId] = result;
+            
+            // Very duct-tapey solution in hopes of finding the cause for parsing issues on OSX. TODO: remove the if/else and error logging once the stuff is fixed
+            if (result.Id != null)
+            {
+                AllItems[result.Id] = result;
+            }
+            else
+            {
+                Logger.Warn("Something went wrong when loading an item by it's Id; Associated poco.Id is " + result.FioId + ". If you see this, please tell me the Id (and pray it's not null) so I can fix it. :D");
+            }
+            if (result.FioId != null)
+            {
+                AllItemsByPocoId[result.FioId] = result;
+            }
+            else
+            {
+                Logger.Warn("Something went wrong when loading an item by it's poco.Id; Associated Id is " + result.Id + ". If you see this, please tell me the Id (and pray it's not null) so I can fix it. :D");
+            }
+            
         }
 
         public static TData? Get(string id)

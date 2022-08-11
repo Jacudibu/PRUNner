@@ -22,5 +22,5 @@ I'm open to any kind of feedback or suggestions. This is my second Application u
 Check out our [Issues](https://github.com/Jacudibu/PRUNner/issues) for a list of things that are planned (or have been suggested). If you want to help implementing any of them or add something else, it's probably best to join the [PrUn Community Tools Discord Server](https://discord.gg/2MDR5DYSfY) and/or creating an issue first.
 
 ### Building / Running PRUNner from Code
-You'll need the .Net 5 SDK installed to build the application from source.
+You'll need the .Net 6 SDK installed to build the application from source.
 There's no special configuration required. If you want to see how to build the app via the command line for your operating system, take a look at [publish.sh](https://github.com/Jacudibu/PRUNner/blob/main/publish.sh).

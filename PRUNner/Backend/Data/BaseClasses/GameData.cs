@@ -25,7 +25,7 @@ namespace PRUNner.Backend.Data.BaseClasses
             AllItemsWithoutAliases = AllItems.Values.OrderBy(x => x.Id).ToImmutableArray();
             foreach (var value in AllItemsByPocoId.Values)
             {
-                value.PostProcessData(pocos.Single(x => value.GetFioIdFromPoco(x).Equals(value.FioId)));
+                value.PostProcessData(pocos.Single(x => value.IsMatchingPoco(x)));
             }
         }
         
@@ -76,6 +76,11 @@ namespace PRUNner.Backend.Data.BaseClasses
         }
 
         public static ImmutableArray<TData> GetAllProperty => GetAll();
+
+        protected virtual bool IsMatchingPoco(TPoco poco)
+        {
+            return FioId.Equals(GetFioIdFromPoco(poco));
+        }
         
         public override string ToString()
         {

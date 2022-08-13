@@ -37,6 +37,11 @@ namespace PRUNner.Backend.Data
             Volume = poco.Volume;
         }
 
+        protected override bool IsMatchingPoco(FioMaterial poco)
+        {
+            return Id.Equals(GetIdFromPoco(poco));
+        }
+
         private static string SanitizeCategoryString(string category)
         {
             return category

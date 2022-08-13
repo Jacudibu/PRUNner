@@ -1,6 +1,5 @@
 ### Changes:
-- Updated the .Net SDK to 6.0, as well as all of the PRUNner's dependencies. Here's hoping this might fix #28.
-- This maybe also fixed an issue with FioParsing on OSX. If you still encounter the error, there'll hopefully at least be some logs to help me debug the thing. :)
+- Another attempt to fix our FIO Parser on OS X. If you didn't run into any issues with the previous version, you can skip this one.
 
 ### Installation
 Just select the zip file for your operating system below, download & unpack it and then run the executable inside. :)

@@ -32,16 +32,9 @@ namespace PRUNner.Backend.Data
                     continue;
                 }
 
-                if (connection.ConnectingId != null) // TODO: Yet one more OSX fix attempt
-                {
-                    var connectedSystem = AllItemsByPocoId[connection.ConnectingId];
-                    connectedSystem.Connections.Add(this);
-                    Connections.Add(connectedSystem);
-                }
-                else
-                {
-                    Logger.Warn("Unable to map system connection. Distances in planet finder might be off. ConnectionId = " + connection.ConnectingId + "; SystemConnectionId: " + connection.SystemConnectionId + ".");
-                }
+                var connectedSystem = AllItemsByPocoId[connection.ConnectingId];
+                connectedSystem.Connections.Add(this);
+                Connections.Add(connectedSystem);
             }
 
             NaturalId = poco.NaturalId;

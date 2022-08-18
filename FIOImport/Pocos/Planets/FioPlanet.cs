@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+
 // ReSharper disable All
 
 namespace FIOImport.POCOs.Planets
@@ -23,7 +24,7 @@ namespace FIOImport.POCOs.Planets
         public double MagneticField { get; set; }
         public double Mass { get; set; }
         public double MassEarth { get; set; }
-        public long OrbitSemiMajorAxis { get; set; }
+        public double OrbitSemiMajorAxis { get; set; }
         public double OrbitEccentricity { get; set; }
         public double OrbitInclination { get; set; }
         public double OrbitRightAscension { get; set; }

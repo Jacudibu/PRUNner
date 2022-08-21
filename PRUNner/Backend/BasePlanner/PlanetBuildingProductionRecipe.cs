@@ -17,6 +17,7 @@ namespace PRUNner.Backend.BasePlanner
         public List<MaterialIO> Outputs { get; }
         [Reactive] public string DurationString { get; private set; } = null!;
         [Reactive] public double PaybackPeriod { get; private set; }
+        [Reactive] public double DailyProfit { get; private set; }
 
         public double DurationInMilliseconds { get; private set; }
         private readonly double _baseDurationMs;
@@ -87,15 +88,15 @@ namespace PRUNner.Backend.BasePlanner
             var workforceUpkeepCost = CalculateUpkeepCost();
             
             var runsPerDay = Constants.MsPerDay / DurationInMilliseconds;
-            var dailyProfit = (outputSalesPrice - inputPurchasePrice) * runsPerDay - workforceUpkeepCost;
+            DailyProfit = (outputSalesPrice - inputPurchasePrice) * runsPerDay - workforceUpkeepCost;
             
-            if (dailyProfit <= 0)
+            if (DailyProfit <= 0)
             {
                 PaybackPeriod = double.PositiveInfinity;
             }
             else
             {
-                PaybackPeriod = Source.BuildingCost / (dailyProfit - Source.DailyCostForRepairs);
+                PaybackPeriod = Source.BuildingCost / (DailyProfit - Source.DailyCostForRepairs);
 
                 if (PaybackPeriod < 0)
                 {

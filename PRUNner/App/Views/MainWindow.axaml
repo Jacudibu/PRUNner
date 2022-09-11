@@ -32,7 +32,9 @@
             <ToolTip.Tip>PRUNner has a dedicated channel for questions and discussions here!</ToolTip.Tip>
           </MenuItem>
           <MenuItem Header="Other Community Resources" Command="{Binding OpenApexHandbookCommunityResourceSite}"/>
-        </MenuItem>        
+        </MenuItem>
+        <Separator MinWidth="50" />
+        <MenuItem Header="🌙 Theme" Command="{Binding ToggleTheme}" />
       </Menu>
 
       <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}" />

@@ -1,7 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Primitives;
+using Avalonia.Styling;
+using Avalonia.Themes.Fluent;
 using NLog;
 using NLog.Targets;
 using PRUNner.Backend;
@@ -111,6 +114,20 @@ namespace PRUNner.App.ViewModels
             BasePlannerViewModel.SetActiveBase(EmpireViewModel.Empire.PlanetaryBases.First());
             Logger.Info("Data successfully loaded.");
         }
+
+        public void ToggleTheme()
+        {
+            if (Application.Current == null)
+                return;
+
+            foreach (IStyle style in Application.Current.Styles)
+            {
+                if (!(style is FluentTheme)) continue;
+
+                FluentTheme theme = (FluentTheme)style;
+                theme.Mode = theme.Mode == FluentThemeMode.Dark ? FluentThemeMode.Light : FluentThemeMode.Dark;
+            }
+        }
         
         public void LogEventAction(LogEventInfo info, object[] objects)
         {
@@ -150,8 +167,8 @@ namespace PRUNner.App.ViewModels
             var window = new Window();
             window.Content = new ScrollViewer
             {
-                HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Visible,
-                VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Visible,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Visible,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Visible,
                 AllowAutoHide = false,
                 Content = basePlanner
             };

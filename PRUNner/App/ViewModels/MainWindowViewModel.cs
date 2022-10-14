@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -120,13 +121,30 @@ namespace PRUNner.App.ViewModels
             if (Application.Current == null)
                 return;
 
+            FluentTheme fluentTheme = GetCurrentFluentTheme();
+            FluentThemeMode newFluentThemeMode =
+                fluentTheme.Mode == FluentThemeMode.Dark ? FluentThemeMode.Light : FluentThemeMode.Dark;
+            SetTheme(newFluentThemeMode);
+        }
+
+        //I would really prefer a better way of getting the current FluentTheme
+        private FluentTheme GetCurrentFluentTheme()
+        {
             foreach (IStyle style in Application.Current.Styles)
             {
                 if (!(style is FluentTheme)) continue;
 
                 FluentTheme theme = (FluentTheme)style;
-                theme.Mode = theme.Mode == FluentThemeMode.Dark ? FluentThemeMode.Light : FluentThemeMode.Dark;
+                return theme;
             }
+
+            throw new Exception("Unable to locate FluentTheme");
+        }
+
+        public void SetTheme(FluentThemeMode fluentThemeMode)
+        {
+            FluentTheme fluentTheme = GetCurrentFluentTheme();
+            fluentTheme.Mode = fluentThemeMode;
         }
         
         public void LogEventAction(LogEventInfo info, object[] objects)

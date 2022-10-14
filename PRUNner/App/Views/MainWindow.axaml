@@ -39,7 +39,7 @@
 
       <ContentControl DockPanel.Dock="Top" Margin="5" Content="{Binding ActiveView}" />
 
-      <Border DockPanel.Dock="Bottom" Background="LightGray" Height="32" VerticalAlignment="Bottom">
+      <Border DockPanel.Dock="Bottom" Height="32" VerticalAlignment="Bottom">
         <TextBlock Text="{Binding StatusBar}" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" Margin="3,0,0,0"/>
       </Border>
     </DockPanel>

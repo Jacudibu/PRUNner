@@ -24,7 +24,7 @@
                 </StackPanel>
                 
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="🔎 Search" FontSize="27" Height="45" Width="140" Margin="10" HorizontalAlignment="Center"
+                    <Button Content="🔎 Search" FontSize="24" Height="45" Width="140" Margin="10" HorizontalAlignment="Center"
                             Command="{Binding Search}" />
                     <CheckBox IsChecked="{Binding MustBeFertile}" Margin="5, 0, 0, 0" >Fertile Soil</CheckBox>
                 </StackPanel>

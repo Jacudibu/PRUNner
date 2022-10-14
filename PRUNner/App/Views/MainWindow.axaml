@@ -7,7 +7,7 @@
         x:Class="PRUNner.App.Views.MainWindow"
         Icon="/App/Assets/avalonia-logo.ico"
         CanResize="True"
-        Title="PRUNner" Width="1850" Height="1000"
+        Title="PRUNner" Width="1870" Height="1030"
         MaxHeight="99999" MaxWidth="99999">
 
     <Design.DataContext>

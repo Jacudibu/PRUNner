@@ -24,7 +24,7 @@
         <MenuItem Header="_Update Price Data" Command="{Binding UpdatePriceData}" />
         <Separator MinWidth="100"/>
         <MenuItem Header="_Save" Command="{Binding SaveToDisk}" />
-        <MenuItem Header="_Load" Command="{Binding LoadFromDisk}" />
+        <MenuItem Header="_Load" Command="{Binding LoadFromDisk}" CommandParameter="false" />
         <Separator MinWidth="100"/>
         <MenuItem Header="Useful Links">
           <MenuItem Header="PRUNner Github" Command="{Binding OpenGithubSite}"/>

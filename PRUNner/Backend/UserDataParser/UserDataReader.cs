@@ -35,6 +35,7 @@ namespace PRUNner.Backend.UserDataParser
             }
 
             GlobalSettings.IgnoreUpdateTag = jObject[nameof(GlobalSettings.IgnoreUpdateTag)]?.ToString();
+            GlobalSettings.UseDarkMode = jObject[nameof(GlobalSettings.UseDarkMode)]?.ToObject<bool>() ?? false;
             _v03GlobalPricePreferenceSettings = (JArray?) jObject["PriceDataPreferenceOrder"];
         }
 

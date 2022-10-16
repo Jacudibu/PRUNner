@@ -27,6 +27,7 @@ namespace PRUNner.Backend.UserDataParser
             JObject result = new();
 
             result[nameof(GlobalSettings.IgnoreUpdateTag)] = GlobalSettings.IgnoreUpdateTag;
+            result[nameof(GlobalSettings.UseDarkMode)] = GlobalSettings.UseDarkMode;
 
             return result;
         }

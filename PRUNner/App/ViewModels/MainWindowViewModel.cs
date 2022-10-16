@@ -46,7 +46,7 @@ namespace PRUNner.App.ViewModels
 
             PlanetFinderSearchResult.OnOpenBasePlanner += PlanetFinderSelectPlanetEvent;
             
-            LoadFromDisk();
+            LoadFromDisk(true);
         }
 
         public void ViewPlanetFinder()
@@ -104,9 +104,15 @@ namespace PRUNner.App.ViewModels
             Logger.Info("Data successfully saved.");
         }
 
-        public void LoadFromDisk()
+        public void LoadFromDisk(bool initialize = false)
         {
-            EmpireViewModel.SetEmpire(UserDataReader.Load());
+            var empire = UserDataReader.Load();
+            if (initialize && GlobalSettings.UseDarkMode)
+            {
+                SetTheme(FluentThemeMode.Dark);
+            }
+
+            EmpireViewModel.SetEmpire(empire);
             if (EmpireViewModel.Empire.PlanetaryBases.Count <= 0)
             {
                 return;
@@ -121,10 +127,8 @@ namespace PRUNner.App.ViewModels
             if (Application.Current == null)
                 return;
 
-            FluentTheme fluentTheme = GetCurrentFluentTheme();
-            FluentThemeMode newFluentThemeMode =
-                fluentTheme.Mode == FluentThemeMode.Dark ? FluentThemeMode.Light : FluentThemeMode.Dark;
-            SetTheme(newFluentThemeMode);
+            GlobalSettings.UseDarkMode = !GlobalSettings.UseDarkMode;
+            SetTheme(GlobalSettings.UseDarkMode ? FluentThemeMode.Dark : FluentThemeMode.Light);
         }
 
         //I would really prefer a better way of getting the current FluentTheme
@@ -141,7 +145,7 @@ namespace PRUNner.App.ViewModels
             throw new Exception("Unable to locate FluentTheme");
         }
 
-        public void SetTheme(FluentThemeMode fluentThemeMode)
+        private void SetTheme(FluentThemeMode fluentThemeMode)
         {
             FluentTheme fluentTheme = GetCurrentFluentTheme();
             fluentTheme.Mode = fluentThemeMode;

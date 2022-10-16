@@ -1,6 +1,5 @@
 ### Changes:
-- Fixed Scientist happiness calculation
-- Added profit/d calculation to recipe dropdowns (thanks, @MetallicDragon!)
+- Added a Dark Theme. Thanks to @louhy for your efforts! 
 
 ### Installation
 Just select the zip file for your operating system below, download & unpack it and then run the executable inside. :)

@@ -33,7 +33,7 @@ namespace PRUNner.Backend.BasePlanner
         
         public void UpdatePercentage(double totalProductionTime)
         {
-            if (ActiveRecipe == null)
+            if (ActiveRecipe == null || double.IsInfinity(totalProductionTime) || double.IsNaN(totalProductionTime))
             {
                 Percentage = 0;
             }

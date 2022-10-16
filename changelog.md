@@ -1,5 +1,6 @@
 ### Changes:
 - Added a Dark Theme. Thanks to @louhy for your efforts! 
+- Fixed a bug that caused net profits to be displayed as NaN.
 
 ### Installation
 Just select the zip file for your operating system below, download & unpack it and then run the executable inside. :)

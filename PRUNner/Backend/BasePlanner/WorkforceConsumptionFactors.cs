@@ -107,30 +107,30 @@ namespace PRUNner.Backend.BasePlanner
 
             var result = 0d;
             
-            if (DW > 0 && consumables.DW) result += DW * MaterialData.GetOrThrow("DW").PriceData.GetPrice(planetaryBase);
-            if (RAT > 0 && consumables.RAT) result += RAT * MaterialData.GetOrThrow("RAT").PriceData.GetPrice(planetaryBase);
-            if (OVE > 0 && consumables.OVE) result += OVE * MaterialData.GetOrThrow("OVE").PriceData.GetPrice(planetaryBase);
-            if (EXO > 0 && consumables.EXO) result += EXO * MaterialData.GetOrThrow("EXO").PriceData.GetPrice(planetaryBase);
-            if (PT > 0 && consumables.PT) result += PT * MaterialData.GetOrThrow("PT").PriceData.GetPrice(planetaryBase);
-            if (MED > 0 && consumables.MED) result += MED * MaterialData.GetOrThrow("MED").PriceData.GetPrice(planetaryBase);
-            if (HMS > 0 && consumables.HMS) result += HMS * MaterialData.GetOrThrow("HMS").PriceData.GetPrice(planetaryBase);
-            if (SCN > 0 && consumables.SCN) result += SCN * MaterialData.GetOrThrow("SCN").PriceData.GetPrice(planetaryBase);
-            if (FIM > 0 && consumables.FIM) result += FIM * MaterialData.GetOrThrow("FIM").PriceData.GetPrice(planetaryBase);
-            if (HSS > 0 && consumables.HSS) result += HSS * MaterialData.GetOrThrow("HSS").PriceData.GetPrice(planetaryBase);
-            if (PDA > 0 && consumables.PDA) result += PDA * MaterialData.GetOrThrow("PDA").PriceData.GetPrice(planetaryBase);
-            if (MEA > 0 && consumables.MEA) result += MEA * MaterialData.GetOrThrow("MEA").PriceData.GetPrice(planetaryBase);
-            if (LC > 0 && consumables.LC) result += LC * MaterialData.GetOrThrow("LC").PriceData.GetPrice(planetaryBase);
-            if (WS > 0 && consumables.WS) result += WS * MaterialData.GetOrThrow("WS").PriceData.GetPrice(planetaryBase);
-            if (COF > 0 && consumables.COF) result += COF * MaterialData.GetOrThrow("COF").PriceData.GetPrice(planetaryBase);
-            if (PWO > 0 && consumables.PWO) result += PWO * MaterialData.GetOrThrow("PWO").PriceData.GetPrice(planetaryBase);
-            if (KOM > 0 && consumables.KOM) result += KOM * MaterialData.GetOrThrow("KOM").PriceData.GetPrice(planetaryBase);
-            if (REP > 0 && consumables.REP) result += REP * MaterialData.GetOrThrow("REP").PriceData.GetPrice(planetaryBase);
-            if (ALE > 0 && consumables.ALE) result += ALE * MaterialData.GetOrThrow("ALE").PriceData.GetPrice(planetaryBase);
-            if (SC > 0 && consumables.SC) result += SC * MaterialData.GetOrThrow("SC").PriceData.GetPrice(planetaryBase);
-            if (GIN > 0 && consumables.GIN) result += GIN * MaterialData.GetOrThrow("GIN").PriceData.GetPrice(planetaryBase);
-            if (VG > 0 && consumables.VG) result += VG * MaterialData.GetOrThrow("VG").PriceData.GetPrice(planetaryBase);
-            if (WIN > 0 && consumables.WIN) result += WIN * MaterialData.GetOrThrow("WIN").PriceData.GetPrice(planetaryBase);
-            if (NST > 0 && consumables.NST) result += NST * MaterialData.GetOrThrow("NST").PriceData.GetPrice(planetaryBase);
+            if (DW > 0 && consumables.DW) result += DW * MaterialData.GetOrThrow("DW").PriceData.GetPrice(true, planetaryBase);
+            if (RAT > 0 && consumables.RAT) result += RAT * MaterialData.GetOrThrow("RAT").PriceData.GetPrice(true, planetaryBase);
+            if (OVE > 0 && consumables.OVE) result += OVE * MaterialData.GetOrThrow("OVE").PriceData.GetPrice(true, planetaryBase);
+            if (EXO > 0 && consumables.EXO) result += EXO * MaterialData.GetOrThrow("EXO").PriceData.GetPrice(true, planetaryBase);
+            if (PT > 0 && consumables.PT) result += PT * MaterialData.GetOrThrow("PT").PriceData.GetPrice(true, planetaryBase);
+            if (MED > 0 && consumables.MED) result += MED * MaterialData.GetOrThrow("MED").PriceData.GetPrice(true, planetaryBase);
+            if (HMS > 0 && consumables.HMS) result += HMS * MaterialData.GetOrThrow("HMS").PriceData.GetPrice(true, planetaryBase);
+            if (SCN > 0 && consumables.SCN) result += SCN * MaterialData.GetOrThrow("SCN").PriceData.GetPrice(true, planetaryBase);
+            if (FIM > 0 && consumables.FIM) result += FIM * MaterialData.GetOrThrow("FIM").PriceData.GetPrice(true, planetaryBase);
+            if (HSS > 0 && consumables.HSS) result += HSS * MaterialData.GetOrThrow("HSS").PriceData.GetPrice(true, planetaryBase);
+            if (PDA > 0 && consumables.PDA) result += PDA * MaterialData.GetOrThrow("PDA").PriceData.GetPrice(true, planetaryBase);
+            if (MEA > 0 && consumables.MEA) result += MEA * MaterialData.GetOrThrow("MEA").PriceData.GetPrice(true, planetaryBase);
+            if (LC > 0 && consumables.LC) result += LC * MaterialData.GetOrThrow("LC").PriceData.GetPrice(true, planetaryBase);
+            if (WS > 0 && consumables.WS) result += WS * MaterialData.GetOrThrow("WS").PriceData.GetPrice(true, planetaryBase);
+            if (COF > 0 && consumables.COF) result += COF * MaterialData.GetOrThrow("COF").PriceData.GetPrice(true, planetaryBase);
+            if (PWO > 0 && consumables.PWO) result += PWO * MaterialData.GetOrThrow("PWO").PriceData.GetPrice(true, planetaryBase);
+            if (KOM > 0 && consumables.KOM) result += KOM * MaterialData.GetOrThrow("KOM").PriceData.GetPrice(true, planetaryBase);
+            if (REP > 0 && consumables.REP) result += REP * MaterialData.GetOrThrow("REP").PriceData.GetPrice(true, planetaryBase);
+            if (ALE > 0 && consumables.ALE) result += ALE * MaterialData.GetOrThrow("ALE").PriceData.GetPrice(true, planetaryBase);
+            if (SC > 0 && consumables.SC) result += SC * MaterialData.GetOrThrow("SC").PriceData.GetPrice(true, planetaryBase);
+            if (GIN > 0 && consumables.GIN) result += GIN * MaterialData.GetOrThrow("GIN").PriceData.GetPrice(true, planetaryBase);
+            if (VG > 0 && consumables.VG) result += VG * MaterialData.GetOrThrow("VG").PriceData.GetPrice(true, planetaryBase);
+            if (WIN > 0 && consumables.WIN) result += WIN * MaterialData.GetOrThrow("WIN").PriceData.GetPrice(true, planetaryBase);
+            if (NST > 0 && consumables.NST) result += NST * MaterialData.GetOrThrow("NST").PriceData.GetPrice(true, planetaryBase);
 
             return result;
         }

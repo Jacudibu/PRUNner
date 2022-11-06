@@ -23,7 +23,7 @@ namespace PRUNner.Backend.Data.Components
             Bid = exchangeData.Bid;
         }
 
-        public double? Get(ExchangePriceType configPriceType)
+        public double? Get(ExchangePriceType configPriceType, bool isInput)
         {
             return configPriceType switch
             {
@@ -32,6 +32,7 @@ namespace PRUNner.Backend.Data.Components
                 ExchangePriceType.Bid => Bid,
                 ExchangePriceType.MMBuy => MMBuy,
                 ExchangePriceType.MMSell => MMSell,
+                ExchangePriceType.Worse => isInput ? Ask : Bid,
                 _ => throw new ArgumentOutOfRangeException(nameof(configPriceType), configPriceType, null)
             };
         }

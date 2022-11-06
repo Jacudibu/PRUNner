@@ -7,5 +7,6 @@ namespace PRUNner.Backend.Enums
         Bid, 
         MMBuy,
         MMSell,
+        Worse,
     }
 }

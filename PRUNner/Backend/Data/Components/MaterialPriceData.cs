@@ -30,18 +30,18 @@ namespace PRUNner.Backend.Data.Components
             ExchangePrices[exchangeData.ExchangeCode].Update(exchangeData);
         }
 
-        public double GetPrice(PlanetaryBase planetaryBase)
+        public double GetPrice(bool isInput, PlanetaryBase planetaryBase)
         {
-            return GetPrice(planetaryBase.Empire, planetaryBase);
+            return GetPrice(isInput, planetaryBase.Empire, planetaryBase);
         }
 
-        public double GetPrice(Empire empire, PlanetaryBase? planetaryBase = null)
+        public double GetPrice(bool isInput, Empire empire, PlanetaryBase? planetaryBase = null)
         {
             if (planetaryBase != null)
             {
                 foreach (var query in planetaryBase.PriceDataPreferences.PriceDataQueryPreferences)
                 {
-                    var result = GetPrice(query, empire.PriceOverrides, planetaryBase.PriceOverrides);
+                    var result = GetPrice(query, isInput, empire.PriceOverrides, planetaryBase.PriceOverrides);
                     if (result != null)
                     {
                         return (double) result;
@@ -51,7 +51,7 @@ namespace PRUNner.Backend.Data.Components
             
             foreach (var query in empire.PriceDataPreferences.PriceDataQueryPreferences)
             {
-                var result = GetPrice(query, empire.PriceOverrides, planetaryBase?.PriceOverrides);
+                var result = GetPrice(query, isInput, empire.PriceOverrides, planetaryBase?.PriceOverrides);
                 if (result != null)
                 {
                     return (double) result;
@@ -61,13 +61,13 @@ namespace PRUNner.Backend.Data.Components
             return 0;
         }
 
-        private double? GetPrice(MaterialPriceDataQueryElement queryElement, PriceOverrides? empirePriceOverrides = null, PriceOverrides? planetPriceOverrides = null)
+        private double? GetPrice(MaterialPriceDataQueryElement queryElement, bool isInput, PriceOverrides? empirePriceOverrides = null, PriceOverrides? planetPriceOverrides = null)
         {
             return queryElement.QueryType switch
             {
                 PriceDataQueryType.EmpireOverrides => empirePriceOverrides?.GetOverrideForTicker(_materialData.Ticker) ?? null,
                 PriceDataQueryType.PlanetOverrides => planetPriceOverrides?.GetOverrideForTicker(_materialData.Ticker) ?? null,
-                PriceDataQueryType.Exchange => ExchangePrices[queryElement.Exchange.Id].Get(queryElement.PriceType),
+                PriceDataQueryType.Exchange => ExchangePrices[queryElement.Exchange.Id].Get(queryElement.PriceType, isInput),
                 _ => throw new ArgumentOutOfRangeException(nameof(queryElement.QueryType), queryElement.QueryType, null)
             };
         }

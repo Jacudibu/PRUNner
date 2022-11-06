@@ -55,7 +55,7 @@ namespace PRUNner.Backend.BasePlanner
 
         public void UpdatePriceData()
         {
-            Value = Balance * Material.PriceData.GetPrice(_planetaryBase);
+            Value = Balance * (Balance > 0 ? Material.PriceData.GetPrice(false, _planetaryBase) : Material.PriceData.GetPrice(true, _planetaryBase));
         }
     }
 }

@@ -33,6 +33,7 @@ namespace PRUNner.Backend.Data.Components
                 ExchangePriceType.MMBuy => MMBuy,
                 ExchangePriceType.MMSell => MMSell,
                 ExchangePriceType.Worse => isInput ? Ask : Bid,
+                ExchangePriceType.Best => isInput ? Bid : Ask,
                 _ => throw new ArgumentOutOfRangeException(nameof(configPriceType), configPriceType, null)
             };
         }

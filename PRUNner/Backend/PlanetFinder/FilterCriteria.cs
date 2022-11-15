@@ -7,6 +7,7 @@ namespace PRUNner.Backend.PlanetFinder
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class FilterCriteria
     {
+        public string? Name;
         public bool ExcludeInfertile;
         public bool ExcludeRocky;
         public bool ExcludeGaseous;
@@ -19,6 +20,11 @@ namespace PRUNner.Backend.PlanetFinder
 
         public bool DoesPlanetFitCriteria(PlanetData planet)
         {
+            if (!string.IsNullOrEmpty(Name) && !planet.Name.Contains(Name, System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return false;
+            }
+
             if (ExcludeInfertile && !planet.IsFertile())
             {
                 return false;
@@ -71,6 +77,7 @@ namespace PRUNner.Backend.PlanetFinder
         {
             return new()
             {
+                Name = Name ?? other.Name,
                 ExcludeInfertile = ExcludeInfertile || other.ExcludeInfertile,
                 ExcludeRocky = ExcludeRocky || other.ExcludeRocky,
                 ExcludeGaseous = ExcludeGaseous || other.ExcludeGaseous,

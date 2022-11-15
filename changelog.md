@@ -1,6 +1,5 @@
 ### Changes:
-- Added a Dark Theme. Thanks to @louhy for your efforts! 
-- Fixed a bug that caused net profits to be displayed as NaN.
+- Added worst- and best-case price options. Thanks to @Yawnder for implementing them!
 
 ### Installation
 Just select the zip file for your operating system below, download & unpack it and then run the executable inside. :)

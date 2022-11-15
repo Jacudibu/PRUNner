@@ -24,11 +24,12 @@
                 </StackPanel>
                 
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="🔎 Search" FontSize="24" Height="45" Width="140" Margin="10" HorizontalAlignment="Center"
-                            Command="{Binding Search}" />
-                    <CheckBox IsChecked="{Binding MustBeFertile}" Margin="5, 0, 0, 0" >Fertile Soil</CheckBox>
+                    <Button Content="🔎 Search" FontSize="24" Height="45" Width="140" Margin="10" HorizontalAlignment="Center" Command="{Binding Search}" />
+					<StackPanel Orientation="Vertical" Margin="3">
+						<TextBlock Text="Name"/>
+						<TextBox Text="{Binding DisplayName}" Margin="0,0,0,0" Width="100"/>
+					</StackPanel>
                 </StackPanel>
-                
             </StackPanel>
            </Border> 
                 
@@ -37,7 +38,8 @@
                 <TextBlock Text="Surface Type" HorizontalAlignment="Center"/>
                 <CheckBox IsChecked="{Binding DisplayRocky}">Rocky (MCG)</CheckBox>
                 <CheckBox IsChecked="{Binding DisplayGaseous}">Gaseous (AEF)</CheckBox>
-            </StackPanel>
+				<CheckBox IsChecked="{Binding MustBeFertile}">Fertile Soil</CheckBox>
+			</StackPanel>
         </Border>
                
         <Border BorderThickness="1" BorderBrush="LightGray" Margin="5, 0, 0, 0">

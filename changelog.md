@@ -1,5 +1,8 @@
 ### Changes:
-- Added worst- and best-case price options. Thanks to @Yawnder for implementing them!
+- Added worst- and best-case price options. 
+- Planets can now be searched by name.
+
+Thanks to @Yawnder for implementing both of them!
 
 ### Installation
 Just select the zip file for your operating system below, download & unpack it and then run the executable inside. :)

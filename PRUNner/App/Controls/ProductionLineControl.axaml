@@ -79,7 +79,7 @@
                                                     </ItemsControl.ItemTemplate>
                                                 </ItemsControl>
                                             </StackPanel>
-                                            <StackPanel Width="65">
+                                            <StackPanel Width="85">
                                                 <TextBlock Text="Profit/d" VerticalAlignment="Center" TextAlignment="Center"/>
                                                 <TextBlock VerticalAlignment="Center" TextAlignment="Right" HorizontalAlignment="Center"
                                                            Text="{Binding DailyProfit, StringFormat={}{0:N2}}"

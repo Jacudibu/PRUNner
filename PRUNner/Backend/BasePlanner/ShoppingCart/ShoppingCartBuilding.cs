@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using PRUNner.Backend.Data;
 using PRUNner.Backend.Data.Components;
@@ -14,7 +15,7 @@ namespace PRUNner.Backend.BasePlanner.ShoppingCart
         [Reactive] public int TotalAmount { get; set; }
         [Reactive] public int PlannedAmount { get; set; }
 
-        public List<MaterialIO> RequiredMaterials { get; set; } = new();
+        public ObservableCollection<MaterialIO> RequiredMaterials { get; set; } = new();
         
         public ShoppingCartBuilding(PlanetBuilding building)
         {

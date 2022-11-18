@@ -24,7 +24,7 @@
                 <controls:BasePlannerControl DataContext="{Binding .}" />
             </TabItem>
             <TabItem Header="Shopping Cart">
-                <controls:ShoppingCartControl DataContext="{Binding ActiveBase.ShoppingCart}" />
+                <controls:ShoppingCartControl DataContext="{Binding ShoppingCartViewModel}" />
             </TabItem>
         </TabControl>
 

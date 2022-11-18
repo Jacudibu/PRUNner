@@ -6,10 +6,20 @@ namespace PRUNner.App.ViewModels
 {
     public class BasePlannerViewModel : ViewModelBase
     {
-        public PlanetaryBase ActiveBase { get; private set; }
+        private PlanetaryBase _activeBase;
+        public PlanetaryBase ActiveBase {
+            get => _activeBase;
+            private set
+            {
+                _activeBase = value;
+                ShoppingCartViewModel.SetActiveBase(value);
+            }
+        }
 
         public BuildingTextBox AddBuildingTextBox { get; } = new();
-        
+
+        public ShoppingCartViewModel ShoppingCartViewModel { get; } = new();
+
         public void SetActiveBase(PlanetaryBase planetaryBase)
         {
             ActiveBase = planetaryBase;

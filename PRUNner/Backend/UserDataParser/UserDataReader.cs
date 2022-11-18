@@ -141,11 +141,20 @@ namespace PRUNner.Backend.UserDataParser
             foreach (var buildingObject in buildings.Cast<JObject>())
             {
                 var ticker = buildingObject.GetValue(nameof(ShoppingCartBuilding.Building))!.ToObject<string>();
-                var shoppingCartBuilding = shoppingCart.Buildings.SingleOrDefault(x => x.Building.Building.Ticker.Equals(ticker));
-                if (shoppingCartBuilding != null)
+
+                var plannedAmount = buildingObject.GetValue(nameof(ShoppingCartBuilding.PlannedAmount))!.ToObject<int>();
+                if (plannedAmount > 0)
                 {
-                    shoppingCartBuilding.PlannedAmount = buildingObject.GetValue(nameof(ShoppingCartBuilding.PlannedAmount))!.ToObject<int>();
+                    var shoppingCartBuilding = shoppingCart.Buildings.SingleOrDefault(x => x.Building.Building.Ticker.Equals(ticker));
+                    if (shoppingCartBuilding == null)
+                    {
+                        shoppingCart.AddBuilding(BuildingData.Get(ticker));
+                        shoppingCartBuilding = shoppingCart.Buildings.SingleOrDefault(x => x.Building.Building.Ticker.Equals(ticker));
+                    }
+
+                    shoppingCartBuilding.PlannedAmount = plannedAmount;
                 }
+
             }
             
             var materials = (JArray) jObject[nameof(ShoppingCart.Materials)]!;

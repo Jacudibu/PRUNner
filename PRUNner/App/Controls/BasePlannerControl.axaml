@@ -364,7 +364,7 @@
                     <TextBlock Text="Production Buildings" Classes="h2" />
                     <StackPanel Orientation="Horizontal">
                         <TextBox Text="{Binding AddBuildingTextBox.BuildingName}" Width="100" />
-                        <Button Content="AddBuilding" Command="{Binding AddBuilding}" />
+                        <Button Content="Add Building" Command="{Binding AddBuilding}" />
                     </StackPanel>
                 </StackPanel>
                 <CheckBox Content="Include Habitation Costs in Recipe PP" IsEnabled="False" Margin="5, 0,0,0"

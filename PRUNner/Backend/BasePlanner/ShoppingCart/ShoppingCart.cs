@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using NLog;
@@ -15,8 +17,8 @@ namespace PRUNner.Backend.BasePlanner.ShoppingCart
         
         private readonly PlanetaryBase _planetaryBase;
 
-        public List<ShoppingCartBuilding> Buildings { get; } = new();
-        public List<ShoppingCartMaterial> Materials { get; private set; } = new();
+        public ObservableCollection<ShoppingCartBuilding> Buildings { get; } = new();
+        public ObservableCollection<ShoppingCartMaterial> Materials { get; } = new();
 
         private bool _ignoreUpdatesDueToInitialization;
         
@@ -44,16 +46,17 @@ namespace PRUNner.Backend.BasePlanner.ShoppingCart
             
             foreach (var building in _planetaryBase.InfrastructureBuildings.All)
             {
-                AddOrUpdateBuilding(building, building.Amount, allMaterials);
+                if (building.Amount > 0)
+                {
+                    AddOrUpdateBuilding(building, building.Amount, 0, allMaterials);
+                }
             }
             
             foreach (var building in _planetaryBase.ProductionBuildings)
             {
-                AddOrUpdateBuilding(building, building.Amount, allMaterials);
+                AddOrUpdateBuilding(building, building.Amount, 0, allMaterials);
             }
-            
-            Buildings.RemoveMany(Buildings.Where(x => x.TotalAmount == 0));
-            
+
             SetupMaterials(allMaterials);
 
             _ignoreUpdatesDueToInitialization = false;
@@ -63,16 +66,30 @@ namespace PRUNner.Backend.BasePlanner.ShoppingCart
             this.RaisePropertyChanged(nameof(Materials));
         }
 
+        public void AddBuilding(BuildingData? building, int quantity = 1)
+        {
+            if (building != null)
+            {
+                var allMaterials = CollectAllRequiredMaterials(_planetaryBase);
+                var infrastructureBuilding = PlanetBuilding.FromInfrastructureBuilding(_planetaryBase, building!);
+                AddOrUpdateBuilding(infrastructureBuilding, 0, 0, allMaterials);
+
+                var element = Buildings.Single(e => e.Building.Building.Ticker == building.Ticker);
+                element.PlannedAmount += quantity;
+            }
+        }
+
         private void SetupMaterials(List<MaterialData> allMaterials)
         {
-            List<ShoppingCartMaterial> newMats = new();
+            Materials.Clear();
+            var newMats = Materials;
             
             foreach (var material in allMaterials)
             {
                 var element = Materials.SingleOrDefault(x => x.Material == material);
                 if (element == null)
                 {
-                    element = new ShoppingCartMaterial(material);
+                    element = new ShoppingCartMaterial(material, _planetaryBase);
                     newMats.Add(element);
                 }
                 else
@@ -80,8 +97,6 @@ namespace PRUNner.Backend.BasePlanner.ShoppingCart
                     newMats.Add(element);
                 }
             }
-
-            Materials = newMats;
         }
 
         private void SumTotalMaterials()
@@ -98,45 +113,66 @@ namespace PRUNner.Backend.BasePlanner.ShoppingCart
             
             foreach (var building in Buildings)
             {
-                for (var i = 0; i < building.RequiredMaterials.Count; i++)
+                foreach(var requiredMaterial in building.RequiredMaterials)
                 {
-                    Materials[i].TotalAmount += building.RequiredMaterials[i].Amount * building.PlannedAmount;
+                    var material = Materials.Single(e => e.Material == requiredMaterial.Material);
+                    material.TotalAmount += requiredMaterial.Amount * building.PlannedAmount;
                 }
             }
         }
 
-        private static List<MaterialData> CollectAllRequiredMaterials(PlanetaryBase planetaryBase)
+        private List<MaterialData> CollectAllRequiredMaterials(PlanetaryBase planetaryBase)
         {
-            return planetaryBase.InfrastructureBuildings.All
-                    .Where(x => x.Amount > 0)
-                    .SelectMany(x => x.BuildingMaterials)
-                .Concat(planetaryBase.ProductionBuildings
-                    .Where(x => x.Amount > 0)
-                    .SelectMany(x => x.BuildingMaterials))
-                .Select(x => x.Material)
+            return Buildings
+                .SelectMany(e => e.RequiredMaterials)
+                .Select(e => e.Material)
                 .Distinct()
-                .OrderBy(x => x.Category)
-                .ThenBy(x => x.Ticker)
+                .OrderBy(e => e.Category)
+                .ThenBy(e => e.Ticker)
                 .ToList();
         }
 
-        private void AddOrUpdateBuilding(PlanetBuilding building, int amount, List<MaterialData> allMaterials)
+        private void AddOrUpdateBuilding(PlanetBuilding building, int amount, int planned, List<MaterialData> allMaterials)
         {
-            if (amount <= 0)
-            {
-                return;
-            }
-            
+            var materialAdded = false;
+
             var element = Buildings.SingleOrDefault(x => x.Building.Building == building.Building);
             if (element == null)
             {
                 element = new ShoppingCartBuilding(building);
                 element.WhenPropertyChanged(x => x.PlannedAmount).Subscribe(_ => SumTotalMaterials());
                 Buildings.Add(element);
+
+                foreach(var materialData in building.BuildingMaterials.Select(e => e.Material))
+                {
+                    if (!allMaterials.Contains(materialData))
+                    {
+                        allMaterials.Add(materialData);
+                    }
+
+                    var material = Materials.SingleOrDefault(e => e.Material.Ticker == materialData.Ticker);
+                    if (material == null)
+                    {
+                        materialAdded = true;
+                        Materials.Add(new ShoppingCartMaterial(materialData, _planetaryBase));
+                    }
+                }
             }
 
             element.TotalAmount = amount;
-            element.SetupRequiredMaterials(allMaterials);
+            element.PlannedAmount += planned;
+
+            if (materialAdded)
+            {
+                foreach(var buildingElement in Buildings)
+                {
+                    buildingElement.SetupRequiredMaterials(allMaterials);
+                }
+            }
+            else
+            {
+                element.SetupRequiredMaterials(allMaterials);
+            }
         }
     }
 }

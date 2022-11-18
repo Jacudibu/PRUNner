@@ -39,8 +39,8 @@ namespace PRUNner.App.ViewModels
             DataParser.LoadAndParseFromCache();
             
             EmpireViewModel = new EmpireViewModel(this);
-            BasePlannerViewModel = new BasePlannerViewModel();
-            PlanetFinderViewModel = new PlanetFinderViewModel();
+            BasePlannerViewModel = new ();
+            PlanetFinderViewModel = new ();
 
             ActiveView = PlanetFinderViewModel;
 

@@ -57,6 +57,8 @@ namespace PRUNner.Backend.BasePlanner
                     }
                 }
             }
+
+            Sort();
             
             foreach (var row in Rows)
             {
@@ -110,30 +112,38 @@ namespace PRUNner.Backend.BasePlanner
             return row;
         }
         
-        private string _currentSortMode = "";
-        private void Sort(string sortModeName, SortOrder defaultSortOrder, Func<PlanetProductionRow, object> comparer)
+        private string _currentSortMode = nameof(SortByCategory);
+        private SortOrder _currentSortOrder = SortOrder.Ascending;
+        private Func<PlanetProductionRow, object> _currentSortComparer = x => x.Material.Category + "/" + x.Material.Name;
+
+        private void Sort()
         {
             List<PlanetProductionRow> result;
+            result = _currentSortOrder == SortOrder.Ascending
+                ? Rows.OrderBy(_currentSortComparer).ToList()
+                : Rows.OrderByDescending(_currentSortComparer).ToList();
+            Rows.Clear();
+            Rows.AddRange(result);
+        }
+
+        private void Sort(string sortModeName, SortOrder defaultSortOrder, Func<PlanetProductionRow, object> comparer)
+        {
             if (_currentSortMode.Equals(sortModeName))
             {
-                result = defaultSortOrder == SortOrder.Ascending 
-                    ? Rows.OrderByDescending(comparer).ToList()
-                    : Rows.OrderBy(comparer).ToList();
+                _currentSortOrder = SortOrder.Descending;
                 _currentSortMode = sortModeName + "Inverse";
             }
             else
             {
-                result = defaultSortOrder == SortOrder.Ascending 
-                    ? Rows.OrderBy(comparer).ToList()
-                    : Rows.OrderByDescending(comparer).ToList();
+                _currentSortOrder = SortOrder.Ascending;
                 _currentSortMode = sortModeName;
+                _currentSortComparer = comparer;
             }
-            
-            Rows.Clear();
-            Rows.AddRange(result);
+            Sort();
         }
         
         public void SortByTicker() => Sort(nameof(SortByTicker), SortOrder.Ascending, x => x.Material.Ticker);
+        public void SortByCategory() => Sort(nameof(SortByCategory), SortOrder.Ascending, x => x.Material.Category + "/" + x.Material.Name);
         public void SortByInputs() => Sort(nameof(SortByInputs), SortOrder.Descending, x => x.Inputs);
         public void SortByOutputs() => Sort(nameof(SortByOutputs), SortOrder.Descending, x => x.Outputs);
         public void SortByBalance() => Sort(nameof(SortByBalance), SortOrder.Descending, x => x.Balance);

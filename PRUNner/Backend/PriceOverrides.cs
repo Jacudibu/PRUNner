@@ -58,7 +58,7 @@ namespace PRUNner.Backend
                     continue;
                 }
                 
-                _dictionary[priceOverride.Ticker] = priceOverride.Price;
+                _dictionary[priceOverride.Ticker.ToUpper()] = priceOverride.Price;
             }
             
             OnPriceUpdate?.Invoke();

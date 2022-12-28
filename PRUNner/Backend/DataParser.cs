@@ -13,6 +13,12 @@ namespace PRUNner.Backend
         {
             var rawData = FioImporter.LoadAllFromCache();
 
+            MaterialData.Reset();
+            SystemData.Reset();
+            CommodityExchangeData.Reset();
+            PlanetData.Reset();
+            BuildingData.Reset();
+            
             Logger.Info("Parsing Materials");
             foreach (var material in rawData.AllMaterials)
             {

@@ -26,6 +26,14 @@
         <MenuItem Header="_Save" Command="{Binding SaveToDisk}" />
         <MenuItem Header="_Load" Command="{Binding LoadFromDisk}" CommandParameter="false" />
         <Separator MinWidth="100"/>
+        <MenuItem Header="Advanced Stuff">
+          <MenuItem Header="⚠️ Update Game Data (read tooltip)">
+            <ToolTip.Tip>Only use this when buildings, recipes or planet data seem out of date - so basically only after game updates. This will delete the FIOCache folder and then close the application. The next time you start it, everything will be redownloaded.</ToolTip.Tip>
+            <MenuItem Header="Delete Cache and Restart" Command="{Binding ResetFioCache}">
+              <ToolTip.Tip>Only use this when buildings, recipes or planet data seem out of date - so basically only after game updates. This will delete the FIOCache folder and then close the application. The next time you start it, everything will be redownloaded.</ToolTip.Tip>
+            </MenuItem>
+          </MenuItem>
+        </MenuItem>
         <MenuItem Header="Useful Links">
           <MenuItem Header="PRUNner Github" Command="{Binding OpenGithubSite}"/>
           <MenuItem Header="Community Tools Discord Server" Command="{Binding OpenCommunityToolsDiscord}">

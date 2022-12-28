@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -6,6 +7,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Primitives;
 using Avalonia.Styling;
 using Avalonia.Themes.Fluent;
+using FIOImport;
 using NLog;
 using NLog.Targets;
 using PRUNner.Backend;
@@ -92,10 +94,15 @@ namespace PRUNner.App.ViewModels
             Utils.OpenWebsite("https://handbook.apex.prosperousuniverse.com/wiki/community-resources/");
         }
 
-        public void BlameFio()
+        public void ResetFioCache()
         {
-            Logger.Debug("Not yet implemented. If you want to invalidate your cache, delete your FIOCache folder and restart. " +
-                         "Not recommended since downloading planet data takes a while.");
+            if (Directory.Exists(FioImporter.CacheFolder))
+            {
+                Directory.Delete(FioImporter.CacheFolder, true);       
+            }
+            
+            var lifetime = Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            lifetime!.Shutdown();
         }
         
         public void SaveToDisk()

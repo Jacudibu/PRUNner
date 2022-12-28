@@ -7,7 +7,7 @@ namespace FIOImport
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        internal const string CacheFolder = "FIOCache/";
+        public const string CacheFolder = "FIOCache/";
 
         public static RawData LoadAllFromCache()
         {

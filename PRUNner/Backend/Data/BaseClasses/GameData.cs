@@ -59,6 +59,13 @@ namespace PRUNner.Backend.Data.BaseClasses
             return AllItemsWithoutAliases;
         }
 
+        public static void Reset()
+        {
+            AllItemsWithoutAliases = ImmutableArray<TData>.Empty;
+            AllItems.Clear();
+            AllItemsByPocoId.Clear();
+        }
+
         public static ImmutableArray<TData> GetAllProperty => GetAll();
 
         protected virtual bool IsMatchingPoco(TPoco poco)

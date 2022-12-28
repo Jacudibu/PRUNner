@@ -1,8 +1,7 @@
 ### Changes:
-- Added worst- and best-case price options. 
-- Planets can now be searched by name.
-
-Thanks to @Yawnder for implementing both of them!
+- Some shopping card improvements by @Yawnder
+- Price Overrides no longer need to be written in all caps
+- Added a button to delete the FIOCache folder and thus update game data from within the app. For now doing so will close the application to ensure data integrity.
 
 ### Installation
 Just select the zip file for your operating system below, download & unpack it and then run the executable inside. :)

@@ -16,7 +16,7 @@ namespace PRUNner.Backend.Utility
 
         public static string GetDurationString(double milliseconds)
         {
-            if (milliseconds < 0 || double.IsPositiveInfinity(milliseconds))
+            if (milliseconds < 0 || double.IsPositiveInfinity(milliseconds) || double.IsNaN(milliseconds))
             {
                 return "∞";
             }

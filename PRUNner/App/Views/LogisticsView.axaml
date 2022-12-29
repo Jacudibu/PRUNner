@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:viewModels="clr-namespace:PRUNner.App.ViewModels"
+             x:Class="PRUNner.App.Views.LogisticsView">
+	<Design.DataContext>
+		<viewModels:LogisticsViewModel />
+	</Design.DataContext>
+	<DockPanel>
+		<StackPanel Orientation="Vertical" DockPanel.Dock="Top" IsVisible="{Binding !GraphvizInstalled}>">
+			<TextBlock DockPanel.Dock="Top" IsVisible="{Binding !GraphvizInstalled}">Install Graphviz to use the logistics tab!</TextBlock>
+			<Button Command="{Binding OpenGraphvizSite}">Download Graphviz</Button>
+		</StackPanel>
+		<ItemsRepeater DockPanel.Dock="Left" Items="{Binding Tickers}" IsVisible="{Binding GraphvizInstalled}">
+			<ItemsRepeater.Layout>
+				<StackLayout Spacing="5"
+					Orientation="Vertical" />
+			</ItemsRepeater.Layout>
+			<ItemsRepeater.ItemTemplate>
+				<DataTemplate>
+					<CheckBox Content="{Binding Key}" IsChecked="{Binding Value}" Command="{Binding Path=$parent.DataContext.OnTickerStateChanged}" CommandParameter="{Binding Key}"/>
+				</DataTemplate>
+			</ItemsRepeater.ItemTemplate>
+		</ItemsRepeater>
+		<Image Source="{Binding GraphvizImage}"/>
+	</DockPanel>
+</UserControl>

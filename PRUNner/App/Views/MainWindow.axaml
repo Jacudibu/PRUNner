@@ -20,6 +20,7 @@
         <MenuItem Header="_Empire Overview" Command="{Binding ViewEmpire}" />
         <MenuItem Header="_Base Planner" Command="{Binding ViewBasePlanner}" />
         <MenuItem Header="Planet _Finder" Command="{Binding ViewPlanetFinder}" />
+        <MenuItem Header="_Logistics" Command="{Binding ViewLogistics}" />
         <Separator MinWidth="100"/>
         <MenuItem Header="_Update Price Data" Command="{Binding UpdatePriceData}" />
         <Separator MinWidth="100"/>
@@ -40,6 +41,9 @@
             <ToolTip.Tip>PRUNner has a dedicated channel for questions and discussions here!</ToolTip.Tip>
           </MenuItem>
           <MenuItem Header="Other Community Resources" Command="{Binding OpenApexHandbookCommunityResourceSite}"/>
+          <MenuItem Header="Graphviz" Command="{Binding OpenGraphvizSite}">
+            <ToolTip.Tip>Needed to use the logistics tab</ToolTip.Tip>
+          </MenuItem>
         </MenuItem>
         <Separator MinWidth="50" />
         <MenuItem Header="🌙 Theme" Command="{Binding ToggleTheme}" />

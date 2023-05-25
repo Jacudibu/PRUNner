@@ -1,3 +1,5 @@
+⚠️ PRUNner isn't really actively developed anymore for the time being. While the game data is still auto-updating and the application itself remains perfectly usable, you might want to check out https://prunplanner.org/ for a web-based solution with more features!
+
 # PRUNner
 PRUNner is a cross-platform standalone tool supposed to ease up base planning on an empire-wide scale by replacing spreadsheets with a custom-made application, yielding way higher response times than one could ever achieve in Google Sheets.
 

@@ -28,6 +28,7 @@ namespace PRUNner.App.ViewModels
         public readonly EmpireViewModel EmpireViewModel;
         public readonly BasePlannerViewModel BasePlannerViewModel;
         public readonly PlanetFinderViewModel PlanetFinderViewModel;
+        public readonly LogisticsViewModel LogisticsViewModel;
 
         [Reactive] public string StatusBar { get; private set; }
 
@@ -43,6 +44,7 @@ namespace PRUNner.App.ViewModels
             EmpireViewModel = new EmpireViewModel(this);
             BasePlannerViewModel = new ();
             PlanetFinderViewModel = new ();
+            LogisticsViewModel = new(EmpireViewModel.Empire);
 
             ActiveView = PlanetFinderViewModel;
 
@@ -54,6 +56,12 @@ namespace PRUNner.App.ViewModels
         public void ViewPlanetFinder()
         {
             ActiveView = PlanetFinderViewModel;
+        }
+
+        public void ViewLogistics()
+        {
+            LogisticsViewModel.Update();
+            ActiveView = LogisticsViewModel;
         }
 
         private void PlanetFinderSelectPlanetEvent(object? sender, PlanetData planet)
@@ -94,6 +102,11 @@ namespace PRUNner.App.ViewModels
             Utils.OpenWebsite("https://handbook.apex.prosperousuniverse.com/wiki/community-resources/");
         }
 
+        public void OpenGraphvizSite()
+        {
+            Utils.OpenWebsite("https://graphviz.org/download/");
+        }
+
         public void ResetFioCache()
         {
             if (Directory.Exists(FioImporter.CacheFolder))
@@ -120,6 +133,7 @@ namespace PRUNner.App.ViewModels
             }
 
             EmpireViewModel.SetEmpire(empire);
+            LogisticsViewModel.SetEmpire(empire);
             if (EmpireViewModel.Empire.PlanetaryBases.Count <= 0)
             {
                 return;

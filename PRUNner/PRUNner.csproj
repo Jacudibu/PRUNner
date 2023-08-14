@@ -38,6 +38,9 @@
           <DependentUpon>PriceDataPreferenceControl.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="App\Views\LogisticsView.axaml.cs">
+          <DependentUpon>LogisticsView.axaml</DependentUpon>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.18" />

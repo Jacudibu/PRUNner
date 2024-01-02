@@ -312,15 +312,17 @@
                            TextAlignment="Right" />
             </Grid>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <Button Width="55" Height="30" Command="{Binding ActiveBase.ProductionTable.SortByTicker}"
-                        HorizontalContentAlignment="Center" Content="" />
-                <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByInputs}"
+                <Button Width="50" Height="30" Command="{Binding ActiveBase.ProductionTable.SortByTicker}"
+                        HorizontalContentAlignment="Center" Content="TCK" />
+                <Button Width="50" Height="30" Command="{Binding ActiveBase.ProductionTable.SortByCategory}"
+                        HorizontalContentAlignment="Center" Content="CAT" />
+                <Button Width="75" Command="{Binding ActiveBase.ProductionTable.SortByInputs}"
                         HorizontalContentAlignment="Center" Content="Inputs" />
-                <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByOutputs}"
+                <Button Width="75" Command="{Binding ActiveBase.ProductionTable.SortByOutputs}"
                         HorizontalContentAlignment="Center" Content="Outputs" />
-                <Button Width="85" Command="{Binding ActiveBase.ProductionTable.SortByBalance}"
+                <Button Width="75" Command="{Binding ActiveBase.ProductionTable.SortByBalance}"
                         HorizontalContentAlignment="Center" Content="Balance" />
-                <Button Width="95" Command="{Binding ActiveBase.ProductionTable.SortByValue}"
+                <Button Width="75" Command="{Binding ActiveBase.ProductionTable.SortByValue}"
                         HorizontalContentAlignment="Center" Content="$/day" />
             </StackPanel>
             <Border Grid.Row="3" BorderThickness="1" BorderBrush="LightGray">
